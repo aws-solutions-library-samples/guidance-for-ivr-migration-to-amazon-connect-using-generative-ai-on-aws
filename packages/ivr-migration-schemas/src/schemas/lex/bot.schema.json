@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BotExportDefinition",
+  "type": "object",
+  "required": ["name", "dataPrivacy", "idleSessionTTLInSeconds"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^([0-9a-zA-Z][_-]?){1,100}$",
+      "description": "The name of the bot. Must be unique within the account."
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string",
+          "maxLength": 200
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A description of the bot."
+    },
+    "dataPrivacy": {
+      "type": "object",
+      "required": ["childDirected"],
+      "properties": {
+        "childDirected": {
+          "type": "boolean",
+          "description": "Indicates whether the bot is directed toward children under age 13."
+        }
+      },
+      "description": "Provides information on additional privacy protections Amazon Lex should use with the bot's data."
+    },
+    "idleSessionTTLInSeconds": {
+      "type": "integer",
+      "minimum": 60,
+      "maximum": 86400,
+      "description": "The time in seconds that a bot session remains active."
+    }
+  },
+  "additionalProperties": false
+}

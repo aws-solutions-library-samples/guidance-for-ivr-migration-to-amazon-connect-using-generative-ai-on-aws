@@ -1,0 +1,1820 @@
+{
+	"data": {
+		"id": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+		"name": "sz-ivr-coffee-shop-for-doc",
+		"defaultLocale": "en-US",
+		"supportedLocales": ["en-US"],
+		"connectorColors": { "ec65a556-5939-4455-8608-c2c1818071fa": "#31B96E", "bb1cfac8-b2b3-4987-8419-dfbdb13dece6": "grey" },
+		"baseServiceUrl": "",
+		"staticProjectId": "",
+		"version": "1.0",
+		"supportedChannels": [
+			{
+				"id": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+				"displayName": "Default",
+				"codeName": "default",
+				"modes": ["DTMF", "Audio Script", "Voice", "TTS"],
+				"disabled": false,
+				"connectorColor": "#FFFFFF",
+				"channelModes": [
+					{
+						"id": "78c75367-ac06-45c0-9d85-85735e78581a",
+						"channelId": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"name": "TTS",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.240Z"
+					},
+					{
+						"id": "bd2dd280-e881-4117-a45d-d3ad7f70d75b",
+						"channelId": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"name": "Audio Script",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.184Z"
+					},
+					{
+						"id": "1fe4bd06-9e2a-48bd-afdc-c3eac18051c8",
+						"channelId": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"name": "Voice",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.213Z"
+					},
+					{
+						"id": "d90b7a54-45be-41a3-9751-668d1c8bacb1",
+						"channelId": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"name": "DTMF",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.156Z"
+					}
+				],
+				"lastModified": "2024-01-04T22:11:30.233Z"
+			},
+			{
+				"id": "ec65a556-5939-4455-8608-c2c1818071fa",
+				"displayName": "IVR",
+				"codeName": "custom",
+				"modes": ["Audio Script", "Voice", "DTMF", "TTS"],
+				"disabled": false,
+				"connectorColor": "#31B96E",
+				"channelModes": [
+					{
+						"id": "3854d36b-af6f-48ac-a26c-a48770b2d593",
+						"channelId": "ec65a556-5939-4455-8608-c2c1818071fa",
+						"name": "DTMF",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.092Z"
+					},
+					{
+						"id": "19ee7a42-7f06-4166-b895-aaf2a8389246",
+						"channelId": "ec65a556-5939-4455-8608-c2c1818071fa",
+						"name": "Voice",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.063Z"
+					},
+					{
+						"id": "f7b4461e-07eb-4208-b66b-b2ba40a817c0",
+						"channelId": "ec65a556-5939-4455-8608-c2c1818071fa",
+						"name": "TTS",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.121Z"
+					},
+					{
+						"id": "ede2d7a9-b1ab-4378-9404-b98661394d5d",
+						"channelId": "ec65a556-5939-4455-8608-c2c1818071fa",
+						"name": "Audio Script",
+						"disabled": false,
+						"lastModified": "2024-01-04T22:11:30.028Z"
+					}
+				],
+				"lastModified": "2024-01-04T22:11:30.113Z"
+			}
+		],
+		"supportedCustomChannels": [],
+		"richTextChannels": [],
+		"globalConfirmations": [],
+		"components": [
+			{
+				"id": "af773600-3dfb-46c1-a7a0-00132129b953",
+				"name": "Main",
+				"description": "Main component",
+				"nodes": [
+					{
+						"id": "f0b31434-cf87-46ef-af26-087723d17dce",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"messageNode": {
+							"name": "Welcome",
+							"description": "",
+							"processingItems": {
+								"id": "9a6956a5-1c5c-4f66-a526-241dcac18e46",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "cf0a4dd1-0df9-4509-8db0-623b7fb6f9b0",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "35680d22-c022-4b79-b15d-bc779d70ac05",
+																"name": "welcome_to_my_coffee_shop_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "Welcome to My Coffee Shop!",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.845Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.843Z"
+															},
+															"id": "abb840dc-dbb6-44e4-bafd-7a3ce454f5ad",
+															"note": "",
+															"promptGroupId": "35680d22-c022-4b79-b15d-bc779d70ac05"
+														},
+														{
+															"transition": {
+																"id": "d99a7529-fd92-423c-a456-c7ade24b4857",
+																"transitionType": "GO_TO",
+																"eventId": "",
+																"label": "Always",
+																"eventLog": "",
+																"nodeId": "68458f2c-51c4-48fe-a3ef-d73f6ec947cc"
+															},
+															"id": "5852c9d9-5ee4-4588-90f6-3c80cdab28bd",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "1453b5c7-2c67-40e4-b453-6d4b19641c5c",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "f0b31434-cf87-46ef-af26-087723d17dce"
+							},
+							"view": { "name": "", "style": "" },
+							"nodeSettingOverride": [],
+							"processingItemsId": "9a6956a5-1c5c-4f66-a526-241dcac18e46",
+							"timestamp": "2024-01-04T22:11:31.259Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "927fa8a9-335f-4c53-83d1-4ce433e16561",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"externalactionNode": {
+							"inputVariablesConcepts": [],
+							"outputVariables": [],
+							"name": "End",
+							"actionType": "END",
+							"description": "",
+							"successTransitionId": "",
+							"failureTransitionId": "",
+							"outputVariableIds": [],
+							"timestamp": "2024-01-04T22:11:31.250Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "e3aa2286-c2cd-4745-aafd-c4348d93aaae",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"messageNode": {
+							"name": "Goodbye",
+							"description": "",
+							"processingItems": {
+								"id": "516a5419-e7ea-4743-bd88-a02c6a4a0740",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "0df3cb71-f1d7-4a8b-8c37-c37aac44ca6e",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "e7168c8f-a2e5-4ce6-9914-862e547aaf04",
+																"name": "thanks_for_visiting_my_coffee_shop_goodbye_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "Thanks for visiting My Coffee Shop. Goodbye.",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.892Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.890Z"
+															},
+															"id": "c5ca883e-28d3-49e5-a39b-1ed12aa4c4ce",
+															"note": "",
+															"promptGroupId": "e7168c8f-a2e5-4ce6-9914-862e547aaf04"
+														},
+														{
+															"transition": {
+																"id": "f0f177a7-a553-45b0-9448-8e59fd2e1db9",
+																"transitionType": "GO_TO",
+																"eventId": "",
+																"label": "Always",
+																"eventLog": "",
+																"nodeId": "927fa8a9-335f-4c53-83d1-4ce433e16561"
+															},
+															"id": "d5730030-bfbd-4c61-a100-4d6292a5aca3",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "4f6171cb-29b8-48dd-a46e-32aa8ed659d6",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "e3aa2286-c2cd-4745-aafd-c4348d93aaae"
+							},
+							"view": { "name": "", "style": "" },
+							"nodeSettingOverride": [],
+							"processingItemsId": "516a5419-e7ea-4743-bd88-a02c6a4a0740",
+							"timestamp": "2024-01-04T22:11:31.241Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "68458f2c-51c4-48fe-a3ef-d73f6ec947cc",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"recognitionNode2": {
+							"name": "Get Intent",
+							"description": "",
+							"initialMessage": {
+								"id": "563485c6-ed83-44c0-a9bb-14ae83a660d0",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "e16e832f-1142-4c9d-9cdb-05c150cbfb1d",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "2609cb62-0700-44f7-a0d9-db9419032ea2",
+																"name": "how_can_i_help_you_today_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "How can I help you today?",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.827Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.826Z"
+															},
+															"id": "85c938aa-114e-407c-9957-ad131b11c1fc",
+															"note": "",
+															"promptGroupId": "2609cb62-0700-44f7-a0d9-db9419032ea2"
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "1b2ff2c0-3ef7-48da-8a48-209b5a52a1a2",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "68458f2c-51c4-48fe-a3ef-d73f6ec947cc"
+							},
+							"collectionType": "INTENT_TYPE",
+							"actionConfigurations": [],
+							"inputManagerReferenceId": "",
+							"entityId": "",
+							"recoRecoveryBehaviors": [],
+							"defaultIntentProcessingItem": {
+								"id": "355a6cf6-5ae2-4404-b97a-04282c2599db",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "3205dd35-5d78-426e-a670-4843c76e364b",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"transition": {
+																"id": "4ad599aa-0b0d-4910-a492-50f20611699c",
+																"transitionType": "GO_TO",
+																"eventId": "",
+																"label": "Always",
+																"eventLog": "",
+																"nodeId": "7462a39e-aab3-4eb4-9f18-5f2f48b3eca0"
+															},
+															"id": "593dd046-68d5-49ab-8c54-4d1835469340",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "73e3d347-834a-41f1-8934-da8a4f5fe2b4",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "68458f2c-51c4-48fe-a3ef-d73f6ec947cc"
+							},
+							"clickables": [],
+							"view": { "name": "", "style": "" },
+							"inputVariablesConcepts": [],
+							"nodeSettingOverride": [],
+							"recoConfirmationBehaviors": [],
+							"dtmfToEntityValueMapping": [],
+							"nodeCommandOverrides": [],
+							"defaultConceptProcessingId": "",
+							"defaultIntentProcessingId": "355a6cf6-5ae2-4404-b97a-04282c2599db",
+							"initialProcessingId": "",
+							"reentryMessageId": "",
+							"initialMessageProcessingItemId": "563485c6-ed83-44c0-a9bb-14ae83a660d0",
+							"timestamp": "2024-01-04T22:11:31.232Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "22cd2c18-a87f-429b-8ce5-727a62a2b788",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"startNode": {
+							"name": "start",
+							"description": "",
+							"processingItems": {
+								"id": "419281e7-561f-4ec0-98f5-7fdddcb8ce55",
+								"channelProcessingItemsMap": {},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "22cd2c18-a87f-429b-8ce5-727a62a2b788"
+							},
+							"nodeId": "f0b31434-cf87-46ef-af26-087723d17dce",
+							"processingItemsId": "419281e7-561f-4ec0-98f5-7fdddcb8ce55",
+							"timestamp": "2024-01-04T22:11:31.224Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "7462a39e-aab3-4eb4-9f18-5f2f48b3eca0",
+						"parentComponentId": "af773600-3dfb-46c1-a7a0-00132129b953",
+						"intentmapperNode2": {
+							"name": "Intent Mapper",
+							"description": "",
+							"intentMappings": [],
+							"transition": {
+								"id": "85d7f718-df8c-4e07-ae95-5297a306d585",
+								"transitionType": "GO_TO",
+								"eventId": "",
+								"label": "On Return",
+								"eventLog": "",
+								"nodeId": "e3aa2286-c2cd-4745-aafd-c4348d93aaae"
+							},
+							"transitionId": "85d7f718-df8c-4e07-ae95-5297a306d585",
+							"timestamp": "2024-01-04T22:11:31.215Z"
+						},
+						"eventHandlers": []
+					}
+				],
+				"eventHandlers": [
+					{
+						"id": "6b9ca7d9-6479-44b3-bf5d-bcff2204a19b",
+						"eventId": "a85107d3-bae8-49c7-9506-0c3b1504083e",
+						"transition": { "id": "b668f54e-bc59-4821-90d0-65738735ee8c", "transitionType": "NO_TRANSITION_TYPE", "eventId": "", "label": "", "eventLog": "" },
+						"reserved": true,
+						"transitionId": "b668f54e-bc59-4821-90d0-65738735ee8c",
+						"componentId": "af773600-3dfb-46c1-a7a0-00132129b953"
+					},
+					{
+						"id": "3a1fa6ac-0a81-4bf4-83e6-f852a9502ad4",
+						"eventId": "f9f2fcd7-f022-446b-8550-e94e486168eb",
+						"transition": { "id": "88ac87dc-a46b-4aaf-a99e-c96711256d95", "transitionType": "NO_TRANSITION_TYPE", "eventId": "", "label": "", "eventLog": "" },
+						"reserved": true,
+						"transitionId": "88ac87dc-a46b-4aaf-a99e-c96711256d95",
+						"componentId": "af773600-3dfb-46c1-a7a0-00132129b953"
+					}
+				],
+				"timestamp": "2024-01-04T22:11:31.137Z",
+				"intentId": ""
+			},
+			{
+				"id": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+				"name": "ORDER_COFFEE",
+				"description": "intent",
+				"nodes": [
+					{
+						"id": "0d4dd12b-c261-4679-8df7-dcc3154d0158",
+						"parentComponentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+						"recognitionNode2": {
+							"name": "COFFEE_SIZE",
+							"description": "",
+							"initialMessage": {
+								"id": "52889610-588e-4983-929b-f14e254a81ab",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "1b7472ed-f60d-485e-96c4-03995cd0e855",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "dfed4e3f-e615-4bd8-83cc-b3f4c5079345",
+																"name": "what_size_would_you_like_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "What size would you like?",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.861Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.859Z"
+															},
+															"id": "a63f0c97-f702-49bb-b6f9-1006b3c0e042",
+															"note": "",
+															"promptGroupId": "dfed4e3f-e615-4bd8-83cc-b3f4c5079345"
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "31b10506-340d-4482-9b73-38817a4ae8cf",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "0d4dd12b-c261-4679-8df7-dcc3154d0158"
+							},
+							"collectionType": "CUSTOM_LIST_TYPE",
+							"actionConfigurations": [],
+							"inputManagerReferenceId": "330f958b-9e29-438c-8f3b-77a67f8ed0be",
+							"entityId": "f6c9ad5c-8ab0-4c46-b702-78536a7fe589",
+							"recoRecoveryBehaviors": [],
+							"defaultConceptProcessingItem": {
+								"id": "4b774642-cef8-4b5d-8678-f812358cbbd8",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "e0a406d4-db4f-41b3-be2f-be2857abc603",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"transition": {
+																"id": "da0b138d-3387-425a-80de-d7c68e28beb0",
+																"transitionType": "GO_BACK_TO",
+																"eventId": "",
+																"label": "Default",
+																"eventLog": "",
+																"nodeId": "330f958b-9e29-438c-8f3b-77a67f8ed0be"
+															},
+															"id": "b96ed462-fbcf-4ac4-96d2-bb78cc6906f8",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "169c1705-ac2c-456a-9ab6-38254958f327",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "0d4dd12b-c261-4679-8df7-dcc3154d0158"
+							},
+							"initialProcessingItem": {
+								"id": "fefb2370-f95e-4dc6-b243-8ff61ef24833",
+								"channelProcessingItemsMap": { "bb1cfac8-b2b3-4987-8419-dfbdb13dece6": { "processingItems": [] } },
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "0d4dd12b-c261-4679-8df7-dcc3154d0158"
+							},
+							"clickables": [],
+							"view": { "name": "", "style": "" },
+							"inputVariablesConcepts": [],
+							"nodeSettingOverride": [],
+							"recoConfirmationBehaviors": [],
+							"dtmfToEntityValueMapping": [],
+							"nodeCommandOverrides": [],
+							"defaultConceptProcessingId": "4b774642-cef8-4b5d-8678-f812358cbbd8",
+							"defaultIntentProcessingId": "",
+							"initialProcessingId": "fefb2370-f95e-4dc6-b243-8ff61ef24833",
+							"reentryMessageId": "",
+							"initialMessageProcessingItemId": "52889610-588e-4983-929b-f14e254a81ab",
+							"timestamp": "2024-01-04T22:11:31.206Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3",
+						"parentComponentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+						"recognitionNode2": {
+							"name": "COFFEE_TYPE",
+							"description": "",
+							"initialMessage": {
+								"id": "3da8d672-4a3e-4171-9a8e-ed59d1c90745",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "3182ea71-62a6-4d5a-8728-33fe9ad602f3",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "6f658ea2-f023-4e91-ac9b-7b5e1cac8382",
+																"name": "what_would_you_like_to_drink_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "What would you like to drink?",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.908Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.907Z"
+															},
+															"id": "f560db88-731e-44ae-9746-ec0848a1634e",
+															"note": "",
+															"promptGroupId": "6f658ea2-f023-4e91-ac9b-7b5e1cac8382"
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "57657d02-a480-42d4-b827-7f32ce434d91",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3"
+							},
+							"collectionType": "CUSTOM_LIST_TYPE",
+							"actionConfigurations": [],
+							"inputManagerReferenceId": "330f958b-9e29-438c-8f3b-77a67f8ed0be",
+							"entityId": "5c08f8de-8ca4-4bd6-9135-ad02111a689a",
+							"recoRecoveryBehaviors": [],
+							"defaultConceptProcessingItem": {
+								"id": "408c1c19-0e41-464a-921b-206d9fab2b24",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "d91b99e1-d6cd-4825-9a1b-162fe36edb46",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"transition": {
+																"id": "0ac1b152-9df2-4676-ac0d-1ce4ff71c49b",
+																"transitionType": "GO_BACK_TO",
+																"eventId": "",
+																"label": "GoTo",
+																"eventLog": "",
+																"nodeId": "330f958b-9e29-438c-8f3b-77a67f8ed0be"
+															},
+															"id": "4b1fd4d2-ce48-475e-aad0-cb43b7817fa8",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "7f89c993-7633-48f2-b5c9-4b6e7c3c8166",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3"
+							},
+							"initialProcessingItem": {
+								"id": "990b4fcc-7861-4bb2-878d-4bc1dda25757",
+								"channelProcessingItemsMap": { "bb1cfac8-b2b3-4987-8419-dfbdb13dece6": { "processingItems": [] } },
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3"
+							},
+							"clickables": [],
+							"view": { "name": "", "style": "" },
+							"inputVariablesConcepts": [],
+							"nodeSettingOverride": [],
+							"recoConfirmationBehaviors": [],
+							"dtmfToEntityValueMapping": [],
+							"nodeCommandOverrides": [],
+							"defaultConceptProcessingId": "408c1c19-0e41-464a-921b-206d9fab2b24",
+							"defaultIntentProcessingId": "",
+							"initialProcessingId": "990b4fcc-7861-4bb2-878d-4bc1dda25757",
+							"reentryMessageId": "",
+							"initialMessageProcessingItemId": "3da8d672-4a3e-4171-9a8e-ed59d1c90745",
+							"timestamp": "2024-01-04T22:11:31.197Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "d07c9eea-d3ee-4706-bee2-9231a2017502",
+						"parentComponentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+						"startNode": {
+							"name": "start",
+							"description": "",
+							"processingItems": {
+								"id": "943857a7-0e4e-4f34-8fdf-41f559484dae",
+								"channelProcessingItemsMap": { "bb1cfac8-b2b3-4987-8419-dfbdb13dece6": { "processingItems": [] } },
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "d07c9eea-d3ee-4706-bee2-9231a2017502"
+							},
+							"nodeId": "330f958b-9e29-438c-8f3b-77a67f8ed0be",
+							"processingItemsId": "943857a7-0e4e-4f34-8fdf-41f559484dae",
+							"timestamp": "2024-01-04T22:11:31.188Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "330f958b-9e29-438c-8f3b-77a67f8ed0be",
+						"parentComponentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+						"controllerNode": {
+							"name": "Get Order Details",
+							"description": "",
+							"initialTransition": {
+								"id": "73a50d5b-3173-460a-aa84-548de001d5a7",
+								"channelProcessingItemsMap": { "bb1cfac8-b2b3-4987-8419-dfbdb13dece6": { "processingItems": [] } },
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "330f958b-9e29-438c-8f3b-77a67f8ed0be"
+							},
+							"finalTransition": {
+								"id": "06ab117e-a635-4ea6-a964-4cef09813028",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"transition": {
+													"id": "63cbeb53-c943-4fea-9b2e-2275df5b643b",
+													"transitionType": "GO_TO",
+													"eventId": "",
+													"label": "Complete",
+													"eventLog": "",
+													"nodeId": "f4ebf665-1854-406d-8408-805ad5b743b1"
+												},
+												"id": "f8f111b3-146c-411d-8368-d65a9a3d76e7",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "330f958b-9e29-438c-8f3b-77a67f8ed0be"
+							},
+							"concepts": [
+								{
+									"conceptId": "5c08f8de-8ca4-4bd6-9135-ad02111a689a",
+									"collectGotoNodeId": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3",
+									"processGotoNodeId": "cf10ed6f-5d15-4f5e-8e03-c812f491e3e3",
+									"conceptName": "",
+									"manualComplete": false,
+									"collectExpressionId": "",
+									"processExpressionId": "",
+									"multiConceptExpressionId": ""
+								},
+								{
+									"conceptId": "f6c9ad5c-8ab0-4c46-b702-78536a7fe589",
+									"collectGotoNodeId": "0d4dd12b-c261-4679-8df7-dcc3154d0158",
+									"processGotoNodeId": "0d4dd12b-c261-4679-8df7-dcc3154d0158",
+									"conceptName": "",
+									"manualComplete": false,
+									"collectExpressionId": "",
+									"processExpressionId": "",
+									"multiConceptExpressionId": ""
+								}
+							],
+							"intentSwitchingDisabled": false,
+							"intentSwitchTransition": {
+								"id": "b88a98a2-c9e8-4305-a047-dc0f6ef15606",
+								"transitionType": "RETURN_TO_INTENT_MAPPER",
+								"eventId": "",
+								"label": "Intent switch",
+								"eventLog": ""
+							},
+							"intentSwitchTransitionId": "b88a98a2-c9e8-4305-a047-dc0f6ef15606",
+							"initialTransitionId": "73a50d5b-3173-460a-aa84-548de001d5a7",
+							"finalTransitionId": "06ab117e-a635-4ea6-a964-4cef09813028",
+							"timestamp": "2024-01-04T22:11:31.178Z"
+						},
+						"eventHandlers": []
+					},
+					{
+						"id": "f4ebf665-1854-406d-8408-805ad5b743b1",
+						"parentComponentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115",
+						"messageNode": {
+							"name": "Wrap Up",
+							"description": "",
+							"processingItems": {
+								"id": "19ca1378-2c46-4e8c-86b3-f4f70937addb",
+								"channelProcessingItemsMap": {
+									"bb1cfac8-b2b3-4987-8419-dfbdb13dece6": {
+										"processingItems": [
+											{
+												"condition": {
+													"id": "f1233daf-4e05-47be-9ef1-ee1fc357f363",
+													"statementType": "ALWAYS_TYPE",
+													"processingItems": [
+														{
+															"promptGroup": {
+																"id": "fa4c385f-c4cc-474c-8824-d11555a7e5ff",
+																"name": "your_coffee_is_coming_right_up_",
+																"prompts": [
+																	{
+																		"payload": {
+																			"displayText": "",
+																			"ttsText": "Your coffee is coming right up!",
+																			"audioFile": "",
+																			"displayTextAnnotations": [],
+																			"ttsTextAnnotations": [],
+																			"ttsAudioBackup": "",
+																			"ttsAudioBackupAnnotations": []
+																		},
+																		"language": "en-US",
+																		"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+																		"lastModified": "2024-01-04T22:11:30.876Z"
+																	}
+																],
+																"audioFileId": "",
+																"bargeinDisabled": false,
+																"lastModified": "2024-01-04T22:11:30.875Z"
+															},
+															"id": "1c08dd93-e799-4568-a315-e4df7e449985",
+															"note": "",
+															"promptGroupId": "fa4c385f-c4cc-474c-8824-d11555a7e5ff"
+														},
+														{
+															"transition": {
+																"id": "8f164c15-48ab-4814-8f57-b0f17276a95b",
+																"transitionType": "RETURN",
+																"eventId": "",
+																"label": "GoTo",
+																"eventLog": "",
+																"nodeId": "invalid reference id [ReturnToAny]"
+															},
+															"id": "3e8ece0c-f408-449f-8d61-99817f4c75fa",
+															"note": ""
+														}
+													],
+													"expressionId": ""
+												},
+												"id": "f55cc8f4-f200-4ae1-a50d-fc920022ef02",
+												"note": ""
+											}
+										]
+									}
+								},
+								"lastModified": "2024-01-04T22:11:31.209Z",
+								"parentNodeId": "f4ebf665-1854-406d-8408-805ad5b743b1"
+							},
+							"view": { "name": "", "style": "" },
+							"nodeSettingOverride": [],
+							"processingItemsId": "19ca1378-2c46-4e8c-86b3-f4f70937addb",
+							"timestamp": "2024-01-04T22:11:31.168Z"
+						},
+						"eventHandlers": []
+					}
+				],
+				"eventHandlers": [],
+				"timestamp": "2024-01-04T22:11:31.127Z",
+				"intentId": "b6ba10d0-fbb1-4af3-a4e8-30dd8192743c"
+			}
+		],
+		"recovery": [],
+		"variables": [
+			{
+				"id": "485eb102-843d-4db6-91c0-87be0f5afb7d",
+				"name": "userData",
+				"description": "The data collected from the end user",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"complexVariableTypeId": "95dea9ac-da7f-4861-9f77-68f46e732484",
+				"timestamp": "2024-01-04T22:11:30.739Z"
+			},
+			{
+				"id": "e97eb0c3-eb35-4cac-8634-18b2a2f37e5b",
+				"name": "returnMessage",
+				"description": "The return message variable that describes the meaning of the returnCode variable",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"simpleVariableType": "STRING_TYPE",
+				"timestamp": "2024-01-04T22:11:30.759Z"
+			},
+			{
+				"id": "8b13b11d-4f9e-4687-b6bf-15f5f98d37e0",
+				"name": "returnCode",
+				"description": "The return code variable for data access nodes",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"simpleVariableType": "STRING_TYPE",
+				"timestamp": "2024-01-04T22:11:30.675Z"
+			},
+			{
+				"id": "60ab2196-6fe7-4712-98bf-eb4af4244530",
+				"name": "channelIntegration",
+				"description": "The channel integration on the client side",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"simpleVariableType": "STRING_TYPE",
+				"timestamp": "2024-01-04T22:11:30.750Z"
+			},
+			{
+				"id": "e12daafd-311a-4bf5-bf8a-828538957ebd",
+				"name": "lastConfirmationResultObject",
+				"description": "",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": true,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"complexVariableTypeId": "e9552c3c-4834-485f-9f40-dbb597464c13",
+				"timestamp": "2024-01-04T22:11:30.812Z"
+			},
+			{
+				"id": "784a1ec9-151d-4e39-85f5-6f46101e1c6b",
+				"name": "language",
+				"description": "The current language; initially set to the default language of the project",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"simpleVariableType": "STRING_TYPE",
+				"timestamp": "2024-01-04T22:11:30.617Z"
+			},
+			{
+				"id": "beacfffa-99cb-4d3b-9d9f-c3a80fba1f24",
+				"name": "ExternalResourceReferences",
+				"description": "References to external NLU and ASR resources to use at runtime",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": false,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"simpleVariableType": "STRING_TYPE",
+				"timestamp": "2024-01-04T22:11:30.767Z"
+			},
+			{
+				"id": "05236ce0-3385-4492-8368-3367428a98d6",
+				"name": "lastCollectionResultObject",
+				"description": "",
+				"possibleValues": [],
+				"uiDefaultValue": "",
+				"isReserved": true,
+				"masked": true,
+				"reportingType": "REPORTING_TYPE_NONE",
+				"complexVariableTypeId": "e9552c3c-4834-485f-9f40-dbb597464c13",
+				"timestamp": "2024-01-04T22:11:30.664Z"
+			}
+		],
+		"complexVariableTypes": [
+			{
+				"id": "95dea9ac-da7f-4861-9f77-68f46e732484",
+				"name": "userData",
+				"description": "The data collected from the end user",
+				"fields": [
+					{
+						"id": "1e4cdf86-4cdf-4743-8dc9-65c82673dc72",
+						"name": "timezone",
+						"description": "The end user's time zone",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.456Z"
+					},
+					{
+						"id": "9400e64b-ca93-40e8-a845-60c4083cfbd0",
+						"name": "userGlobalID",
+						"description": "The end user's global unique identifier",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.458Z"
+					},
+					{
+						"id": "238a2924-7e3a-485f-963d-cff933e7a1e3",
+						"name": "userChannelID",
+						"description": "The end user's channel-specific identifier",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.460Z"
+					},
+					{
+						"id": "e020b299-36ec-40a9-a330-a402cbfed927",
+						"name": "userAuxiliaryID",
+						"description": "The end user's secondary identifier",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.462Z"
+					},
+					{
+						"id": "3121c315-d839-497f-8b93-a50716513ecd",
+						"name": "systemID",
+						"description": "The identifier for how the system was reached by the end user",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.463Z"
+					},
+					{
+						"id": "aef3af14-c6b4-4e7a-8dd0-15888b81c92b",
+						"name": "location",
+						"description": "The end user's geographic coordinates",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"complexVariableTypeId": "d3e7bda9-0fee-4922-86d0-49ad2fc932ad",
+						"timestamp": "2024-01-04T22:11:30.465Z"
+					}
+				],
+				"isReserved": true
+			},
+			{
+				"id": "d09317b7-d251-444e-95dd-b30d8f16cbb4",
+				"name": "interpretation",
+				"description": "Variable type for holding each interpretation",
+				"fields": [
+					{
+						"id": "f2ab81a8-bd1b-4778-ade3-23e4fcee2dc1",
+						"name": "intent",
+						"description": "",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.409Z"
+					},
+					{
+						"id": "fa2392d4-3ac3-4737-a0f2-aba9a3a1d0ea",
+						"name": "confidence",
+						"description": "",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "DECIMAL_TYPE",
+						"timestamp": "2024-01-04T22:11:30.411Z"
+					}
+				],
+				"isReserved": true
+			},
+			{
+				"id": "fb7c2e9a-00ad-49ae-97ef-aa9b369db995",
+				"name": "DynamicMessageReference",
+				"description": "Variable type for holding dynamic message references",
+				"fields": [
+					{
+						"id": "59eb4ecc-f2a1-4d62-990a-4d9a36c8a6a2",
+						"name": "audioFileName",
+						"description": "Audio file name, including extension",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.373Z"
+					},
+					{
+						"id": "53bd082f-81fe-4c99-8f4c-ffeb9755da6a",
+						"name": "ttsBackup",
+						"description": "Back up TTS verbiage",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.375Z"
+					}
+				],
+				"isReserved": true
+			},
+			{
+				"id": "d3e7bda9-0fee-4922-86d0-49ad2fc932ad",
+				"name": "location",
+				"description": "The end user's geographic coordinates",
+				"fields": [
+					{
+						"id": "1545bd04-b363-4aae-b79a-908082c91867",
+						"name": "latitude",
+						"description": "The end user's latitude coordinate",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.590Z"
+					},
+					{
+						"id": "480f26ab-9d72-4319-8835-29fecfa73097",
+						"name": "longitude",
+						"description": "The end user's longitude coordinate",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.591Z"
+					}
+				],
+				"isReserved": true
+			},
+			{
+				"id": "e9552c3c-4834-485f-9f40-dbb597464c13",
+				"name": "interpretationResult",
+				"description": "Variable type for holding interpretation result",
+				"fields": [
+					{
+						"id": "ed285155-7b5e-4e25-aa43-ba4d262de431",
+						"name": "literal",
+						"description": "",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.545Z"
+					},
+					{
+						"id": "2899563e-102e-47a7-9551-de4b4c053c24",
+						"name": "interpretations",
+						"description": "",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "LIST_TYPE",
+						"complexGenericTypeId": "d09317b7-d251-444e-95dd-b30d8f16cbb4",
+						"timestamp": "2024-01-04T22:11:30.547Z"
+					},
+					{
+						"id": "cb57d088-1492-4b9b-b8e8-6e523bb601b9",
+						"name": "formattedLiteral",
+						"description": "",
+						"possibleValues": [],
+						"uiDefaultValue": "",
+						"isReserved": true,
+						"masked": false,
+						"reportingType": "REPORTING_TYPE_NONE",
+						"simpleVariableType": "STRING_TYPE",
+						"timestamp": "2024-01-04T22:11:30.550Z"
+					}
+				],
+				"isReserved": true
+			}
+		],
+		"promptGroups": [
+			{
+				"id": "6f658ea2-f023-4e91-ac9b-7b5e1cac8382",
+				"name": "what_would_you_like_to_drink_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "What would you like to drink?",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.908Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.907Z"
+			},
+			{
+				"id": "e7168c8f-a2e5-4ce6-9914-862e547aaf04",
+				"name": "thanks_for_visiting_my_coffee_shop_goodbye_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "Thanks for visiting My Coffee Shop. Goodbye.",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.892Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.890Z"
+			},
+			{
+				"id": "fa4c385f-c4cc-474c-8824-d11555a7e5ff",
+				"name": "your_coffee_is_coming_right_up_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "Your coffee is coming right up!",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.876Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.875Z"
+			},
+			{
+				"id": "dfed4e3f-e615-4bd8-83cc-b3f4c5079345",
+				"name": "what_size_would_you_like_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "What size would you like?",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.861Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.859Z"
+			},
+			{
+				"id": "35680d22-c022-4b79-b15d-bc779d70ac05",
+				"name": "welcome_to_my_coffee_shop_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "Welcome to My Coffee Shop!",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.845Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.843Z"
+			},
+			{
+				"id": "2609cb62-0700-44f7-a0d9-db9419032ea2",
+				"name": "how_can_i_help_you_today_",
+				"prompts": [
+					{
+						"payload": {
+							"displayText": "",
+							"ttsText": "How can I help you today?",
+							"audioFile": "",
+							"displayTextAnnotations": [],
+							"ttsTextAnnotations": [],
+							"ttsAudioBackup": "",
+							"ttsAudioBackupAnnotations": []
+						},
+						"language": "en-US",
+						"channel": "bb1cfac8-b2b3-4987-8419-dfbdb13dece6",
+						"lastModified": "2024-01-04T22:11:30.827Z"
+					}
+				],
+				"audioFileId": "",
+				"bargeinDisabled": false,
+				"lastModified": "2024-01-04T22:11:30.826Z"
+			}
+		],
+		"parentId": "NONE",
+		"ontologyId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+		"ontology": {
+			"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+			"intents": [
+				{
+					"id": "44a1673f-fc5c-4f31-a073-a9c48b405be3",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "NO_INTENT",
+					"conceptIds": [],
+					"isInBaseOntology": true,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "b6ba10d0-fbb1-4af3-a4e8-30dd8192743c",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "ORDER_COFFEE",
+					"conceptIds": ["f6c9ad5c-8ab0-4c46-b702-78536a7fe589", "5c08f8de-8ca4-4bd6-9135-ad02111a689a"],
+					"isInBaseOntology": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				}
+			],
+			"concepts": [
+				{
+					"id": "e19505af-852b-45b6-9998-1061386cff6e",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "AND",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "f6c9ad5c-8ab0-4c46-b702-78536a7fe589",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "COFFEE_SIZE",
+					"isInBaseOntology": false,
+					"valuesCount": 4,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "5c08f8de-8ca4-4bd6-9135-ad02111a689a",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "COFFEE_TYPE",
+					"isInBaseOntology": false,
+					"valuesCount": 3,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "ed457d9d-dedb-42b0-80a7-0fa48421b20a",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "DATE",
+					"isInBaseOntology": false,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"isA": "9d2f4393-0c9e-48f9-be14-b3bf9068d234",
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "46d3c9db-5b9e-4b9e-a949-abb7e55aea8f",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "NOT",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "58216b8b-33de-49c2-868b-99551ab4a2bf",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "OR",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "72753023-b8c8-47b8-af14-5f9b868f2fb6",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "REF_MOMENT",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "236913e7-b73b-4b7a-8e14-fb16d04c3d7d",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "REF_PERSON",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "654b52db-f0ae-43be-a01f-6adb7896ca60",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "REF_PLACE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "9211a2c2-2690-4a1f-9b5c-68c7ce11ecb6",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "REF_THING",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "3b17d628-cc0e-4a72-89a2-1ea0aca313f1",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "TIME",
+					"isInBaseOntology": false,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"isA": "9d2f4393-0c9e-48f9-be14-b3bf9068d234",
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "20d36149-7316-4b29-9981-29cda6d9f2b1",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "YES_NO",
+					"isInBaseOntology": false,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"isA": "7423f941-e30f-4beb-abbb-eb73f6b3acfd",
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "2cddc32c-d077-4272-aeb6-ab2c2a7a2752",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_AMOUNT",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "7423f941-e30f-4beb-abbb-eb73f6b3acfd",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_BOOLEAN",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "9d2f4393-0c9e-48f9-be14-b3bf9068d234",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_CALENDARX",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "e718c10c-bbf5-48e8-b638-fbf6b27a545f",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_CARDINAL_NUMBER",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "63c3da53-ae25-48f0-98c1-aa81f6c5f333",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_DISTANCE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "8cff7507-8232-4a57-a1c9-08b38190c61d",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_DOUBLE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "61793dd1-264e-4c2d-ae7e-95361641d23d",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_DURATION",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "bdc55287-66c8-4f5e-9e53-5d6271043350",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_DURATION_RANGE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "4eb3f36e-9c43-42d0-a105-e2eba802a1ee",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_EXPIRY_DATE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "5d74f330-a556-4fb9-8810-9667518c59b3",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_GENERIC_ORDER",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "66ab064b-2487-4ab0-936c-d2cffb2a801b",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_GLOBAL",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "5b9d5a28-ddf3-445e-9551-307c663a0cc0",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_NUMBER",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "ced64d33-eaf8-4972-b0e1-4d8f2ac275a8",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_ORDINAL_NUMBER",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": true,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "a2d782e0-601f-43e0-bb5b-ec642cf780ce",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_QUANTITY",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				},
+				{
+					"id": "55cca1af-5ac9-49c6-b45b-daad6b76135e",
+					"projectId": "4a5ecb02-7ba2-4d16-a674-4e6eb7201838",
+					"name": "nuance_TEMPERATURE",
+					"isInBaseOntology": true,
+					"valuesCount": 0,
+					"isDialogType": false,
+					"predefinedConceptId": "",
+					"isDeprecated": false,
+					"dataType": "",
+					"type": "",
+					"isSensitive": false,
+					"lastModified": "1970-01-01T00:00:00Z"
+				}
+			],
+			"lastModified": "1970-01-01T00:00:00Z"
+		},
+		"globalSettings": [],
+		"backendConfig": [],
+		"upgradeVersion": 31,
+		"events": [
+			{ "id": "2fe96a1b-3fe0-4482-9233-1cb52d79d011", "eventString": "event.nuance.dialog.odm.maxnoinputs", "uiString": "MaxNoinput", "throwable": false, "reserved": true },
+			{ "id": "7953e75a-107c-45b9-8ccf-d9f35e7570ee", "eventString": "event.nuance.dialog.odm.maxnomatches", "uiString": "MaxNomatch", "throwable": false, "reserved": true },
+			{ "id": "30069144-1ca1-412c-84d4-f5a89b279d71", "eventString": "event.nuance.dialog.odm.maxturns", "uiString": "MaxTurns", "throwable": false, "reserved": true },
+			{ "id": "fc69c98c-2f17-45b4-9b43-9ca14a06f781", "eventString": "event.nuance.dialog.odm.maxrepeats", "uiString": "MaxRepeat", "throwable": false, "reserved": true },
+			{
+				"id": "7a8367cd-fe7a-47d8-8b68-f09b7c4f5b51",
+				"eventString": "event.nuance.dialog.odm.maxnotoconfirms",
+				"uiString": "MaxNoToConfirm",
+				"throwable": false,
+				"reserved": true
+			},
+			{
+				"id": "637aed63-186c-4d76-acd6-b81da11fbbbd",
+				"eventString": "event.nuance.dialog.odm.maxinvalidanswers",
+				"uiString": "MaxInvalidRecoOption",
+				"throwable": false,
+				"reserved": true
+			},
+			{ "id": "a85107d3-bae8-49c7-9506-0c3b1504083e", "eventString": "event", "uiString": "GenericEvent", "throwable": false, "reserved": true },
+			{ "id": "f9f2fcd7-f022-446b-8550-e94e486168eb", "eventString": "error", "uiString": "GenericError", "throwable": false, "reserved": true },
+			{ "id": "9bf11b4e-90e3-4945-b717-846a1a430601", "eventString": "event.nuance.dialog.mainmenu", "uiString": "MainMenu", "throwable": true, "reserved": true },
+			{ "id": "57e5d8e0-7ed5-448e-956a-67619ef3d6d9", "eventString": "event.nuance.dialog.escalate", "uiString": "Escalate", "throwable": true, "reserved": true },
+			{ "id": "5bc9a3b5-6174-45bb-aa0f-2625f80afd04", "eventString": "event.nuance.dialog.goodbye", "uiString": "Goodbye", "throwable": true, "reserved": true },
+			{ "id": "0e14f51d-3fa2-4722-a6ec-19c5d336cfbd", "eventString": "event.nuance.hangup", "uiString": "UserDisconnect", "throwable": false, "reserved": true }
+		],
+		"globalCommandsEntityId": "",
+		"globalCommands": [
+			{
+				"id": "6dd46a37-ce16-450d-a01a-6bd3b0615b03",
+				"entityValue": "",
+				"event": { "id": "5bc9a3b5-6174-45bb-aa0f-2625f80afd04", "eventString": "event.nuance.dialog.goodbye", "uiString": "Goodbye", "throwable": true, "reserved": true },
+				"dtmfValue": "",
+				"projectLevelEnabled": false,
+				"disabledNodeIds": [],
+				"disabledComponentIds": [],
+				"timestamp": "2024-01-04T22:11:31.191Z"
+			},
+			{
+				"id": "e510b3da-d73d-4541-b480-0dc4af590473",
+				"entityValue": "",
+				"event": {
+					"id": "57e5d8e0-7ed5-448e-956a-67619ef3d6d9",
+					"eventString": "event.nuance.dialog.escalate",
+					"uiString": "Escalate",
+					"throwable": true,
+					"reserved": true
+				},
+				"dtmfValue": "",
+				"projectLevelEnabled": false,
+				"disabledNodeIds": [],
+				"disabledComponentIds": [],
+				"timestamp": "2024-01-04T22:11:31.182Z"
+			},
+			{
+				"id": "b97f4a77-6f99-4f7c-888c-5eaf8285fd56",
+				"entityValue": "",
+				"event": {
+					"id": "9bf11b4e-90e3-4945-b717-846a1a430601",
+					"eventString": "event.nuance.dialog.mainmenu",
+					"uiString": "MainMenu",
+					"throwable": true,
+					"reserved": true
+				},
+				"dtmfValue": "",
+				"projectLevelEnabled": false,
+				"disabledNodeIds": [],
+				"disabledComponentIds": [],
+				"timestamp": "2024-01-04T22:11:31.173Z"
+			}
+		],
+		"dressAliases": [],
+		"globalSettingOverrides": [
+			{
+				"id": "069b69f3-3b59-41ce-a293-4dd7109e5cda",
+				"settingName": "channel-dtmf-grammars-enabled",
+				"settingType": "GRAMMAR_SETTINGS",
+				"channelId": "ec65a556-5939-4455-8608-c2c1818071fa",
+				"predefinedName": "PREDEFINE_NOT_SET",
+				"value": "true",
+				"language": "",
+				"entityId": ""
+			}
+		],
+		"ndfVersion": "",
+		"projectIntentMappings": [
+			{
+				"id": "e84d1386-73c2-440c-97f6-019c8884b442",
+				"intentId": "b6ba10d0-fbb1-4af3-a4e8-30dd8192743c",
+				"destination": { "componentId": "8239ca5c-7b7f-4b96-9af8-883a4495b115" }
+			}
+		],
+		"enginePackVersion": "hosted",
+		"environmentConfigurations": [],
+		"projectConfigurations": {},
+		"componentManagementType": "COMPONENT_MANAGEMENT_TYPE_UNSPECIFIED",
+		"tasks": [],
+		"taskTriggerHandlings": [],
+		"versionTimestamp": "2023-09-21T16:40:31Z",
+		"lastModified": "2024-01-04T22:11:30.272Z"
+	}
+}

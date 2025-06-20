@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "ManifestExportDefinition",
+    "type": "object",
+    "required": ["metaData"],
+    "properties": {
+      "metaData": {
+        "type": "object",
+        "required": ["schemaVersion", "fileFormat", "resourceType"],
+        "properties": {
+          "schemaVersion": {
+            "type": "string"
+          },
+          "fileFormat": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string",
+            "enum": ["BOT", "BOTLOCALE", "CUSTOMVOCABULARY"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }

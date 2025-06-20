@@ -1,0 +1,76 @@
+Here's the markdown version of the CSV file format for Amazon Lex V2 test sets:
+
+```markdown
+# Amazon Lex V2 Test Set CSV Format
+
+## CSV Structure
+Create a test set CSV file with the following columns:
+
+1. **Line #**
+- Incremental counter tracking total rows to test
+- Type: Number
+- Required: Yes
+
+2. **Conversation #**
+- Tracks turns in conversations
+- For single inputs: Leave empty, use "-" or "N/A"
+- For conversations: Same number for all turns in a conversation
+- For conversations: Alternate rows for Agent and User
+- Required: No
+
+3. **Source**
+- Indicates message origin
+- Values: "User" or "Agent"
+- Single inputs always "User"
+- Required: Yes
+
+4. **Input**
+- User utterance or bot prompts
+- Required: Yes
+
+5. **Expected Output Intent**
+- Intent fulfilled in the input
+- Required: Yes
+
+6. **Expected Output Slot X**
+- Slots elicited in user input
+- Add columns for each expected slot
+- Format: SlotName = SlotValue
+- Required: No
+
+## Example: Single Input Test Cases
+```csv
+Line #,Conversation #,Source,Input,Expected Output Intent,Expected Output Slot 1,Expected Output Slot 2
+1,,User,book a cleaning appointment tomorrow,MakeAppointment,AppointmentType = cleaning,Date = tomorrow
+2,N/A,User,book a cleaning appointment on April 15th,MakeAppointment,AppointmentType = cleaning,Date = 4/15/23
+3,N/A,User,book appointment for December first,MakeAppointment,Date = December first,
+4,N/A,User,book a cleaning appointment,MakeAppointment,AppointmentType = cleaning,
+5,,User,Can you help me book an appointment?,MakeAppointment,,
+```
+
+## Example: Conversation Test Cases
+```csv
+Line #,Conversation #,Source,Input,Expected Output Intent,Expected Output Slot 1,Expected Output Slot 2,Expected Output
+Slot 3
+1,1,User,book an appointment,MakeAppointment,,,
+2,1,Agent,What type of appointment would you like to schedule?,MakeAppointment,,,
+3,1,User,cleaning,MakeAppointment,AppointmentType = cleaning,,
+4,1,Agent,When should I schedule your appointment?,MakeAppointment,,,
+5,1,User,tomorrow,MakeAppointment,,Date = tomorrow,
+6,2,User,book a root canal appointment today,MakeAppointment,AppointmentType = root canal,Date = today,
+7,2,Agent,At what time should I schedule your appointment?,MakeAppointment,,,
+8,2,User,eleven a.m.,MakeAppointment,,,Time = eleven a.m.
+```
+
+## Best Practices
+- Use UTF-8 encoding
+- Properly escape commas in fields
+- Maintain header row
+- Include variety of test scenarios
+- Test slot filling behavior
+- Include multi-turn conversations
+- Validate response handling
+
+## Limitations
+- Maximum 50,000 test cases per test set
+- Maximum file size: 100 MB

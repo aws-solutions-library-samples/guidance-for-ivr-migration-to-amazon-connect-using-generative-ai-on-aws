@@ -1,0 +1,22 @@
+{
+	"name": "ivr-migration-tool",
+	"private": true,
+	"workspaces": [
+		"packages/**/*",
+		"packages-infrastructure/**/*"
+	],
+	"scripts": {
+		"prebuild": "mkdir -p build",
+		"test": "bun test --coverage  --coverage-reporter lcov --coverage-dir ./build",
+		"coverage": "npm run coverage --workspaces --if-present",
+		"format": "npm run format --workspaces --if-present",
+		"clean": "npm run clean --workspaces && rm -rf build node_modules .aws-sam cdk.json",
+		"commitlint": "commitlint --edit"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.2"
+	}
+}

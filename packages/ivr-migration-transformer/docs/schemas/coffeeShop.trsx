@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns:nuance="https://developer.nuance.com/mix/nlu/trsx" xml:lang="eng-USA" nuance:version="2.6" nuance:enginePackVersion="hosted">
+    <sources>
+        <source name="nuance_custom_data" displayName="nuance_custom_data" version="1.0" type="CUSTOM" useForOOV="true"/>
+    </sources>
+    <ontology base="http://localhost:8080/resources/ontology-1.0.xml">
+        <intents>
+            <intent name="ORDER_COFFEE">
+                <links>
+                    <link conceptref="COFFEE_TYPE"/>
+                    <link conceptref="COFFEE_SIZE"/>
+                </links>
+            </intent>
+        </intents>
+        <concepts>
+            <concept name="COFFEE_TYPE" dataType="no_format"/>
+            <concept name="COFFEE_SIZE" dataType="no_format"/>
+        </concepts>
+    </ontology>
+    <dictionaries>
+        <dictionary conceptref="COFFEE_TYPE">
+            <entry literal="americano" value="americano"/>
+            <entry literal="espresso" value="espresso"/>
+            <entry literal="ristretto" value="ristretto"/>
+        </dictionary>
+        <dictionary conceptref="COFFEE_SIZE">
+            <entry literal="double" value="large"/>
+            <entry literal="large" value="large"/>
+            <entry literal="single" value="small"/>
+            <entry literal="small" value="small"/>
+        </dictionary>
+    </dictionaries>
+    <samples>
+        <sample intentref="ORDER_COFFEE" count="1" excluded="false" fullyVerified="false">need coffee</sample>
+        <sample intentref="ORDER_COFFEE" count="1" excluded="false" fullyVerified="true">
+            <annotation conceptref="COFFEE_SIZE">double</annotation>
+            <annotation conceptref="COFFEE_TYPE">espresso</annotation>please</sample>
+        <sample intentref="ORDER_COFFEE" count="1" excluded="false" fullyVerified="true">a<annotation conceptref="COFFEE_TYPE">ristretto</annotation>
+        </sample>
+        <sample intentref="ORDER_COFFEE" count="1" excluded="false" fullyVerified="true">I'd like a<annotation conceptref="COFFEE_SIZE">double</annotation>
+            <annotation conceptref="COFFEE_TYPE">espresso</annotation>please</sample>
+    </samples>
+</project>

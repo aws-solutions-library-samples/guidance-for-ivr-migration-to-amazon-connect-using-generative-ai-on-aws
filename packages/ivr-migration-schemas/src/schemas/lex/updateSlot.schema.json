@@ -1,0 +1,1018 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "SlotExportDefinition",
+	"type": "object",
+	"required": ["slotId", "slotName", "valueElicitationSetting"],
+	"properties": {
+		"identifier": {
+			"type": "string",
+			"description": "The unique identifier for the slot. The identifier is only unique within the bot that contains the slot.",
+			"length": 10,
+			"pattern": "^([0-9a-zA-Z][_-]?){10}$"
+		},
+		"description": {
+			"oneOf": [
+				{
+					"type": "string",
+					"maxLength": 200
+				}
+			],
+			"description": "A description of the slot. Use this to help identify the slot in lists."
+		},
+		"multipleValuesSetting": {
+			"oneOf": [
+				{
+					"$ref": "#/$defs/MultipleValuesSetting"
+				}
+			],
+			"description": "Indicates whether the slot returns multiple values in one response. Multi-value slots are only available in the en-US locale. If you set this value to true in any other locale, Amazon Lex throws a ValidationException. If the multipleValuesSetting is not set, the default value is false."
+		},
+		"obfuscationSetting": {
+			"oneOf": [
+				{
+					"$ref": "#/$defs/ObfuscationSetting"
+				}
+			],
+			"description": "Determines how slot values are used in Amazon CloudWatch logs. If the value of the obfuscationSetting parameter is DefaultObfuscation, slot values are obfuscated in the log output. If the value is None, the actual value is present in the log output. The default is to obfuscate values in the CloudWatch logs."
+		},
+		"slotName": {
+			"type": "string",
+			"description": "The name of the slot. Slot names must be unique within the bot that contains the slot.",
+			"minLength": 1,
+			"maxLength": 100,
+			"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+		},
+		"slotId": {
+			"type": "string",
+			"description": "The unique identifier for the slot to update.",
+			"minLength": 1,
+			"maxLength": 100,
+			"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+		},
+		"slotTypeId": {
+			"type": "string",
+			"description": "The unique identifier of the new slot type to associate with this slot.",
+			"minLength": 1,
+			"maxLength": 25
+		},
+		"subSlotSetting": {
+			"$ref": "#/$defs/SubSlotSetting",
+			"description": "Specifications for the constituent sub slots and the expression for the composite slot."
+		},
+		"valueElicitationSetting": {
+			"$ref": "#/$defs/SlotValueElicitationSetting",
+			"description": "Specifies prompts that Amazon Lex sends to the user to elicit a response that provides the value for the slot."
+		}
+	},
+	"additionalProperties": false,
+	"$defs": {
+		"MultipleValuesSetting": {
+			"type": "object",
+			"description": "Indicates whether a slot can return multiple values.",
+			"properties": {
+				"allowMultipleValues": {
+					"type": "boolean",
+					"description": "Indicates whether a slot can return multiple values. When true, the slot may return more than one value in a response. When false, the slot returns only a single value. Multi-value slots are only available in the en-US locale. If you set this value to true in any other locale, Amazon Lex throws a ValidationException.",
+					"default": false
+				}
+			},
+			"additionalProperties": false
+		},
+		"ObfuscationSetting": {
+			"type": "object",
+			"required": ["obfuscationSettingType"],
+			"description": "Determines whether Amazon Lex obscures slot values in conversation logs.",
+			"properties": {
+				"obfuscationSettingType": {
+					"type": "string",
+					"enum": ["DefaultObfuscation", "None"],
+					"description": "Value that determines whether Amazon Lex obscures slot values in conversation logs. The default is to obscure the values."
+				}
+			},
+			"additionalProperties": false
+		},
+		"SubSlotSetting": {
+			"type": "object",
+			"description": "Specifications for the constituent sub slots and the expression for the composite slot.",
+			"properties": {
+				"expression": {
+					"type": "string",
+					"description": "The expression text for defining the constituent sub slots in the composite slot using logical AND and OR operators.",
+					"minLength": 0,
+					"maxLength": 640,
+					"pattern": "[0-9A-Za-z_\\-\\s\\(\\)]+"
+				},
+				"slotSpecifications": {
+					"type": "object",
+					"patternProperties": {
+						"^([0-9a-zA-Z][_-]?){1,100}$": {
+							"$ref": "#/$defs/Specifications"
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"additionalProperties": false
+		},
+		"SlotValueElicitationSetting": {
+			"type": "object",
+			"required": ["slotConstraint"],
+			"description": "Specifies the elicitation setting details eliciting a slot.",
+			"properties": {
+				"slotConstraint": {
+					"type": "string",
+					"enum": ["Optional", "Required"],
+					"description": "Specifies whether the slot is required or optional."
+				},
+				"defaultValueSpecification": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/SlotDefaultValueSpecification"
+						}
+					],
+					"description": "A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values."
+				},
+				"promptSpecification": {
+					"$ref": "#/$defs/PromptSpecification",
+					"description": "The prompt that Amazon Lex uses to elicit the slot value from the user."
+				},
+				"sampleUtterances": {
+					"oneOf": [
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/$defs/SampleUtterance"
+							}
+						}
+					],
+					"description": "If you know a specific pattern that users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances."
+				},
+				"slotCaptureSetting": {
+					"$ref": "#/$defs/SlotCaptureSetting",
+					"description": "Specifies the settings that Amazon Lex uses when a slot value is successfully entered by a user."
+				},
+				"slotResolutionSetting": {
+					"$ref": "#/$defs/SlotResolutionSetting",
+					"description": "Specifies the settings that Amazon Lex uses when a slot value is successfully entered by a user."
+				},
+				"waitAndContinueSpecification": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/WaitAndContinueSpecification"
+						}
+					],
+					"description": "Specifies the prompts that Amazon Lex uses while a bot is waiting for customer input."
+				}
+			},
+			"additionalProperties": false
+		},
+		"SlotCaptureSetting": {
+			"type": "object",
+			"description": "Settings used when Amazon Lex successfully captures a slot value from a user.",
+			"properties": {
+				"captureConditional": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ConditionalSpecification"
+						}
+					],
+					"description": "A list of conditional branches to evaluate after the slot value is captured."
+				},
+				"captureNextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "Specifies the next step that the bot runs when the slot value is captured before the code hook times out."
+				},
+				"captureResponse": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ResponseSpecification"
+						}
+					],
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				},
+				"codeHook": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/DialogCodeHookInvocationSetting"
+						}
+					],
+					"description": "Code hook called after Amazon Lex successfully captures a slot value."
+				},
+				"elicitationCodeHook": {
+					"$ref": "#/$defs/ElicitationCodeHookInvocationSetting",
+					"description": "Code hook called when Amazon Lex doesn't capture a slot value."
+				},
+				"failureConditional": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ConditionalSpecification"
+						}
+					],
+					"description": "A list of conditional branches to evaluate when the slot value isn't captured."
+				},
+				"failureNextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "Specifies the next step that the bot runs when the slot value code is not recognized."
+				},
+				"failureResponse": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ResponseSpecification"
+						}
+					],
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				}
+			},
+			"additionalProperties": false
+		},
+		"ElicitationCodeHookInvocationSetting": {
+			"type": "object",
+			"required": ["enableCodeHookInvocation"],
+			"description": "Settings that specify the dialog code hook that is called by Amazon Lex between eliciting slot values.",
+			"properties": {
+				"enableCodeHookInvocation": {
+					"type": "boolean",
+					"description": "Indicates whether a Lambda function should be invoked for the dialog."
+				},
+				"invocationLabel": {
+					"oneOf": [
+						{
+							"type": "string",
+							"minLength": 1,
+							"maxLength": 100,
+							"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+						}
+					],
+					"description": "A label that indicates the dialog step from which the dialog code hook is happening."
+				}
+			}
+		},
+		"DialogCodeHookInvocationSetting": {
+			"type": "object",
+			"required": ["active", "enableCodeHookInvocation", "postCodeHookSpecification"],
+			"description": "Settings that specify the dialog code hook that is called by Amazon Lex at a step of the conversation.",
+			"properties": {
+				"active": {
+					"type": "boolean",
+					"description": "Determines whether a dialog code hook is used when the intent is activated."
+				},
+				"enableCodeHookInvocation": {
+					"type": "boolean",
+					"description": "Indicates whether a Lambda function should be invoked for the dialog."
+				},
+				"postCodeHookSpecification": {
+					"$ref": "#/$defs/PostDialogCodeHookInvocationSpecification",
+					"description": "Contains the responses and actions that Amazon Lex takes after the Lambda function is complete."
+				},
+				"invocationLabel": {
+					"type": "string",
+					"description": "A label that indicates the dialog step from which the dialog code hook is happening.",
+					"minLength": 1,
+					"maxLength": 100,
+					"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+				}
+			}
+		},
+		"PostDialogCodeHookInvocationSpecification": {
+			"type": "object",
+			"description": "Specifies next steps to run after the dialog code hook finishes.",
+			"properties": {
+				"failureConditional": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ConditionalSpecification"
+						}
+					],
+					"description": "A list of conditional branches to evaluate after the dialog code hook throws an exception or returns with the State field of the Intent object set to Failed."
+				},
+				"failureNextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "Specifies the next step the bot runs after the dialog code hook throws an exception or returns with the State field of the Intent object set to Failed."
+				},
+				"failureResponse": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				},
+				"successConditional": {
+					"$ref": "#/$defs/ConditionalSpecification",
+					"description": "A list of conditional branches to evaluate after the dialog code hook finishes successfully."
+				},
+				"successNextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "Specifics the next step the bot runs after the dialog code hook finishes successfully."
+				},
+				"successResponse": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				},
+				"timeoutConditional": {
+					"$ref": "#/$defs/ConditionalSpecification",
+					"description": "A list of conditional branches to evaluate if the code hook times out."
+				},
+				"timeoutNextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "Specifies the next step that the bot runs when the code hook times out."
+				},
+				"timeoutResponse": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				}
+			}
+		},
+		"DialogState": {
+			"type": "object",
+			"description": "The current state of the conversation with the user.",
+			"properties": {
+				"dialogAction": {
+					"$ref": "#/$defs/DialogAction",
+					"description": "Defines the action that the bot executes at runtime when the conversation reaches this step."
+				},
+				"intent": {
+					"$ref": "#/$defs/IntentOverride",
+					"description": "Override settings to configure the intent state."
+				},
+				"sessionAttributes": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					},
+					"description": "Map of key/value pairs representing session-specific context information. It contains application information passed between Amazon Lex and a client application."
+				}
+			}
+		},
+
+		"DialogAction": {
+			"type": "object",
+			"required": ["type"],
+			"description": "Defines the action that the bot executes at runtime when the conversation reaches this step.",
+			"properties": {
+				"type": {
+					"type": "string",
+					"description": "The action that the bot should execute.",
+					"enum": [
+						"ElicitIntent",
+						"StartIntent",
+						"ElicitSlot",
+						"EvaluateConditional",
+						"InvokeDialogCodeHook",
+						"ConfirmIntent",
+						"FulfillIntent",
+						"CloseIntent",
+						"EndConversation"
+					]
+				},
+				"slotToElicit": {
+					"oneOf": [
+						{
+							"type": "string",
+							"minLength": 1,
+							"maxLength": 100,
+							"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+						}
+					],
+					"description": "If the dialog action is ElicitSlot, defines the slot to elicit from the user."
+				},
+				"suppressNextMessage": {
+					"oneOf": [
+						{
+							"type": "boolean"
+						}
+					],
+					"description": "When true the next message for the intent is not used."
+				}
+			}
+		},
+		"IntentOverride": {
+			"type": "object",
+			"description": "Override settings to configure the intent state..",
+			"properties": {
+				"name": {
+					"oneOf": [
+						{
+							"type": "string",
+							"minLength": 1,
+							"maxLength": 100,
+							"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+						}
+					],
+					"description": "The name of the intent. Only required when you're switching intents."
+				},
+				"slots": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/$defs/SlotValueOverride",
+						"additionalProperties": false
+					}
+				}
+			}
+		},
+		"SlotValueOverride": {
+			"type": "object",
+			"description": "The slot values that Amazon Lex uses when it sets slot values in a dialog step.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "When the shape value is List, it indicates that the values field contains a list of slot values. When the value is Scalar, it indicates that the value field contains a single value.",
+					"enum": ["List", "Scalar"]
+				},
+				"value": {
+					"$ref": "#/$defs/SlotValue",
+					"description": "The current value of the slot."
+				},
+				"values": {
+					"type": "array",
+					"description": "A list of one or more values that the user provided for the slot. For example, for a slot that elicits pizza toppings, the values might be 'pepperoni' and 'pineapple.'",
+					"items": {
+						"$ref": "#/$defs/SlotValueOverride"
+					}
+				}
+			}
+		},
+		"SlotValue": {
+			"type": "object",
+			"description": "The value to set in a slot.",
+			"properties": {
+				"interpretedValue": {
+					"type": "string",
+					"description": "The value that Amazon Lex determines for the slot. The actual value depends on the setting of the value selection strategy for the bot. You can choose to use the value entered by the user, or you can have Amazon Lex choose the first value in the resolvedValues list.",
+					"minLength": 1
+				}
+			}
+		},
+		"SlotResolutionSetting": {
+			"type": "object",
+			"required": ["slotResolutionStrategy"],
+			"description": "Contains information about whether assisted slot resolution is turned on for the slot or not.",
+			"properties": {
+				"slotResolutionStrategy": {
+					"type": "string",
+					"description": "Specifies whether assisted slot resolution is turned on for the slot or not. If the value is EnhancedFallback, assisted slot resolution is activated when Amazon Lex defaults to the AMAZON.FallbackIntent. If the value is Default, assisted slot resolution is turned off.",
+					"enum": ["EnhancedFallback", "Default"]
+				}
+			}
+		},
+		"ConditionalSpecification": {
+			"type": "object",
+			"required": ["active", "conditionalBranches", "defaultBranch"],
+			"description": "Provides a list of conditional branches. Branches are evaluated in the order that they are entered in the list. The first branch with a condition that evaluates to true is executed. The last branch in the list is the default branch. The default branch should not have any condition expression. The default branch is executed if no other branch has a matching condition.",
+			"properties": {
+				"active": {
+					"type": "boolean",
+					"description": "Determines whether a conditional branch is active. When active is false, the conditions are not evaluated.."
+				},
+				"conditionalBranches": {
+					"type": "array",
+					"description": "A list of conditional branches. A conditional branch is made up of a condition, a response and a next step. The response and next step are executed when the condition is true.",
+					"items": {
+						"$ref": "#/$defs/ConditionalBranch"
+					},
+					"minItems": 1,
+					"maxItems": 4
+				},
+				"defaultBranch": {
+					"$ref": "#/$defs/DefaultConditionalBranch",
+					"description": "The default branch that is executed when no other branch has a matching condition."
+				}
+			}
+		},
+		"DefaultConditionalBranch": {
+			"description": "A set of actions that Amazon Lex should run if none of the other conditions are met.",
+			"type": "object",
+			"properties": {
+				"nextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "The next step in the conversation if this branch is executed."
+				},
+				"response": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond to the user."
+				}
+			}
+		},
+		"ConditionalBranch": {
+			"type": "object",
+			"required": ["condition", "name", "nextStep"],
+			"description": "A set of actions that Amazon Lex should run if the condition is matched.",
+			"properties": {
+				"condition": {
+					"$ref": "#/$defs/Condition",
+					"description": "Contains the expression to evaluate. If the condition is true, the branch's actions are taken."
+				},
+				"name": {
+					"type": "string",
+					"description": "The name of the branch.",
+					"minLength": 1,
+					"maxLength": 100,
+					"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+				},
+				"nextStep": {
+					"$ref": "#/$defs/DialogState",
+					"description": "The next step in the conversation."
+				},
+				"response": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input."
+				}
+			},
+			"additionalProperties": false
+		},
+		"Condition": {
+			"type": "object",
+			"required": ["expressionString"],
+			"description": "Provides an expression that evaluates to true or false.",
+			"properties": {
+				"expressionString": {
+					"type": "string",
+					"description": "The expression string that is evaluated.",
+					"minLength": 1,
+					"maxLength": 1024
+				}
+			}
+		},
+		"Specifications": {
+			"type": "object",
+			"required": ["slotTypeName", "valueElicitationSetting"],
+			"description": "Subslot specifications.",
+			"properties": {
+				"slotTypeName": {
+					"type": "string",
+					"description": "The unique identifier assigned to the slot type.",
+					"minLength": 1,
+					"maxLength": 25
+				},
+				"valueElicitationSetting": {
+					"$ref": "#/$defs/SubSlotValueElicitationSetting",
+					"description": "Specifies the elicitation setting details for constituent sub slots of a composite slot."
+				}
+			},
+			"additionalProperties": false
+		},
+		"SubSlotValueElicitationSetting": {
+			"type": "object",
+			"required": ["promptSpecification"],
+			"description": "Subslot elicitation settings. DefaultValueSpecification is a list of default values for a constituent sub slot in a composite slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values. This is similar to DefaultValueSpecification for slots. PromptSpecification is the prompt that Amazon Lex uses to elicit the sub slot value from the user. This is similar to PromptSpecification for slots.",
+			"properties": {
+				"promptSpecification": {
+					"$ref": "#/$defs/PromptSpecification",
+					"description": "Specifies a list of message groups that Amazon Lex sends to a user to elicit a response."
+				},
+				"defaultValueSpecification": {
+					"$ref": "#/$defs/SlotDefaultValueSpecification",
+					"description": "Defines a list of values that Amazon Lex should use as the default value for a slot."
+				},
+				"sampleUtterances": {
+					"oneOf": [
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/$defs/SampleUtterance"
+							}
+						}
+					],
+					"description": "If you know a specific pattern that users might respond to an Amazon Lex request for a sub slot value, you can provide those utterances to improve accuracy. This is optional. In most cases Amazon Lex is capable of understanding user utterances. This is similar to SampleUtterances for slots."
+				},
+				"waitAndContinueSpecification": {
+					"$ref": "#/$defs/WaitAndContinueSpecification",
+					"description": "Specifies the prompts that Amazon Lex uses while a bot is waiting for customer input."
+				}
+			},
+			"additionalProperties": false
+		},
+		"PromptSpecification": {
+			"type": "object",
+			"required": ["maxRetries", "messageGroups"],
+			"description": "Specifies a list of message groups that Amazon Lex sends to a user to elicit a response.",
+			"properties": {
+				"maxRetries": {
+					"type": "integer",
+					"description": "The maximum number of times the bot tries to elicit a response from the user using this prompt.",
+					"minimum": 0,
+					"maximum": 5
+				},
+				"messageGroups": {
+					"type": "array",
+					"description": "A collection of messages that Amazon Lex can send to the user. Amazon Lex chooses the actual message to send at runtime.",
+					"items": {
+						"$ref": "#/$defs/MessageGroup"
+					}
+				},
+				"allowInterrupt": {
+					"type": "boolean",
+					"description": "Indicates whether the user can interrupt a speech prompt from the bot."
+				},
+				"messageSelectionStrategy": {
+					"type": "string",
+					"enum": ["Ordered", "Random"],
+					"description": "Indicates how a message is selected from a message group among retries."
+				},
+				"promptAttemptsSpecification": {
+					"type": "object",
+					"description": "Specifies the advanced settings on each attempt of the prompt.",
+					"properties": {
+						"Initial": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						},
+						"Retry1": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						},
+						"Retry2": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						},
+						"Retry3": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						},
+						"Retry4": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						},
+						"Retry5": {
+							"$ref": "#/$defs/PromptAttemptSpecification"
+						}
+					}
+				}
+			}
+		},
+		"SlotDefaultValueSpecification": {
+			"type": "object",
+			"required": ["defaultValueList"],
+			"description": "Defines a list of values that Amazon Lex should use as the default value for a slot.",
+			"properties": {
+				"defaultValueList": {
+					"type": "array",
+					"description": "A list of default values. Amazon Lex chooses the default value to use in the order that they are presented in the list.",
+					"items": {
+						"$ref": "#/$defs/SlotDefaultValue"
+					},
+					"minItems": 0,
+					"maxItems": 10
+				}
+			}
+		},
+		"SlotDefaultValue": {
+			"type": "object",
+			"required": ["defaultValue"],
+			"description": "Specifies the default value to use when a user doesn't provide a value for a slot.",
+			"properties": {
+				"defaultValue": {
+					"type": "string",
+					"description": "The default value to use when a user doesn't provide a value for a slot.",
+					"minLength": 1,
+					"maxLength": 202
+				}
+			}
+		},
+		"SampleUtterance": {
+			"type": "object",
+			"required": ["utterance"],
+			"description": "A sample utterance that invokes an intent or respond to a slot elicitation prompt.",
+			"properties": {
+				"utterance": {
+					"type": "string",
+					"description": "The sample utterance that Amazon Lex uses to build its machine-learning model to recognize intents."
+				}
+			}
+		},
+		"WaitAndContinueSpecification": {
+			"type": "object",
+			"required": ["continueResponse", "waitingResponse"],
+			"description": "Specifies the prompts that Amazon Lex uses while a bot is waiting for customer input",
+			"properties": {
+				"continueResponse": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "The response that Amazon Lex sends to indicate that the bot is ready to continue the conversation."
+				},
+				"waitingResponse": {
+					"$ref": "#/$defs/ResponseSpecification",
+					"description": "The response that Amazon Lex sends to indicate that the bot is waiting for the conversation to continue."
+				},
+				"active": {
+					"type": "boolean",
+					"description": "Specifies whether the bot will wait for a user to respond. When this field is false, wait and continue responses for a slot aren't used. If the active field isn't specified, the default is true."
+				},
+				"stillWaitingResponse": {
+					"$ref": "#/$defs/StillWaitingResponseSpecification",
+					"description": "A response that Amazon Lex sends periodically to the user to indicate that the bot is still waiting for input from the user."
+				}
+			}
+		},
+		"StillWaitingResponseSpecification": {
+			"type": "object",
+			"required": ["frequencyInSeconds", "messageGroups", "timeoutInSeconds"],
+			"description": "Defines the messages that Amazon Lex sends to a user to remind them that the bot is waiting for a response.",
+			"properties": {
+				"frequencyInSeconds": {
+					"type": "integer",
+					"description": "How often a message should be sent to the user.",
+					"minimum": 1,
+					"maximum": 300
+				},
+				"messageGroups": {
+					"type": "array",
+					"description": "One or more message groups, each containing one or more messages, that define the prompts that Amazon Lex sends to the user.",
+					"items": {
+						"$ref": "#/$defs/MessageGroup"
+					},
+					"minItems": 1,
+					"maxItems": 5
+				},
+				"timeoutInSeconds": {
+					"type": "integer",
+					"description": "If Amazon Lex waits longer than this length of time for a response, it will stop sending messages.",
+					"minimum": 1,
+					"maximum": 900
+				},
+				"allowInterrupt": {
+					"type": "boolean",
+					"description": "Indicates that the user can interrupt the response by speaking while the message is being played."
+				}
+			}
+		},
+		"ResponseSpecification": {
+			"type": "object",
+			"required": ["messageGroups"],
+			"description": "Specifies a list of message groups that Amazon Lex uses to respond the user input.",
+			"properties": {
+				"messageGroups": {
+					"type": "array",
+					"description": "A collection of responses that Amazon Lex can send to the user. Amazon Lex chooses the actual response to send at runtime.",
+					"items": {
+						"$ref": "#/$defs/MessageGroup"
+					},
+					"minItems": 1,
+					"maxItems": 5
+				},
+				"allowInterrupt": {
+					"type": "boolean",
+					"description": "Indicates whether the user can interrupt an in-progress message while it is playing."
+				}
+			}
+		},
+		"MessageGroup": {
+			"type": "object",
+			"description": "Provides one or more messages that Amazon Lex should send to the user.",
+			"required": ["message"],
+			"properties": {
+				"message": {
+					"$ref": "#/$defs/Message",
+					"description": "The primary message that Amazon Lex should send to the user."
+				},
+				"variations": {
+					"oneOf": [
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/$defs/Message",
+								"description": "Message variations to send to the user. When variations are defined, Amazon Lex chooses the primary message or one of the variations to send to the user.",
+								"minItems": 0,
+								"maxItems": 2
+							}
+						}
+					],
+					"description": "An array of objects, each of which provides information about a message."
+				}
+			}
+		},
+		"Message": {
+			"type": "object",
+			"description": "Provides information about a message.",
+			"properties": {
+				"customPayload": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/CustomPayload"
+						}
+					]
+				},
+				"imageResponseCard": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/ImageResponseCard"
+						}
+					]
+				},
+				"plainTextMessage": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/PlainTextMessage"
+						}
+					]
+				},
+				"ssmlMessage": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/SSMLMessage"
+						}
+					]
+				}
+			}
+		},
+		"CustomPayload": {
+			"type": "object",
+			"required": ["value"],
+			"description": "Provides information about a custom payload.",
+			"properties": {
+				"value": {
+					"type": "string",
+					"description": "The value of the custom payload.",
+					"minLength": 1,
+					"maxLength": 100
+				}
+			}
+		},
+		"ImageResponseCard": {
+			"type": "object",
+			"required": ["title"],
+			"description": "Provides information about an image response card.",
+			"properties": {
+				"title": {
+					"type": "string",
+					"description": "The title of the image response card.",
+					"minLength": 1,
+					"maxLength": 250
+				},
+				"buttons": {
+					"type": "array",
+					"description": "A list of buttons that should be displayed on the response card. ",
+					"items": {
+						"$ref": "#/$defs/Button"
+					},
+					"minItems": 0,
+					"maxItems": 5
+				},
+				"imageUrl": {
+					"type": "string",
+					"description": "The URL of an image to display on the response card.",
+					"minLength": 1,
+					"maxLength": 250
+				},
+				"subtitle": {
+					"type": "string",
+					"description": "The subtitle to display on the response card.",
+					"minLength": 1,
+					"maxLength": 250
+				}
+			}
+		},
+		"Button": {
+			"type": "object",
+			"required": ["text", "value"],
+			"description": "Describes a button to use on a response card used to gather slot values from a user.",
+			"properties": {
+				"text": {
+					"type": "string",
+					"description": "The text that should be displayed on the button.",
+					"minLength": 1,
+					"maxLength": 50
+				},
+				"value": {
+					"type": "string",
+					"description": "The value returned to Amazon Lex when the user chooses this button. This must be one of the slot values configured for the slot.",
+					"minLength": 1,
+					"maxLength": 50
+				}
+			}
+		},
+		"PlainTextMessage": {
+			"type": "object",
+			"required": ["value"],
+			"description": "Defines an ASCII text message to send to the user.",
+			"properties": {
+				"value": {
+					"type": "string",
+					"description": "The message to send to the user.",
+					"minLength": 1,
+					"maxLength": 1000
+				}
+			}
+		},
+		"SSMLMessage": {
+			"type": "object",
+			"required": ["value"],
+			"description": "Defines a Speech Synthesis Markup Language (SSML) prompt.",
+			"properties": {
+				"value": {
+					"type": "string",
+					"description": "The SSML text that defines the prompt.",
+					"minLength": 1,
+					"maxLength": 1000
+				}
+			}
+		},
+		"PromptAttemptSpecification": {
+			"type": "object",
+			"required": ["allowedInputTypes"],
+			"description": "Specifies the settings on a prompt attempt.",
+			"properties": {
+				"allowedInputTypes": {
+					"$ref": "#/$defs/AllowedInputTypes",
+					"description": "Indicates the allowed input types of the prompt attempt."
+				},
+				"allowInterrupt": {
+					"type": "boolean",
+					"description": "Indicates whether the user can interrupt a speech prompt attempt from the bot."
+				},
+				"audioAndDTMFInputSpecification": {
+					"$ref": "#/$defs/AudioAndDTMFInputSpecification",
+					"description": "Specifies the settings on audio and DTMF input."
+				},
+				"textInputSpecification": {
+					"$ref": "#/$defs/TextInputSpecification",
+					"description": "Specifies the settings on text input."
+				}
+			}
+		},
+		"AllowedInputTypes": {
+			"type": "object",
+			"required": ["allowAudioInput", "allowDTMFInput"],
+			"description": "Specifies the allowed input types.",
+			"properties": {
+				"allowAudioInput": {
+					"type": "boolean",
+					"description": "Indicates whether audio input is allowed."
+				},
+				"allowDTMFInput": {
+					"type": "boolean",
+					"description": "Indicates whether DTMF input is allowed."
+				}
+			}
+		},
+		"AudioAndDTMFInputSpecification": {
+			"type": "object",
+			"required": ["startTimeoutMs"],
+			"description": "Specifies the audio and DTMF input specification.",
+			"properties": {
+				"startTimeoutMs": {
+					"type": "integer",
+					"description": "Time for which a bot waits before assuming that the customer isn't going to speak or press a key. This timeout is shared between Audio and DTMF inputs..",
+					"minimum": 1
+				},
+				"audioSpecification": {
+					"$ref": "#/$defs/AudioSpecification",
+					"description": "Specifies the settings on audio input."
+				},
+				"dtmfSpecification": {
+					"$ref": "#/$defs/DTMFSpecification",
+					"description": "Specifies the DTMF input specification."
+				}
+			}
+		},
+		"AudioSpecification": {
+			"description": "Specifies the audio input specifications for Amazon Lex.",
+			"type": "object",
+			"properties": {
+				"endTimeoutMs": {
+					"type": "integer",
+					"minimum": 1,
+					"description": "Time (in milliseconds) that Lex waits after the customer stops speaking before assuming the utterance is finished."
+				},
+				"maxLengthMs": {
+					"type": "integer",
+					"minimum": 1,
+					"description": "Maximum time (in milliseconds) Lex waits before truncating speech input and returning it to the application."
+				}
+			},
+			"required": ["endTimeoutMs", "maxLengthMs"],
+			"additionalProperties": false
+		},
+		"DTMFSpecification": {
+			"description": "Specifies the DTMF (Dual-Tone Multi-Frequency) input specifications for Amazon Lex.",
+			"type": "object",
+			"properties": {
+				"deletionCharacter": {
+					"type": "string",
+					"description": "The DTMF character that clears accumulated digits and ends the input.",
+					"pattern": "^[A-D0-9#*]{1}$"
+				},
+				"endCharacter": {
+					"type": "string",
+					"description": "The DTMF character that immediately ends the input.",
+					"pattern": "^[A-D0-9#*]{1}$"
+				},
+				"endTimeoutMs": {
+					"type": "integer",
+					"minimum": 1,
+					"description": "How long the bot should wait after the last DTMF character before assuming the input has concluded (in milliseconds)."
+				},
+				"maxLength": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 1024,
+					"description": "The maximum number of DTMF digits allowed in the utterance."
+				}
+			},
+			"required": ["deletionCharacter", "endCharacter", "endTimeoutMs", "maxLength"],
+			"additionalProperties": false
+		},
+		"TextInputSpecification": {
+			"type": "object",
+			"required": ["startTimeoutMs"],
+			"description": "Specifies the text input specifications.",
+			"properties": {
+				"startTimeoutMs": {
+					"type": "integer",
+					"description": "TTime for which a bot waits before re-prompting a customer for text input.",
+					"minimum": 1
+				}
+			}
+		}
+	}
+}

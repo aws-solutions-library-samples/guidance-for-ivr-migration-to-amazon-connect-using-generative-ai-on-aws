@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns:nuance="https://developer.nuance.com/mix/nlu/trsx" xml:lang="en-US" nuance:version="2.0">
+    <metadata>
+        <entry key="description">Sample model with a freeform entity and a list entity</entry>
+        <entry key="short_name">Search Engine Query Sample Model</entry>
+        <entry key="source">Nuance Communications</entry>
+        <entry key="type">sample</entry>
+        <entry key="version">1.0.0</entry>
+    </metadata>
+    <ontology base="https://developer.nuance.com/mix/nlu/trsx/ontology-1.0.xml">
+        <intents>
+            <intent name="SEARCH">
+                <links>
+                    <link conceptref="SEARCH_ENGINE"/>
+                    <link conceptref="SEARCH_QUERY"/>
+                </links>
+            </intent>
+        </intents>
+        <concepts>
+            <concept name="SEARCH_QUERY" freetext="true"/>
+            <concept name="SEARCH_ENGINE"/>
+        </concepts>
+    </ontology>
+    <dictionaries>
+        <dictionary conceptref="SEARCH_ENGINE">
+            <entry literal="bing" value="bing"/>
+            <entry literal="duck duck go" value="duckduckgo"/>
+            <entry literal="duckduckgo" value="duckduckgo"/>
+            <entry literal="google" value="google"/>
+            <entry literal="wiki" value="wikipedia"/>
+            <entry literal="wikipedia" value="wikipedia"/>
+            <entry literal="wikipédia" value="wikipedia"/>
+            <entry literal="yahoo" value="yahoo"/>
+        </dictionary>
+    </dictionaries>
+    <samples>
+        <sample intentref="SEARCH" count="1">I'd like to find<annotation conceptref="SEARCH_QUERY">good coffee places nearby</annotation>on<annotation conceptref="SEARCH_ENGINE">bing</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">look up<annotation conceptref="SEARCH_QUERY">Edward Snowden</annotation>on<annotation conceptref="SEARCH_ENGINE">duckduckgo</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">
+            <annotation conceptref="SEARCH_ENGINE">google</annotation>
+            <annotation conceptref="SEARCH_QUERY">how long does a sequoia live</annotation>?</sample>
+        <sample intentref="SEARCH" count="1">find me some<annotation conceptref="SEARCH_QUERY">cat pictures</annotation>on<annotation conceptref="SEARCH_ENGINE">bing</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search<annotation conceptref="SEARCH_QUERY">cheap flights</annotation>in<annotation conceptref="SEARCH_ENGINE">yahoo</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">I'd like to search for<annotation conceptref="SEARCH_QUERY">the list of lists of lists</annotation>on<annotation conceptref="SEARCH_ENGINE">wikipedia</annotation>please</sample>
+        <sample intentref="SEARCH" count="1">search<annotation conceptref="SEARCH_QUERY">do a barrel roll</annotation>on<annotation conceptref="SEARCH_ENGINE">google</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search for<annotation conceptref="SEARCH_QUERY">chinese chicken salad recipes</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search for<annotation conceptref="SEARCH_QUERY">cats</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search for<annotation conceptref="SEARCH_QUERY">cat toys</annotation>on<annotation conceptref="SEARCH_ENGINE">yahoo</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search for<annotation conceptref="SEARCH_QUERY">thai noodles</annotation>on<annotation conceptref="SEARCH_ENGINE">bing</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search<annotation conceptref="SEARCH_QUERY">how to fix a leaky tap</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search<annotation conceptref="SEARCH_ENGINE">google</annotation>for<annotation conceptref="SEARCH_QUERY">a new car</annotation>
+        </sample>
+        <sample intentref="SEARCH" count="1">search on<annotation conceptref="SEARCH_ENGINE">google</annotation>for<annotation conceptref="SEARCH_QUERY">tree pruning</annotation>
+        </sample>
+    </samples>
+</project>

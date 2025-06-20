@@ -1,0 +1,57 @@
+{
+	"name": "@ivr-migration-tool/api",
+	"module": "index.ts",
+	"type": "module",
+	"version": "0.1.0",
+	"exports": "./src/ivr-migration-api/index.ts",
+	"scripts": {
+		"typecheck": "bunx tsc -b",
+		"build": "bun --env-file=.env build.ts",
+		"debug": "bun --inspect --env-file=.env build.ts",
+		"start": "bun run src/server.ts",
+		"prestart": "bun run src/localConfigGenerator.ts"
+	},
+	"dependencies": {
+		"@aws-sdk/client-bedrock-runtime": "^3.787.0",
+		"@aws-sdk/client-cognito-identity-provider": "^3.777.0",
+		"@aws-sdk/client-dynamodb": "^3.751.0",
+		"@aws-sdk/client-eventbridge": "^3.804.0",
+		"@aws-sdk/client-lambda": "^3.758.0",
+		"@aws-sdk/client-lex-models-v2": "3.782.0",
+		"@aws-sdk/client-s3": "^3.782.0",
+		"@aws-sdk/client-sqs": "^3.816.0",
+		"@aws-sdk/lib-dynamodb": "^3.751.0",
+		"@aws-sdk/s3-request-presigner": "^3.782.0",
+		"@aws-sdk/util-dynamodb": "^3.817.0",
+		"@fastify/awilix": "^7.0.0",
+		"@fastify/cors": "^11.0.0",
+		"@fastify/env": "^5.0.2",
+		"@fastify/sensible": "^6.0.3",
+		"@fastify/swagger": "^9.4.2",
+		"@fastify/type-provider-typebox": "^5.1.0",
+		"@ivr-migration-tool/schemas": "workspace:*",
+		"@ivr-migration-tool/transformer": "workspace:*",
+		"@sinclair/typebox": "0.34.28",
+		"adm-zip": "^0.5.16",
+		"csv-parse": "^5.6.0",
+		"fastify": "5.3.3",
+		"json-stringify-safe": "^5.0.1",
+		"jwt-decode": "^4.0.0",
+		"multi-agent-orchestrator": "^0.1.6",
+		"ow": "^2.0.0",
+		"p-wait-for": "^5.0.2",
+		"pino": "^9.6.0",
+		"pino-pretty": "^11.3.0",
+		"ulid": "^3.0.0",
+		"zlib": "^1.0.5"
+	},
+	"devDependencies": {
+		"@types/adm-zip": "^0.5.7",
+		"@types/aws-lambda": "^8.10.147",
+		"@types/bun": "latest",
+		"@types/json-stringify-safe": "^5.0.3"
+	},
+	"peerDependencies": {
+		"typescript": "^5.7.3"
+	}
+}

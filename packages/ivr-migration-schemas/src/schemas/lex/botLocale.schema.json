@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BotLocaleExportDefinition",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 100,
+      "description": "the name of the bot locale."
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 100,
+      "description": "The identifier of the language and locale that the bot will be used in. The string must match one of the supported locales. All of the intents, slot types, and slots used in the bot must have the same locale. The locale must be a valid POSIX locale."
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string",
+          "maxLength": 200
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A description of the bot locale."
+    },
+    "voiceSettings": {
+      "$ref": "#/$defs/VoiceSettings",
+      "description": "The Amazon Polly voice ID that Amazon Lex uses for voice interaction."
+    },
+    "nluConfidenceThreshold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Determines the threshold where Amazon Lex will insert the AMAZON.FallbackIntent, AMAZON.KendraSearchIntent, or both when returning alternative intents. AMAZON.FallbackIntent and AMAZON.KendraSearchIntent are only inserted if they are configured for the bot."
+    }
+  },
+  "required": ["identifier"],
+  "additionalProperties": false,
+  "$defs": {
+    "VoiceSettings": {
+      "type": "object",
+      "properties": {
+        "engine": {
+          "type": "string",
+          "description": "Specifies the engine for Amazon Polly voice.",
+          "enum": ["standard", "neural"]
+        },
+        "voiceId": {
+          "type": "string",
+          "description": "The identifier of the Amazon Polly voice to use."
+        }
+      },
+      "required": ["voiceId"],
+      "additionalProperties": false
+    }
+  }
+}

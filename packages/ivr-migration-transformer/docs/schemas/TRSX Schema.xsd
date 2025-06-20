@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:nuance='https://developer.nuance.com/mix/nlu/trsx'
+           xmlns:xd="http://www.w3.org/2001/XMLSchema" elementFormDefault='qualified' nuance:version="2.6">
+    <xs:import namespace='http://www.w3.org/XML/1998/namespace' schemaLocation='http://www.w3.org/2001/xml.xsd'/>
+    <xs:import namespace='https://developer.nuance.com/mix/nlu/trsx' schemaLocation='nuance.xsd'/>
+    <xs:element name='project'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='1' ref='metadata'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='sources'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='ontology'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='dictionaries'/>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='samples'/>
+            </xs:sequence>
+            <xs:attribute ref='nuance:version' use='required'/>
+            <xs:attribute ref='xml:lang' default='en-us'/>
+            <xs:attribute ref='nuance:enginePackVersion'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='metadata'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' name='entry'>
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name='key' use='required' type='xs:NCName'/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='sources'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='source'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='source'>
+        <xs:complexType>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+            <xs:attribute name='displayName' use='optional' type='xs:string'/>
+            <xs:attribute name='uri' use='optional' type='xs:anyURI'/>
+            <xs:attribute name='version' use='optional' type='xs:string'/>
+            <xs:attribute name='type' use='optional' type='source_type'/>
+            <xs:attribute name='useForOOV' use='optional' type='xs:boolean'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="source_type">
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="CUSTOM"/>
+        <xs:enumeration value="PREBUILT"/>
+        <xs:enumeration value="REJECTION"/>
+      </xs:restriction>
+    </xs:simpleType>
+    <xs:element name='ontology'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='1' ref='intents'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='concepts'/>
+            </xs:sequence>
+            <xs:attribute name='base' use='optional' type='xs:anyURI'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='intents'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='intent'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='intent'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='1' ref='links'/>
+            </xs:sequence>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+            <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+        <xs:element name='links'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='link'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='link'>
+        <xs:complexType>
+            <xs:attribute name='conceptref' use='required' type='xs:NCName'/>
+            <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='concepts'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='concept'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='concept'>
+        <xs:complexType>
+            <xs:all>
+                <xs:element minOccurs='0' maxOccurs='1' ref='settings'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='regex'/>
+                <xs:element minOccurs='0' maxOccurs='1' ref='relations'/>
+            </xs:all>
+            <xs:attribute name='name' use='required' type='xs:NCName'/>
+            <xs:attribute name='dataType' use='optional' type='data_type'/>
+            <xs:attribute name='freetext' use='optional' type='xs:boolean' default='false'/>
+            <xs:attribute name='dynamic' use='optional' type='xs:boolean' default='false'/>
+            <xs:attribute name='ruleGrammarFileName' use='optional' type='xs:string'/>
+            <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name='data_type'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value='not_set'/>
+            <xs:enumeration value='no_format'/>
+            <xs:enumeration value='yes_no'/>
+            <xs:enumeration value='boolean'/>
+            <xs:enumeration value='number'/>
+            <xs:enumeration value='digits'/>
+            <xs:enumeration value='alphanum'/>
+            <xs:enumeration value='date'/>
+            <xs:enumeration value='time'/>
+            <xs:enumeration value='amount'/>
+            <xs:enumeration value='distance'/>
+            <xs:enumeration value='temperature'/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name='regex'/>
+    <xs:element name='relations'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='relation'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='relation'>
+        <xs:complexType>
+            <xs:attribute name='type' use='required' type='relation_type'/>
+            <xs:attribute name='conceptref' use='required' type='xs:NCName'/>
+            <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name='relation_type'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value='isA'/>
+            <xs:enumeration value='hasA'/>
+            <xs:enumeration value='hasReferrers'/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name='settings'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='setting'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='setting'>
+        <xs:complexType>
+            <xs:attribute name='name' use='required'/>
+            <xs:attribute name='value' use='required'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='dictionaries'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='dictionary'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='dictionary'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' name='entry' type='dictionary_entry'/>
+            </xs:sequence>
+            <xs:attribute name='conceptref' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name='dictionary_entry'>
+        <xs:attribute name='literal' use='required'/>
+        <xs:attribute name='value' use='optional'/>
+        <xs:attribute name='protected' use='optional' type='xs:boolean' default='false'/>
+        <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+    </xs:complexType>
+    <xs:element name='samples'>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='sample'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='sample'>
+        <xs:complexType mixed='true'>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='annotation'/>
+            </xs:sequence>
+            <xs:attribute name='description' use='optional' type='xs:string'/>
+            <xs:attribute name='count' use='optional' type='xs:integer'/>
+            <xs:attribute name='intentref' use='optional' type='xs:NCName'/>
+            <xs:attribute name='excluded' use='optional' type='xs:boolean' default='false'/>
+            <xs:attribute name='fullyVerified' use='optional' type='xs:boolean' default='false'/>
+            <xs:attribute name='protected' use='optional' type='xs:boolean' default='false'/>
+            <xs:attribute name='sourceref' use='optional' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name='annotation'>
+        <xs:complexType mixed='true'>
+            <xs:sequence>
+                <xs:element minOccurs='0' maxOccurs='unbounded' ref='annotation'/>
+            </xs:sequence>
+            <xs:attribute name='conceptref' use='required' type='xs:NCName'/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

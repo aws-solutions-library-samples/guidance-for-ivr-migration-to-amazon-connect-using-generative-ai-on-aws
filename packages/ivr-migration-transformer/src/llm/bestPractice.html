@@ -1,0 +1,310 @@
+# Best practices for creating Amazon Lex interaction models
+
+In this post, we go through a set of best practices for using ML to create a bot that will delight your customers by accurately understanding them. This allows your bot to have more natural conversations that don’t require the user to follow a set of strict instructions. 
+
+Let’s look at some of the terminology we use frequently in this post:
+
+*   **Utterance** – The phrase the user says to your live bot.
+*   **Sample utterance** – Some examples of what users might say. These are attached to intents and used to train the bot.
+*   **Intent** – This represents what the user meant and should be clearly connected to a response or an action from the bot. For instance, an intent that responds to a user saying hello, or an intent that can respond and take action if a user wants to order a coffee. A bot has one or more intents that utterances can be mapped to.
+*   **Slot** – A parameter that can capture specific types of information from the utterance (for example, the time of an appointment or the customer’s name). Slots are attached to intents.
+*   **Slot value** – Either examples of what the slot should capture, or a specific list of values for a slot (for example, _large_, _medium_, and _small_ as values for a slot for coffee sizes).
+
+Building a well-designed bot requires several different considerations. These include requirements gathering and discovery, conversational design, testing through automation and with users, and monitoring and optimizing your bot. Within the conversational design aspect, there are two main elements: the interaction model and the conversational or voice user experience (CUX/VUX). CUX and VUX encompass the personality of the bot, the types of responses, the flow of the conversation, variations for modality, and how the bot handles unexpected inputs or failures. The interaction model is the piece that can take what the user said (utterance) and map it to what they meant (intent). In this post, we only look at how to design and optimize your interaction model.
+
+The best practices listed in the following sections can support you in building a bot that will give your customers a great user experience and work well for your use case.
+
+## Creating intents
+
+Each intent is a concept you teach your bot to understand. For instance, it could be an intent that represents someone ordering a coffee, or someone greeting your bot. You need to make sure that you make it really clear and easy for the bot to recognize that a particular utterance should be matched to that intent.
+
+Imagine if someone gave you a set of index cards with phrases on them, each sorted into piles, but with no other context or details. They then started to give you additional index cards with phrases and asked you to add them to the right pile, simply based on the phrases on the cards in each pile. If each pile represented a clear concept with similar phrasing, this would be easy. But if there were no clear topic in each, you would struggle to work out how to match them to a pile. You may even start to use other clues, like “these are all short sentences” or “only these have punctuation.”
+
+Your bot uses similar techniques, but remember that although ML is smart, it’s not as smart as a human, and doesn’t have all the external knowledge and context a human has. If a human with no context of what your bot does might struggle to understand what was meant, your bot likely will too. The best practices in this section can help you create intents that will be recognizable and more likely to be matched with the desired utterance.
+
+### 1\. Each intent should represent a single concept
+
+Each intent should represent one concept or idea, and not just a topic. It’s okay to have multiple intents that map to the same action or response if separating them gives each a clearer, cohesive concept. Let’s look at some dos and don’ts:
+
+*   **Don’t** create generic intents that group multiple concepts together.
+
+For example, the following intent combines phrases about a damaged product and more general complaint phrases:
+
+`**DamageComplaint**`  
+`I've received a damaged product`  
+`i received a damaged product`  
+`I'm really frustrated`  
+`Your company is terrible at deliveries`  
+`My product is broken`  
+`I got a damaged package`  
+`I'm going to return this order`  
+`I'll never buy from you again`
+
+The following intent is another example, which combines updating personal details with updating the mobile application:
+
+`**UpdateNeeded**`  
+`I need to update my address`  
+`Can I update the address you have for me`  
+`How do I update my telephone number`  
+`I can't get the update for the mobile app to work`  
+`Help me update my iphone app`  
+`How do I get the latest version of the mobile app`
+
+*   **Do** split up intents when they have very different meanings. For example, we can split up the `UpdateNeeded` intent from the previous example into two intents:
+
+`**UpdatePersonalDetails**`  
+`I need to update my address`  
+`Can I update the address you have for me`  
+`How do I update my telephone number`
+
+`**UpdateMobileApp**`  
+`I can't get the update for the mobile app to work`  
+`Help me update my iphone app`  
+`How do I get the latest version of the mobile app`
+
+*   **Do** split up intents when they have the same action or response needed, but use very different phrasing. For example, the following two intents may have the same end result, but the first is directly telling us they need to tow their car, whereas the second is only indirectly hinting that they may need their car towed.
+
+`**RoadsideAssistanceRequested   **I need to tow my car`  
+`Can I get a tow truck`  
+`Can you send someone out to get my car`
+
+`**RoadsideAssistanceNeeded   **I've had an accident`  
+`I hit an animal`  
+`My car broke down`
+
+### 2\. Reduce overlap between intents
+
+Let’s think about that stack of index cards again. If there were cards with the same (or very similar) phrases, it would be hard to know which stack to add a new card with that phrase onto. It’s the same in this case. We want really clear-cut sets of sample utterances in each intent. The following are a few strategies:
+
+*   **Don’t** create intents with very similar phrasing that have similar meanings. For example, because Amazon Lex will generalize outside of the sample utterances, phrases that aren’t clearly one specific intent could get mismatched, for instance a customer saying “I’d like to book an appointment” when there are two appointment intents, like the following:
+
+`**BookDoctorsAppointment**`  
+`I’d like to book a doctors appointment`
+
+`**BookBloodLabAppointment**`  
+`I’d like to book a lab appointment`
+
+*   **Do** use slots to combine intents that are on the same topic and have similar phrasing. For example, by combining the two intents in the previous example, we can more accurately capture any requests for an appointment, and then use a slot to determine the correct type of appointment:
+
+`**BookAppointment   **I’d like to book a {appointmentType} appointment`
+
+*   **Don’t** create intents where one intent is subset of another. For example, as your bot grows, it can be easy to start creating intents to capture more detailed information:
+
+`**BookFlight**`  
+`I'd like to book a flight`  
+`book me a round trip flight`  
+`i need to book flight one way`
+
+`**BookOneWayFlight**`  
+`book me a one-way flight`  
+`I’d like to book a one way flight`  
+`i need to book flight one way please`
+
+*   **Do** use slots to capture different subsets of information within an intent. For example, instead of using different intents to capture the information on the type of flight, we can use a slot to capture this:
+
+`**BookFlight**`  
+`I'd like to book a flight`  
+`book me a {itineraryType} flight`  
+`i need to book flight {itineraryType}`  
+`I’d like to book a {itineraryType} flight`
+
+### 3\. Have the right amount of data
+
+In ML, training data is key. Hundreds or thousands of samples are often needed to get good results. You’ll be glad to hear that Amazon Lex doesn’t require a huge amount of data, and in fact you don’t want to have too many sample utterances in each intent, because they may start to diverge or add confusion. However, it is key that we provide enough sample utterances to create a clear pattern for the bot to learn from.
+
+Consider the following:
+
+*   Have at least 15 utterances per intent.
+*   Add additional utterances incrementally (batches of 10–15) so you can test the performance in stages. A larger number of utterances is not necessarily better.
+*   Review intents with a large number of utterances (over 100) to evaluate if you can either remove very similar utterances, or should split the intent into multiple intents.
+*   Keep the number of utterances similar across intents. This allows recognition for each intent to be balanced, and avoids accidentally biasing your bot to certain intents.
+*   Regularly review your intents based on learnings from your production bot, and continue to add and adjust the utterances. Designing and developing bot is an iterative process that never stops.
+
+### 4\. Have diversity in your data
+
+Amazon Lex is a conversational AI—its primary purpose is to chat with humans. Humans tend to have a large amount of variety in how they phrase things. When designing a bot, we want to make sure we’re capturing that range in our intent configuration. It’s important to re-evaluate and update your configuration and sample data on a regular basis, especially if you’re expanding or changing your user base over time. Consider the following recommendations:
+
+*   **Do** have a diverse range of utterances in each intent. The following are examples of the types of diversity you should consider:
+    *   **Utterance lengths** – The following is an example of varying lengths:
+
+`**BookFlight**`  
+`book flight`  
+`I need to book a flight`  
+`I want to book a flight for my upcoming trip`
+
+*   *   **Vocabulary** – We need to align this with how our customers talk. You can capture this through user testing or by using the conversational logs from your bot. For example:
+
+`**OrderFlowers**`  
+`I want to **buy** flowers`  
+`Can I **order** flowers`  
+`I need to **get** flowers`
+
+*   *   **Phrasing** – We need a mix of utterances that represent the different ways our customers might phrase things. The following example shows utterances using “_book_” as a verb, “_booking_” as a noun, “_flight booking_” as a subject, and formal and informal language:
+
+`**BookFlight**`  
+`I need to book a flight`  
+`can you help with a flight booking`  
+`Flight booking is what I am looking for`  
+`please book me a flight`  
+`I'm gonna need a flight`
+
+*   *   **Punctuation** – We should include a range of common usage. We should also include non-grammatical usage if this something a customer would use (especially when typing). See the following example:
+
+`**OrderFlowers**`  
+`I want to order flowers.`  
+`i wanted to get flowers!`  
+`Get me some flowers... please!!`
+
+*   *   **Slot usage** – Provide sample utterances that show both using and not using slots. Use different mixes of slots across those that include them. Make sure the slots have examples with different places they could appear in the utterance. For example:
+
+`**CancelAppointment**`  
+`Cancel appointment`  
+`Cancel my appointment with Dr. {DoctorLastName}`  
+`Cancel appointment on {AppointmentDate} with Dr. {DoctorLastName}`  
+`Cancel my appointment on {AppointmentDate}`  
+`Can you tell Dr. {DoctorLastName} to cancel my appointment`  
+`Please cancel my doctors appointment`
+
+*   **Don’t** keep adding utterances that are just small variances in phrasing. Amazon Lex is able to handle generalizing these for you. For example, you wouldn’t require each of these three variations as the differences are minor:
+
+`**DamagedProductComplaint**`  
+`I've received a damaged product`  
+`I received a damaged product`  
+`Received damaged product`
+
+*   **Don’t** add diversity to some intents but not to others. We need to be consistent with the forms of diversity we add. Remember the index cards from the beginning—when an utterance isn’t clear, the bot may start to use other clues, like sentence length or punctuation, to try to make a match. There are times you may want to use this to your advantage (for example, if you genuinely want to direct all one-word phrases to a particular intent), but it’s important you avoid doing this by accident.
+
+## Creating slots
+
+We touched on some good practices involving slots in the previous section, but let’s look at some more specific best practices for slots.
+
+### 5\. Use short noun or adjective phrases for slots
+
+Slots represent something that can be captured definitively as a parameter, like the size of the coffee you want to order, or the airport you’re flying to. Consider the following:
+
+*   Use nouns or short adjectives for your slot values. Don’t use slots for things like carrier phrases (“_how do I_” or “_what could I_”) because this will reduce the ability of Amazon Lex to generalize your utterances. Try to keep slots for values you need to capture to fulfil your intent.
+*   Keep slots generally to one or two words.
+
+### 6\. Prefer slots over explicit values
+
+You can use slots to generalize the phrases you’re using, but we need to stick to the recommendations we just reviewed as well. To make our slot values as easy to identify as possible, we never use values included in the slot directly in sample utterances. Keep in mind the following tips:
+
+*   **Don’t** explicitly include values that could be slots in the sample utterances. For example:
+
+`**OrderFlowers**`  
+`I want to buy **roses**`  
+`I want to buy **lilies**`  
+`I would love to order some **orchids**`  
+`I would love to order some **roses**`
+
+*   **Do** use slots to reduce repetition. For example:
+
+`**OrderFlowers**`  
+`I want to buy {flowers}`  
+`I would love to order some {flowers}`
+
+`**flowers**`  
+`roses`  
+`lilies`  
+`orchids`
+
+*   **Don’t** mix slots and real values in the sample utterances. For example:
+
+`**OrderFlowers**`  
+`I want to buy {flowers}`  
+`I want to buy **lilies**`  
+`I would love to order some {flowers}`
+
+`**flowers**`  
+`roses`  
+`lilies`  
+`orchids`
+
+* **Do** separate the slot from the other text with a whitespace character. For example:
+
+`When is my flight from {eDepartureCity} ?`
+`I am flying from {eArrivalCity} ?`
+
+*   **Don’t** have intents with only slots in the sample utterances if the slot types are `AlphaNumeric`, `Number`, `Date`, `GRXML`, are very broad custom slots, or include abbreviations. Instead, expand the sample utterances by adding conversational phrases that include the slot to the sample utterances.
+
+### 7\. Keep your slot values coherent
+
+The bot has to decide whether to match a slot based only on what it can learn from the values we have entered. If there is a lot of similarity or overlap within slots in the same intent, this can cause challenges with the right slot being matched.
+
+*   **Don’t** have slots with overlapping values in the same intent. Try to combine them instead. For example:
+
+`**pets**`  
+`cat`  
+`dog`  
+`goldfish`
+
+`**animals**`  
+`horse`  
+`cat`  
+`dog`
+
+### 8\. Consider how the words will be transcribed
+
+Amazon Lex uses automated speech recognition (ASR) to transcribe speech. This means that all inputs to your Amazon Lex interaction model are processed as text, even when using a voice bot. We need to remember that a transcription may vary from how users might type the same thing. Consider the following:
+
+*   Enter acronyms, or other words whose letters should be pronounced individually, as single letters separated by a period and a space. This will more closely match how it will be transcribed. For example:
+
+`A. T. M.`  
+`A. W. S.`  
+`P. A.`
+
+*   Review the audio and transcriptions on a regular basis, so you can adjust your sample utterances or slot types. To do this, turn on conversation logs, and enable both text and audio logs, whenever possible.
+
+### 9\. Use the right options available for your slots
+
+Many different types of slots and options are available, and using the best options for each of our slots can help the recognition of those slot values. We always want to take the time to understand the options before deciding on how to design our slots:
+
+*   Use the restrict option to limit slots to a closed set of values. You can define synonyms for each value. This could be, for instance, the menu items in your restaurant.
+*   Use the expand option when you want to be able to identify more than just the sample values you provide (for example, Name).
+*   Turn obfuscation on for slots that are collecting sensitive data to prevent the data from being logged.
+*   Use [runtime hints](https://docs.aws.amazon.com/lexv2/latest/dg/using-hints.html) to improve slot recognition when you can narrow down the potential options at runtime. Choosing one slot might narrow down the options for another; for example, a particular type of furniture may not have all color options.
+*   Use [spelling styles](https://docs.aws.amazon.com/lexv2/latest/dg/using-spelling.html) to capture uncommon words or words with variations in spellings such as names.
+
+### 10\. Use custom vocabulary for specialist domains
+
+In most cases, a [custom vocabulary](https://docs.aws.amazon.com/lexv2/latest/dg/vocab.html) is not required, but can be helpful if your users will use specialist words not common in everyday language. In this case, adding one can be helpful in making sure that your transcriptions are accurate. Keep the following in mind:
+
+*   **Do** use a custom vocabulary to add words that aren’t readily recognized by Amazon Lex in voice-based conversations. This improves the speech-to-text transcription and overall customer experience.
+*   **Don’t** use short or common words like “on,” “it,” “to,” “yes,” or “no” in a custom vocabulary.
+*   **Do** decide how much weight to give a word based on how often the word isn’t recognized in the transcription and how rare the word is in the input. Words that are difficult to pronounce require a higher weight. Use a representative test set to determine if a weight is appropriate. You can collect an audio test set by turning on audio logging in conversation logs.
+*   **Do** use custom slot types for lists of catalog values or entities such as product names or mutual funds.
+
+### 11\. GRXML slots need a strict grammar
+
+When migrating to Amazon Lex from a service that may already have grammars in place (such as traditional automatic speech recognition engines), it is possible to reuse [GRXML grammars](https://docs.aws.amazon.com/lexv2/latest/dg/building-srgs.html) during the new bot design process. However, when creating a completely new Amazon Lex bot, we recommend first checking if other slot types might meet your needs before using GRXML. Consider the following:
+
+*   **Do** use GRXML slots only for spoken input, and not text-based interactions.
+*   **Don’t** add the carrier phrases for the GRXML slots in the GRXML file (grammar) itself.
+*   **Do** put carrier phrases into the slot sample utterances, such as I live in {zipCode} or {zipCode} is my zip code.
+*   **Do** author the grammar to only capture correct slot values. For example, to capture a five-digit US ZIP code, you should only accept values that are exactly five digits.
+
+### 12\. Consider using built in intents
+
+Here are the list of build in intents
+- AMAZON.CancelIntent
+- AMAZON.FallbackIntent
+- AMAZON.HelpIntent
+- AMAZON.KendraSearchIntent
+- AMAZON.PauseIntent
+- AMAZON.QnAIntent
+- AMAZON.QnAIntent (multiple use support)
+- AMAZON.QinConnectIntent
+- AMAZON.RepeatIntent
+- AMAZON.ResumeIntent
+- AMAZON.StartOverIntent
+- AMAZON.StopIntent
+
+If you're using Built-in intents, you can't do the following:
+
+- Add or remove sampleUtterances from the base intent
+- Configure slots
+
+If you're using Built-in intents, do the following:
+
+- Set the parentSignature to the build in intent name.
+- Make sure your intent name differes with the built in intent name.

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' elementFormDefault='qualified' targetNamespace='https://developer.nuance.com/mix/nlu/trsx'>
+    <xs:attribute name='version' type='xs:decimal'/>
+    <xs:attribute name='enginePackVersion' type='xs:string'/>
+</xs:schema>

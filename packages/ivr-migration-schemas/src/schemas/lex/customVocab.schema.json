@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "CustomVocabularyExportDefinition",
+    "type": "object",
+    "required": ["customVocabularyItems"],
+    "properties": {
+      "customVocabularyItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/CustomVocabularyItem"
+        }
+      }
+    },
+    "$defs": {
+      "CustomVocabularyItem": {
+        "type": "object",
+        "required": ["phrase"],
+        "properties": {
+          "phrase": {
+            "type": "string",
+            "minLength": 1
+          },
+          "weight": {
+            "type": ["integer", "null"],
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }

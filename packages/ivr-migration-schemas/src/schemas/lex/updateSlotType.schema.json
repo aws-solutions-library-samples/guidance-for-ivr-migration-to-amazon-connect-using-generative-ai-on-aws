@@ -1,0 +1,247 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "SlotTypeExportDefinition",
+	"type": "object",
+	"required": ["slotTypeName", "slotTypeId"],
+	"properties": {
+		"identifier": {
+			"type": "string",
+			"description": "The unique identifier assigned to a slot type. This refers to either a built-in slot type or the unique slotTypeId of a custom slot type.",
+			"length": 10
+		},
+		"compositeSlotTypeSetting": {
+			"$ref": "#/$defs/CompositeSlotTypeSetting",
+			"description": "Specifications for a composite slot type."
+		},
+		"description": {
+			"oneOf": [
+				{
+					"type": "string",
+					"maxLength": 200
+				}
+			],
+			"description": "A description of the slot type. Use the description to help identify the slot type in lists."
+		},
+		"externalSourceSetting": {
+			"$ref": "#/$defs/ExternalSourceSetting",
+			"description": "Sets the type of external information used to create the slot type."
+		},
+		"parentSlotTypeSignature": {
+			"oneOf": [
+				{
+					"type": "string",
+					"enum": ["AMAZON.AlphaNumeric"]
+				}
+			],
+			"description": "The built-in slot type used as a parent of this slot type. When you define a parent slot type, the new slot type has the configuration of the parent slot type."
+		},
+		"slotTypeName": {
+			"type": "string",
+			"description": "The name for the slot. A slot type name must be unique within the intent.",
+			"minLength": 1,
+			"maxLength": 100,
+			"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+		},
+		"slotTypeId": {
+			"type": "string",
+			"description": "The unique identifier of the slot type to update.",
+			"minLength": 1,
+			"maxLength": 100,
+			"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+		},
+		"slotTypeValues": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/SlotTypeValue"
+			},
+			"minItems": 1,
+			"maxItems": 10000
+		},
+		"valueSelectionSetting": {
+			"$ref": "#/$defs/SlotTypeConfiguration",
+			"description": "Determines the strategy that Amazon Lex uses to select a value from the list of possible values."
+		}
+	},
+	"$defs": {
+		"CompositeSlotTypeSetting": {
+			"type": "object",
+			"description": "A composite slot is a combination of two or more slots that capture multiple pieces of information in a single user input. Required if resolution strategt is TopResolution.",
+			"properties": {
+				"subSlots": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/SubSlotTypeComposition"
+					},
+					"minItems": 0,
+					"maxItems": 6
+				}
+			},
+			"additionalProperties": false
+		},
+		"ExternalSourceSetting": {
+			"type": "object",
+			"description": "Provides information about the external source of the slot type's definition.",
+			"properties": {
+				"grammarSlotTypeSetting": {
+					"$ref": "#/$defs/GrammarSlotTypeSetting",
+					"description": "Settings required for a slot type based on a grammar that you provide."
+				}
+			},
+			"additionalProperties": false
+		},
+		"GrammarSlotTypeSetting": {
+			"type": "object",
+			"description": "Settings required for a slot type based on a grammar that you provide.",
+			"properties": {
+				"source": {
+					"$ref": "#/$defs/GrammarSlotTypeSource",
+					"description": "The source of the grammar used to create the slot type."
+				}
+			},
+			"additionalProperties": false,
+			"required": ["source"]
+		},
+		"GrammarSlotTypeSource": {
+			"type": "object",
+			"required": ["s3BucketName", "s3ObjectKey"],
+			"description": "Describes the Amazon S3 bucket name and location for the grammar that is the source for the slot type.",
+			"properties": {
+				"s3BucketName": {
+					"type": "string",
+					"description": "The name of the Amazon S3 bucket that contains the grammar source.",
+					"minLength": 3,
+					"maxLength": 63,
+					"pattern": "^[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]$"
+				},
+				"s3ObjectKey": {
+					"type": "string",
+					"description": "The path to the grammar in the Amazon S3 bucket.",
+					"minLength": 1,
+					"maxLength": 1024,
+					"pattern": "[\\.\\-\\!\\*\\_\\'\\(\\)a-zA-Z0-9][\\.\\-\\!\\*\\_\\'\\(\\)\\/a-zA-Z0-9]*$"
+				},
+				"kmsKeyArn": {
+					"type": "string",
+					"description": "The AWS KMS key required to decrypt the contents of the grammar, if any.",
+					"minLength": 20,
+					"maxLength": 2048,
+					"pattern": "^arn:[\\w\\-]+:kms:[\\w\\-]+:[\\d]{12}:(?:key\\/[\\w\\-]+|alias\\/[a-zA-Z0-9:\\/_\\-]{1,256})$"
+				}
+			},
+			"additionalProperties": false
+		},
+		"SlotTypeValue": {
+			"type": "object",
+			"description": "Each slot type can have a set of values. Each SlotTypeValue represents a value that the slot type can take.",
+			"properties": {
+				"sampleValue": {
+					"$ref": "#/$defs/SampleValue",
+					"description": "The value of the slot type entry."
+				},
+				"synonyms": {
+					"type": "array",
+					"description": "Additional values related to the slot type entry.",
+					"items": {
+						"$ref": "#/$defs/SampleValue"
+					},
+					"minItems": 0,
+					"maxItems": 10000
+				}
+			},
+			"additionalProperties": false
+		},
+		"SampleValue": {
+			"type": "object",
+			"required": ["value"],
+			"description": "Defines one of the values for a slot type.",
+			"properties": {
+				"value": {
+					"type": "string",
+					"description": "The value that can be used for a slot type.",
+					"minLength": 1,
+					"maxLength": 140
+				}
+			},
+			"additionalProperties": false
+		},
+		"SlotTypeConfiguration": {
+			"type": "object",
+			"required": ["resolutionStrategy"],
+			"description": "Determines the slot resolution strategy that Amazon Lex uses to return slot type values. The field can be set to one of the following values:\r\n1. OriginalValue - Returns the value entered by the user, if the user value is similar to the slot value.\r\n2. TopResolution - Specify this only if slotTypeValues has synonyms.",
+			"properties": {
+				"resolutionStrategy": {
+					"type": "string",
+					"description": "Determines the slot resolution strategy that Amazon Lex uses to return slot type values.",
+					"enum": ["OriginalValue", "TopResolution", "Concatenation"],
+					"default": "OriginalValue"
+				},
+				"advancedRecognitionSetting": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/AdvancedRecognitionSetting"
+						}
+					],
+					"description": "Provides settings that enable advanced recognition settings for slot values. You can use this to enable using slot values as a custom vocabulary for recognizing user utterances."
+				},
+				"regexFilter": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/SlotValueRegexFilter"
+						}
+					],
+					"description": "A regular expression used to validate the value of a slot."
+				}
+			},
+			"additionalProperties": false
+		},
+		"AdvancedRecognitionSetting": {
+			"type": "object",
+			"description": "Provides settings that enable advanced recognition settings for slot values.",
+			"properties": {
+				"audioRecognitionStrategy": {
+					"type": "string",
+					"description": "Enables using the slot values as a custom vocabulary for recognizing user utterances.",
+					"enum": ["UseSlotValuesAsCustomVocabulary"]
+				}
+			},
+			"additionalProperties": false
+		},
+		"SlotValueRegexFilter": {
+			"type": "object",
+			"required": ["pattern"],
+			"description": "Provides a regular expression used to validate the value of a slot.",
+			"properties": {
+				"pattern": {
+					"type": "string",
+					"description": "A regular expression used to validate the value of a slot. Use a standard regular expression. Amazon Lex supports the following characters in the regular expression:\n- A-Z, a-z\n- 0-9\n- Unicode characters (\"\\⁠u<Unicode>\")\nRepresent Unicode characters with four digits, for example \"\\⁠u0041\" or \"\\⁠u005A\".\nThe following regular expression operators are not supported:\n- Infinite repeaters: *, +, or {x,} with no upper bound.\n- Wild card (.)",
+					"minLength": 1,
+					"maxLength": 300
+				}
+			},
+			"additionalProperties": false
+		},
+		"SubSlotTypeComposition": {
+			"type": "object",
+			"required": ["name", "slotTypeId"],
+			"description": "Subslot type composition.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of a constituent sub slot inside a composite slot.",
+					"minLength": 1,
+					"maxLength": 100,
+					"pattern": "^([0-9a-zA-Z][_-]?){1,100}$"
+				},
+				"slotTypeId": {
+					"type": "string",
+					"description": "The unique identifier assigned to a slot type. This refers to either a built-in slot type or the unique slotTypeId of a custom slot type.",
+					"minLength": 1,
+					"maxLength": 25,
+					"pattern": "^((AMAZON\\.)[a-zA-Z_]+?|[0-9a-zA-Z]+)$"
+				}
+			},
+			"additionalProperties": false
+		}
+	},
+	"additionalProperties": false
+}

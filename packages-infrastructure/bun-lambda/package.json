@@ -1,0 +1,22 @@
+{
+	"name": "@ivr-migration-tool/bun-lambda",
+	"private": true,
+	"devDependencies": {
+		"@oclif/plugin-plugins": "^3.5.0",
+		"@oclif/core": "^2.0.8",
+		"bun-types": "^0.7.0",
+		"jszip": "^3.10.1",
+		"oclif": "^3.6.5",
+		"prettier": "^2.8.2"
+	},
+	"dependencies": {
+		"aws4fetch": "^1.0.17"
+	},
+	"resolutions": {
+		"braces": "^3.0.3"
+	},
+	"scripts": {
+		"build": "bun scripts/build-layer.ts",
+		"format": "prettier --write ."
+	}
+}

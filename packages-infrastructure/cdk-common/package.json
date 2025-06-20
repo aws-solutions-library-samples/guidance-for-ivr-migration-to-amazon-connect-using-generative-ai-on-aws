@@ -1,0 +1,35 @@
+{
+	"name": "@ivr-migration-tool/cdk-common",
+	"module": "index.ts",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"version": "0.1.0",
+	"description": "CDK constructs and shared utilities",
+	"author": "Pouya Bahavar <bahavare@amazon.com>",
+	"scripts": {
+		"typecheck": "bunx tsc -b",
+		"clean": "bunx shx rm -rf dist tsconfig.tsbuildinfo",
+		"build": "bun run clean && bun --env-file=.env build.ts",
+		"debug": "bun --inspect --env-file=.env build.ts"
+	},
+	"dependencies": {
+		"@aws-sdk/client-sts": "~3",
+		"@aws-sdk/types": "~3",
+		"aws-cdk-lib": "~2",
+		"aws-lambda": "~1",
+		"constructs": "~10"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "~8",
+		"@types/bun": "latest",
+		"aws-cdk": "~2",
+		"cdk-nag": "~2",
+		"custom-resource-helper": "~1",
+		"eslint": "~9",
+		"shx": "^0.3.4"
+	},
+	"peerDependencies": {
+		"typescript": "^5.7.3"
+	},
+	"private": true
+}

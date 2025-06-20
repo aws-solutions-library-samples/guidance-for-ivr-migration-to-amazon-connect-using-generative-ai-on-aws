@@ -1,0 +1,26 @@
+{
+	"name": "@ivr-migration-tool/transformer",
+	"module": "src/index.ts",
+	"type": "module",
+	"version": "0.1.0",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"build:antlr4": "bunx antlr-ng -Dlanguage=TypeScript -l -o src/trsx/generated/ src/trsx/antlr4/*.g4",
+		"build": "bun --env-file=.env build.ts",
+		"typecheck": "bunx tsc -build"
+	},
+	"dependencies": {
+		"@aws-sdk/client-lex-models-v2": "^3.782.0",
+		"@ivr-migration-tool/schemas": "workspace:*",
+		"antlr4ng": "^3.0.16",
+		"json-stringify-safe": "^5.0.1",
+		"ow": "^2.0.0",
+		"pino": "^9.6.0"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.2"
+	}
+}

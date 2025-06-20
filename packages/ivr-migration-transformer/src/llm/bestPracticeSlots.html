@@ -1,0 +1,173 @@
+# Best practices for creating Amazon Lex interaction models
+
+Let’s look at some of the terminology we use frequently in this post:
+
+* **Utterance** – The phrase the user says to your live bot.
+* **Sample utterance** – Some examples of what users might say. These are attached to intents and used to train the bot.
+* **Intent** – This represents what the user meant and should be clearly connected to a response or an action from the
+bot. For instance, an intent that responds to a user saying hello, or an intent that can respond and take action if a
+user wants to order a coffee. A bot has one or more intents that utterances can be mapped to.
+* **Slot** – A parameter that can capture specific types of information from the utterance (for example, the time of an
+appointment or the customer’s name). Slots are attached to intents.
+* **Slot value** – Either examples of what the slot should capture, or a specific list of values for a slot (for
+example, _large_, _medium_, and _small_ as values for a slot for coffee sizes).
+
+The best practices listed in the following sections can support you in building a bot that will give your customers a
+great user experience and work well for your use case.
+
+## Creating slots
+
+We touched on some good practices involving slots in the previous section, but let’s look at some more specific best
+practices for slots.
+
+### 1. Use short noun or adjective phrases for slots
+
+Slots represent something that can be captured definitively as a parameter, like the size of the coffee you want to
+order, or the airport you’re flying to. Consider the following:
+
+* Use nouns or short adjectives for your slot values. Don’t use slots for things like carrier phrases (“_how do I_” or
+“_what could I_”) because this will reduce the ability of Amazon Lex to generalize your utterances. Try to keep slots
+for values you need to capture to fulfil your intent.
+* Keep slots generally to one or two words.
+
+### 2. Prefer slots over explicit values
+
+You can use slots to generalize the phrases you’re using, but we need to stick to the recommendations we just reviewed
+as well. To make our slot values as easy to identify as possible, we never use values included in the slot directly in
+sample utterances. Keep in mind the following tips:
+
+* **Don’t** explicitly include values that could be slots in the sample utterances. For example:
+
+`**OrderFlowers**`
+`I want to buy **roses**`
+`I want to buy **lilies**`
+`I would love to order some **orchids**`
+`I would love to order some **roses**`
+
+* **Do** use slots to reduce repetition. For example:
+
+`**OrderFlowers**`
+`I want to buy {flowers}`
+`I would love to order some {flowers}`
+
+`**flowers**`
+`roses`
+`lilies`
+`orchids`
+
+* **Don’t** mix slots and real values in the sample utterances. For example:
+
+`**OrderFlowers**`
+`I want to buy {flowers}`
+`I want to buy **lilies**`
+`I would love to order some {flowers}`
+
+`**flowers**`
+`roses`
+`lilies`
+`orchids`
+
+* **Don’t** have intents with only slots in the sample utterances if the slot types are `AlphaNumeric`, `Number`,
+`Date`, `GRXML`, are very broad custom slots, or include abbreviations. Instead, expand the sample utterances by adding
+conversational phrases that include the slot to the sample utterances.
+
+### 3. Keep your slot values coherent
+
+The bot has to decide whether to match a slot based only on what it can learn from the values we have entered. If there
+is a lot of similarity or overlap within slots in the same intent, this can cause challenges with the right slot being
+matched.
+
+* **Don’t** have slots with overlapping values in the same intent. Try to combine them instead. For example:
+
+`**pets**`
+`cat`
+`dog`
+`goldfish`
+
+`**animals**`
+`horse`
+`cat`
+`dog`
+
+### 4. Consider how the words will be transcribed
+
+Amazon Lex uses automated speech recognition (ASR) to transcribe speech. This means that all inputs to your Amazon Lex
+interaction model are processed as text, even when using a voice bot. We need to remember that a transcription may vary
+from how users might type the same thing. Consider the following:
+
+* Enter acronyms, or other words whose letters should be pronounced individually, as single letters separated by a
+period and a space. This will more closely match how it will be transcribed. For example:
+
+`A. T. M.`
+`A. W. S.`
+`P. A.`
+
+* Review the audio and transcriptions on a regular basis, so you can adjust your sample utterances or slot types. To do
+this, turn on conversation logs, and enable both text and audio logs, whenever possible.
+
+### 9\. Use the right options available for your slots
+
+Many different types of slots and options are available, and using the best options for each of our slots can help the
+recognition of those slot values. We always want to take the time to understand the options before deciding on how to
+design our slots:
+
+* Use the restrict option to limit slots to a closed set of values. You can define synonyms for each value. This could
+be, for instance, the menu items in your restaurant.
+* Use the expand option when you want to be able to identify more than just the sample values you provide (for example,
+Name).
+* Turn obfuscation on for slots that are collecting sensitive data to prevent the data from being logged.
+* Use [runtime hints](https://docs.aws.amazon.com/lexv2/latest/dg/using-hints.html) to improve slot recognition when you
+can narrow down the potential options at runtime. Choosing one slot might narrow down the options for another; for
+example, a particular type of furniture may not have all color options.
+* Use [spelling styles](https://docs.aws.amazon.com/lexv2/latest/dg/using-spelling.html) to capture uncommon words or
+words with variations in spellings such as names.
+
+### 5. Use custom vocabulary for specialist domains
+
+In most cases, a [custom vocabulary](https://docs.aws.amazon.com/lexv2/latest/dg/vocab.html) is not required, but can be
+helpful if your users will use specialist words not common in everyday language. In this case, adding one can be helpful
+in making sure that your transcriptions are accurate. Keep the following in mind:
+
+* **Do** use a custom vocabulary to add words that aren’t readily recognized by Amazon Lex in voice-based conversations.
+This improves the speech-to-text transcription and overall customer experience.
+* **Don’t** use short or common words like “on,” “it,” “to,” “yes,” or “no” in a custom vocabulary.
+* **Do** decide how much weight to give a word based on how often the word isn’t recognized in the transcription and how
+rare the word is in the input. Words that are difficult to pronounce require a higher weight. Use a representative test
+set to determine if a weight is appropriate. You can collect an audio test set by turning on audio logging in
+conversation logs.
+* **Do** use custom slot types for lists of catalog values or entities such as product names or mutual funds.
+
+### 6. GRXML slots need a strict grammar
+
+When migrating to Amazon Lex from a service that may already have grammars in place (such as traditional automatic
+speech recognition engines), it is possible to reuse [GRXML
+grammars](https://docs.aws.amazon.com/lexv2/latest/dg/building-srgs.html) during the new bot design process. However,
+when creating a completely new Amazon Lex bot, we recommend first checking if other slot types might meet your needs
+before using GRXML. Consider the following:
+
+* **Do** use GRXML slots only for spoken input, and not text-based interactions.
+* **Don’t** add the carrier phrases for the GRXML slots in the GRXML file (grammar) itself.
+* **Do** put carrier phrases into the slot sample utterances, such as I live in {zipCode} or {zipCode} is my zip code.
+* **Do** author the grammar to only capture correct slot values. For example, to capture a five-digit US ZIP code, you
+should only accept values that are exactly five digits.
+
+### 7. Make sure the sample utterances reference the slot name and not type
+
+Example:
+
+For slot "eArrivalCity" with type "ArrivalCityType"
+
+The sample utterances will be:
+- I want to go to {eArrivalCity}
+- My destination is {eArrivalCity}
+
+### 8. Make sure your sample utterances include context words
+
+Bad Example:
+
+- {eArrivalCity}
+
+Good Example:
+- My destination is {eArrivalCity}
+- I want to fly to {eArrivalCity}
+- I'm traveling to {eArrivalCity}

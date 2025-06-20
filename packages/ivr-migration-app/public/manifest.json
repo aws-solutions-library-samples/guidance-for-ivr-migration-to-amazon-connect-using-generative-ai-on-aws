@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "start_url": "/",
+  "name": "IVR Migration Tool",
+  "short_name": "IVR Tool",
+  "description": "Tool for migrating legacy IVR systems to Amazon Lex and Amazon Connect",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/favicon.ico",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/favicon.ico",
+      "sizes": "512x512"
+    }
+  ]
+}

@@ -1,0 +1,3241 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://example.com/schemas/project.json",
+	"title": "Nuance Mix Project Schema",
+	"type": "object",
+	"properties": {
+		"data": {
+			"$ref": "#/$defs/project"
+		}
+	},
+	"$defs": {
+		"action": {
+			"description": "Represents an action in a processing item, either an assign action or an entity update action.",
+			"type": "object",
+			"properties": {
+				"action": {
+					"oneOf": [
+						{
+							"$ref": "#/$defs/assignAction"
+						},
+						{
+							"$ref": "#/$defs/entityUpdateAction"
+						}
+					],
+					"description": "The action."
+				}
+			}
+		},
+		"actionConfiguration": {
+			"type": "object",
+			"description": "Defines processing to perform for a specific entity or ASR value",
+			"allOf": [
+				{
+					"type": "object",
+					"properties": {
+						"processingItems": {
+							"$ref": "#/$defs/processingItemGroup",
+							"description": "Processing items to perform for the entity value (or ASR value)"
+						},
+						"processingItemsId": {
+							"type": "string",
+							"description": "UUID of processingItems"
+						}
+					}
+				},
+				{
+					"oneOf": [
+						{
+							"type": "object",
+							"required": ["conceptValue"],
+							"properties": {
+								"conceptValue": {
+									"type": "string",
+									"description": "Entity value associated with the processing items"
+								}
+							},
+							"additionalProperties": true
+						},
+						{
+							"type": "object",
+							"required": ["asrValue"],
+							"properties": {
+								"asrValue": {
+									"type": "string",
+									"description": "ASR value associated with the processing items"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				}
+			]
+		},
+		"annotation": {
+			"type": "object",
+			"description": "Defines a dynamic placeholder within a prompt.",
+			"allOf": [
+				{
+					"type": "object",
+					"properties": {
+						"annotation payload": {
+							"type": "object",
+							"description": "Key-value pair representing the annotation payload."
+						},
+						"variableId": {
+							"type": "string",
+							"description": "UUID if the payload type is 'variable'."
+						},
+						"variableExpressionId": {
+							"type": "string",
+							"description": "UUID if the payload type is 'variableExpression'."
+						},
+						"type": {
+							"type": "string",
+							"description": "Formatting type (e.g., digits, currency)."
+						},
+						"properties": {
+							"$ref": "#/$defs/annotationProperties",
+							"description": "Formatting and display attributes."
+						}
+					}
+				},
+				{
+					"oneOf": [
+						{
+							"type": "object",
+							"required": ["variable"],
+							"properties": {
+								"variable": {
+									"$ref": "#/$defs/variable",
+									"description": "Variable that contains dynamic content to include in the message"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["variableExpression"],
+							"properties": {
+								"variableExpression": {
+									"$ref": "#/$defs/variableExpression",
+									"description": "Complex variable field, or the result of a supported method against a variable, to include in the message"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["conceptId"],
+							"properties": {
+								"conceptId": {
+									"type": "string",
+									"description": "UUID of the entity that contains dynamic content to include in the message"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["conceptIdLiteral"],
+							"properties": {
+								"conceptIdLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose literal is to include in the message"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["conceptIdFormattedLiteral"],
+							"properties": {
+								"conceptIdFormattedLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose formatted literal is to include in the message"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["currentEntity"],
+							"properties": {
+								"currentEntity": {
+									"type": "string",
+									"description": "One of: ENTITY_VALUE, ENTITY_LITERAL, ENTITY_FORMATTED_LITERAL, to include in a global confirmation message—Mix.dialog only supports ENTITY_VALUE (current entity value from the last NLU interpretation result)"
+								}
+							}
+						},
+						{
+							"type": "object",
+							"required": ["intent"],
+							"properties": {
+								"intent": {
+									"type": "string",
+									"description": "One of: INTENT_VALUE (active intent value), INTENT_LITERAL (active intent literal), INTENT_FORMATTED_LITERAL (formatted version of the active intent literal),INTENT_CONFIDENCE (active intent confidence score), to include in the message"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"annotationProperties": {
+			"type": "object",
+			"description": "Represent output formatting properties for the value associated with the annotation. Only string is required, all other elements are optional and depend on the data type. If only string is present, this means that the raw value is to be included in the message.",
+			"properties": {
+				"formType": {
+					"type": "string",
+					"description": "Determines the format editor to use in Mix.dialog for this annotation—one of: ALPHA_NUM_TYPE, CURRENCY_TYPE, DATE_TYPE, DECIMAL_TYPE, DIGITS_TYPE, DISTANCE_TYPE, CARDINAL_NUMBER_TYPE, TEMPERATURE_TYPE, DISTANCE_TYPE, TIME_TYPE"
+				},
+				"string": {
+					"type": "string",
+					"description": "Display text for the annotation."
+				},
+				"advanced": {
+					"type": "string",
+					"description": "If true, uses the advanced editor."
+				},
+				"pattern": {
+					"type": "string",
+					"description": "Pattern to format the value."
+				},
+				"thousandSeparator": {
+					"type": "boolean",
+					"description": "If true, applies thousands separator."
+				},
+				"playZeroDollars": {
+					"type": "boolean",
+					"description": "Play 'zero dollars' if amount is zero."
+				},
+				"playZeroCents": {
+					"type": "boolean",
+					"description": "Play 'zero cents' if amount is zero."
+				},
+				"playPrehundred": {
+					"type": "boolean",
+					"description": "Use special audio for hundreds position in amounts."
+				},
+				"currency": {
+					"type": "string",
+					"description": "Currency symbol or code for display."
+				},
+				"partsOfDate": {
+					"type": "string",
+					"description": "Order and parts of date to play."
+				},
+				"playDayOfTheWeek": {
+					"type": "boolean",
+					"description": "Include day of the week in playback."
+				},
+				"partsOfTime": {
+					"type": "string",
+					"description": "Order and parts of time to play."
+				},
+				"clock24": {
+					"type": "string",
+					"description": "Hour format: 12 or 24."
+				},
+				"decimalPlaces": {
+					"type": "string",
+					"description": "Number of decimal places to show."
+				},
+				"playZeroUnits": {
+					"type": "boolean",
+					"description": "Play 'zero point' for zero values."
+				},
+				"playZeroDecimals": {
+					"type": "boolean",
+					"description": "Play zero decimals in output."
+				},
+				"distanceType": {
+					"type": "string",
+					"description": "Unit of distance to show (e.g., km, mi)."
+				},
+				"tempType": {
+					"type": "string",
+					"description": "Temperature unit to show (e.g., C, F)."
+				},
+				"intonation": {
+					"type": "string",
+					"description": "Intonation for recorded audio: medial or final."
+				},
+				"case": {
+					"type": "string",
+					"description": "Grammatical case for certain languages (e.g., nominative, dative)."
+				},
+				"forceTTS": {
+					"type": "boolean",
+					"description": "Force TTS format for annotations."
+				},
+				"ssmlOpenFreeform": {
+					"type": "string",
+					"description": "Custom SSML open tag."
+				},
+				"ssmlCloseFreeform": {
+					"type": "string",
+					"description": "Custom SSML close tag."
+				}
+			}
+		},
+		"assignAction": {
+			"type": "object",
+			"description": "Assigns a value to a variable, an entity, or the active intent.",
+			"properties": {
+				"assign": {
+					"type": "object",
+					"description": "The assign action object.",
+					"properties": {
+						"target": {
+							"$ref": "#/$defs/leftOperand"
+						},
+						"value": {
+							"$ref": "#/$defs/rightOperand"
+						},
+						"lhsVariableId": {
+							"type": "string",
+							"description": "UUID of the variable to set, or SYS_VAR_channel for a predefined variable."
+						},
+						"lhsVariableExpressionId": {
+							"type": "string",
+							"description": "UUID of the complex variable field to set."
+						},
+						"variableId": {
+							"type": "string",
+							"description": "UUID of the variable used as the right operand."
+						},
+						"variableExpressionId": {
+							"type": "string",
+							"description": "UUID of the element used as a variable expression."
+						},
+						"expressionId": {
+							"type": "string",
+							"description": "UUID of the expression used as the right operand."
+						}
+					}
+				}
+			}
+		},
+		"backendConfig": {
+			"type": "object",
+			"description": "Backend connection configuration for server-side integration.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Not used."
+				},
+				"urlExtension": {
+					"type": "string",
+					"description": "URL extension (max 2000 characters)."
+				},
+				"fetchTimeout": {
+					"type": "number",
+					"description": "Timeout for fetch in milliseconds."
+				},
+				"connectTimeout": {
+					"type": "number",
+					"description": "Timeout for connection in milliseconds."
+				},
+				"method": {
+					"type": "string",
+					"description": "HTTP method to use (e.g., POST, GET)."
+				},
+				"dressName": {
+					"type": "string",
+					"description": "Deprecated: previously used service alias."
+				},
+				"headers": {
+					"type": "array",
+					"description": "List of headers for backend request.",
+					"items": {
+						"type": "object",
+						"properties": {
+							"key": {
+								"type": "string",
+								"description": "Header key name."
+							},
+							"header": {
+								"type": "object",
+								"description": "Key-value pair for the header content."
+							},
+							"variableId": {
+								"type": "string",
+								"description": "UUID if header type is variable."
+							},
+							"variableExpressionId": {
+								"type": "string",
+								"description": "UUID if header is from variable expression."
+							}
+						},
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"constant": {
+										"type": "string",
+										"description": "Static header data (maximum 2048 characters)"
+									}
+								}
+							},
+							{
+								"type": "object",
+								"properties": {
+									"variable": {
+										"$ref": "#/$defs/variable",
+										"description": "Variable used as dynamic header data"
+									}
+								}
+							},
+							{
+								"type": "object",
+								"properties": {
+									"variableExpression": {
+										"$ref": "#/$defs/variableExpression",
+										"description": "Complex variable field, used as dynamic header data"
+									}
+								}
+							}
+						]
+					}
+				},
+				"dressAliasId": {
+					"type": "string",
+					"description": "ID of backend connection profile."
+				}
+			}
+		},
+		"backendConnectionPreset": {
+			"description": "Represents a backend connection preset to be applied to a data access node for server-side integration.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the preset"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the preset"
+				},
+				"urlExtension": {
+					"type": "string",
+					"description": "URL extension (maximum 2000 characters)",
+					"maxLength": 2000
+				},
+				"fetchTimeout": {
+					"type": "number",
+					"description": "Fetch timeout in milliseconds (default: 0)",
+					"minimum": 0
+				},
+				"connectTimeout": {
+					"type": "number",
+					"description": "Connection timeout in milliseconds (default: 0)",
+					"minimum": 0
+				},
+				"method": {
+					"type": "string",
+					"description": "HTTP method to use for the connection",
+					"enum": ["POST", "GET", "PUT", "DELETE", "PATCH", "NOT_SET"]
+				},
+				"dressName": {
+					"type": "string",
+					"description": "Deprecated (superseded by dressAliasId)"
+				},
+				"headers": {
+					"type": "array",
+					"description": "Headers used to query the backend system",
+					"items": {
+						"$ref": "#/$defs/header"
+					}
+				},
+				"dressAliasId": {
+					"type": "string",
+					"description": "Numeric ID of the connection profile for the backend system"
+				}
+			}
+		},
+		"callMethod": {
+			"description": "Represents a method call in a variable operation.",
+			"type": "object",
+			"properties": {
+				"methodName": {
+					"type": "string",
+					"description": "Name of the method to call (e.g., 'length', 'random', 'getDay'). The available methods depend on the variable type."
+				},
+				"parameters": {
+					"type": "array",
+					"description": "Optional list of key-value pairs representing the parameters for the method. Can be empty if no parameters are needed.",
+					"items": {
+						"$ref": "#/$defs/methodParameter"
+					}
+				}
+			}
+		},
+		"channel": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique ID of the channel"
+				},
+				"displayName": {
+					"type": "string",
+					"description": "Name of the channel—Default is a reserved name for the combination of all channels in a project"
+				},
+				"codeName": {
+					"type": "string",
+					"description": "Deprecated"
+				},
+				"modes": {
+					"type": "array",
+					"description": "Deprecated",
+					"items": {
+						"type": "string"
+					}
+				},
+				"disabled": {
+					"type": "boolean",
+					"description": "true if the channel is disabled; otherwise, false"
+				},
+				"connectorColor": {
+					"type": "string",
+					"description": "Color code for the channel (for example, #31B96E)",
+					"pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
+				},
+				"channelModes": {
+					"type": "array",
+					"description": "Modalities available for messages in this channel",
+					"items": {
+						"$ref": "#/$defs/modality"
+					}
+				},
+				"lastModified": {
+					"type": "string",
+					"description": "Date and time of the last modification",
+					"format": "date-time"
+				}
+			},
+			"additionalProperties": false
+		},
+		"command": {
+			"description": "Represents a global command in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the command"
+				},
+				"entityValue": {
+					"type": "string",
+					"description": "Global command entity value to invoke the command"
+				},
+				"event": {
+					"$ref": "#/$defs/event",
+					"description": "Event thrown when this command is invoked"
+				},
+				"dtmfValue": {
+					"type": "string",
+					"description": "DTMF value to invoke the command"
+				},
+				"projectLevelEnabled": {
+					"type": "boolean",
+					"description": "True if the command is enabled in this project; otherwise, false"
+				},
+				"disabledNodeIds": {
+					"type": "array",
+					"description": "Nodes where this command is disabled—Future use",
+					"items": {
+						"type": "string"
+					}
+				},
+				"disabledComponentIds": {
+					"type": "array",
+					"description": "Components where this command is disabled—Future use",
+					"items": {
+						"type": "string"
+					}
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification, in the format: YYYY-MM-DDThh:mm:ssZ"
+				}
+			}
+		},
+		"component": {
+			"description": "Represents a group of nodes that make up a flow in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique ID of the component"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the component"
+				},
+				"description": {
+					"type": "string",
+					"description": "“intent” if the component is an intent component; otherwise, empty"
+				},
+				"nodes": {
+					"type": "array",
+					"description": "Nodes in the component",
+					"items": {
+						"$ref": "#/$defs/node"
+					}
+				},
+				"eventHandlers": {
+					"type": "array",
+					"description": "Global event handlers (in Main) or component-level event handlers (in other components)",
+					"items": {
+						"$ref": "#/$defs/eventHandler"
+					}
+				},
+				"intentId": {
+					"type": "string",
+					"description": "UUID of the intent that is mapped to the component, if this is an intent component; otherwise, empty"
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification (e.g., 2019-08-21T08:34:27Z)"
+				}
+			}
+		},
+		"componentNode": {
+			"type": "object",
+			"description": "A component call node transitions the dialog into another component and defines return behavior after that component completes.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node (must follow naming guidelines)."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Description of the node."
+				},
+				"componentId": {
+					"type": "string",
+					"description": "UUID of the component to invoke."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Processing items executed when returning from the component (transitions only)."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing item group."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification (ISO 8601 format)."
+				}
+			}
+		},
+		"condition": {
+			"type": "object",
+			"description": "Represents a conditional logic block within a processing item.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the condition."
+				},
+				"statementType": {
+					"type": "string",
+					"enum": ["NO_TYPE", "IF_TYPE", "ELSEIF_TYPE", "ELSE_TYPE", "ALWAYS_TYPE"],
+					"description": "Type of condition statement."
+				},
+				"expression": {
+					"$ref": "#/$defs/expression",
+					"description": "Expression to evaluate, only present for IF_TYPE or ELSEIF_TYPE."
+				},
+				"processingItems": {
+					"type": "array",
+					"description": "List of processing items to perform if the condition is true.",
+					"items": {
+						"$ref": "#/$defs/processingItem"
+					}
+				},
+				"expressionId": {
+					"type": "string",
+					"description": "UUID of the expression used for IF_TYPE and ELSEIF_TYPE; empty otherwise."
+				}
+			}
+		},
+		"confirmation": {
+			"description": "Represents a global confirmation behavior.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the confirmation behavior"
+				},
+				"globalValue": {
+					"type": "string",
+					"description": "Deprecated"
+				},
+				"confirmationRecoveryBehaviors": {
+					"type": "array",
+					"description": "Error handling for the confirmation behavior",
+					"items": {
+						"$ref": "#/$defs/recoveryBehavior"
+					}
+				},
+				"entityType": {
+					"type": "string",
+					"description": "Information type for this confirmation behavior",
+					"enum": ["DEFAULT", "ALPHANUM", "DIGITS", "DATE", "TIME", "CURRENCY", "YESNO", "PREDEFINE_NOT_SET"]
+				},
+				"channelId": {
+					"type": "string",
+					"description": "UUID of the channel"
+				}
+			}
+		},
+		"constantHeader": {
+			"type": "object",
+			"description": "Static header value.",
+			"properties": {
+				"constant": {
+					"type": "string",
+					"maxLength": 2048,
+					"description": "Static header data (maximum 2048 characters)."
+				}
+			}
+		},
+		"controllerNode": {
+			"type": "object",
+			"description": "A question router node that collects multiple entities and routes dialog flow based on what is collected.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node. Must follow naming guidelines."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the node."
+				},
+				"initialTransition": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Optional transition before entity collection begins."
+				},
+				"finalTransition": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Mandatory transition after all entities are collected."
+				},
+				"concepts": {
+					"type": "array",
+					"description": "List of entity references handled by this node.",
+					"items": {
+						"$ref": "#/$defs/entityReference"
+					}
+				},
+				"intentSwitchingDisabled": {
+					"type": "boolean",
+					"description": "Indicates whether intent switching is disabled (default: false)."
+				},
+				"intentSwitchTransition": {
+					"$ref": "#/$defs/transition",
+					"description": "Transition executed when intent switching is detected."
+				},
+				"intentSwitchTransitionId": {
+					"type": "string",
+					"description": "UUID of the intent switch transition."
+				},
+				"initialTransitionId": {
+					"type": "string",
+					"description": "UUID of the initial transition."
+				},
+				"finalTransitionId": {
+					"type": "string",
+					"description": "UUID of the final transition."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp of the last modification (ISO 8601 format)."
+				}
+			}
+		},
+		"dataAccessNode": {
+			"type": "object",
+			"description": "A node that exchanges information with a backend system, typically retrieving data without user interaction.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node (must not start with a number or include spaces)."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the data access node."
+				},
+				"outputVariables": {
+					"type": "array",
+					"description": "Variables returned by the backend system.",
+					"items": {
+						"$ref": "#/$defs/variable"
+					}
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Message shown during data access latency (single static message)."
+				},
+				"serviceName": {
+					"type": "string",
+					"description": "Deprecated field for service name."
+				},
+				"externalFetchEnabled": {
+					"type": "boolean",
+					"description": "Indicates whether client-side integration is used."
+				},
+				"successNodeId": {
+					"type": "string",
+					"description": "UUID of the node to transition to upon success."
+				},
+				"failureNodeId": {
+					"type": "string",
+					"description": "UUID of the node to transition to upon failure."
+				},
+				"inputVariablesConcepts": {
+					"type": "array",
+					"description": "Inputs passed to the backend system.",
+					"items": {
+						"$ref": "#/$defs/inputConcept"
+					}
+				},
+				"urlExtension": {
+					"type": "string",
+					"description": "Deprecated URL extension field."
+				},
+				"fetchTimeout": {
+					"type": "number",
+					"description": "Deprecated fetch timeout in milliseconds."
+				},
+				"connectTimeout": {
+					"type": "number",
+					"description": "Deprecated connection timeout in milliseconds."
+				},
+				"methodType": {
+					"type": "string",
+					"description": "Deprecated HTTP method type."
+				},
+				"sourceExpression": {
+					"type": "string",
+					"description": "Deprecated expression for backend source."
+				},
+				"headers": {
+					"type": "object",
+					"description": "Deprecated headers as raw string."
+				},
+				"view": {
+					"$ref": "#/$defs/view",
+					"description": "Formatting information for latency messages."
+				},
+				"backendConfig": {
+					"$ref": "#/$defs/backendConfig",
+					"description": "Information required for server-side backend integration."
+				},
+				"nodeSettingOverride": {
+					"type": "array",
+					"description": "Overrides global node settings.",
+					"items": {
+						"$ref": "#/$defs/nodeSettingOverride"
+					}
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing item group."
+				},
+				"outputVariableIds": {
+					"type": "array",
+					"description": "UUIDs of the output variables returned by the backend.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modification timestamp (ISO 8601)."
+				}
+			}
+		},
+		"dataHostAlias": {
+			"description": "Represents a data host alias for server-side integration.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Numeric ID of the connection profile for the backend system"
+				},
+				"alias": {
+					"type": "string",
+					"description": "Alias name for a web service used for backend access in a server-side integration"
+				},
+				"defaultValue": {
+					"type": "string",
+					"description": "Default URL for the alias (optional)",
+					"format": "uri"
+				}
+			}
+		},
+		"decisionNode": {
+			"type": "object",
+			"description": "A decision node applies logic or conditions to determine the next step in the dialog without user interaction or data access.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the decision node."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the decision node."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Logical processing items that determine the next action."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID reference for the processing item group."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp of the last update in ISO 8601 format (e.g., 2019-08-21T08:34:27Z)."
+				}
+			}
+		},
+		"dtmfMapping": {
+			"type": "object",
+			"description": "Maps DTMF input keys to entity values.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the mapping."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the associated node."
+				},
+				"channelId": {
+					"type": "string",
+					"description": "Channel this mapping applies to."
+				},
+				"dtmfValue": {
+					"type": "string",
+					"description": "DTMF key pressed by the user."
+				},
+				"entityValue": {
+					"type": "string",
+					"description": "Mapped value."
+				},
+				"entityId": {
+					"type": "string",
+					"description": "UUID of the associated entity."
+				}
+			}
+		},
+		"endNode": {
+			"description": "Represents an end node in the project - deprecated",
+			"type": "object"
+		},
+		"entity": {
+			"type": "object",
+			"description": "Represents an entity (concept) in the project.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the entity."
+				},
+				"projectId": {
+					"type": "string",
+					"description": "ID of the project this entity belongs to."
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the entity (follows naming guidelines)."
+				},
+				"isInBaseOntology": {
+					"type": "boolean",
+					"description": "True if this entity is predefined; false if it is custom."
+				},
+				"valuesCount": {
+					"type": "number",
+					"description": "Total number of values defined for the entity."
+				},
+				"isDialogType": {
+					"type": "boolean",
+					"description": "True for a dialog-type predefined entity."
+				},
+				"predefinedConceptId": {
+					"type": "string",
+					"description": "UUID of the top-level parent in an isA relationship (for predefined/dialog entities)."
+				},
+				"isDeprecated": {
+					"type": "boolean",
+					"description": "True if the entity is deprecated."
+				},
+				"isA": {
+					"type": "string",
+					"description": "UUID of the parent entity (used in relationship entities)."
+				},
+				"lastModified": {
+					"type": "string",
+					"description": "Reserved for future use."
+				}
+			}
+		},
+		"entityReference": {
+			"type": "object",
+			"description": "Entity collection logic for the question router node.",
+			"properties": {
+				"conceptId": {
+					"type": "string",
+					"description": "UUID of the entity to be collected."
+				},
+				"collectExpression": {
+					"$ref": "#/$defs/expression",
+					"description": "Optional expression that determines if collection should occur."
+				},
+				"collectGotoNodeId": {
+					"type": "string",
+					"description": "UUID of the node used to collect the entity."
+				},
+				"processExpression": {
+					"$ref": "#/$defs/expression",
+					"description": "Optional expression to evaluate after collection."
+				},
+				"processGotoNodeId": {
+					"type": "string",
+					"description": "UUID of the node to transition to after processing."
+				},
+				"multiConceptExpression": {
+					"$ref": "#/$defs/expression",
+					"description": "Optional expression for handling multiple mentions."
+				},
+				"collectExpressionId": {
+					"type": "string",
+					"description": "UUID of the collect expression."
+				},
+				"processExpressionId": {
+					"type": "string",
+					"description": "UUID of the process expression."
+				},
+				"multiConceptExpressionId": {
+					"type": "string",
+					"description": "UUID of the multi-concept expression."
+				},
+				"conceptName": {
+					"type": "string",
+					"description": "Legacy name of the concept, maintained for compatibility."
+				},
+				"manualComplete": {
+					"type": "boolean",
+					"description": "True if completion status is set manually; otherwise, false."
+				}
+			}
+		},
+		"entityUpdateAction": {
+			"type": "object",
+			"description": "Updates an entity's status attributes or clears the entity.",
+			"properties": {
+				"conceptAction": {
+					"type": "object",
+					"properties": {
+						"conceptId": {
+							"type": "string",
+							"description": "UUID of the entity to update."
+						},
+						"clearConcept": {
+							"type": "boolean",
+							"description": "True if the entity should be cleared."
+						},
+						"conceptUpdate": {
+							"type": "object",
+							"description": "Object containing update statuses for entity attributes.",
+							"properties": {
+								"requiredStatus": {
+									"type": "string",
+									"enum": ["UNCHANGED", "TRUE", "FALSE"],
+									"description": "Update status for .isRequired."
+								},
+								"completeStatus": {
+									"type": "string",
+									"enum": ["UNCHANGED", "TRUE", "FALSE"],
+									"description": "Update status for .isCompleted."
+								},
+								"confirmStatus": {
+									"type": "string",
+									"enum": ["UNCHANGED", "TRUE", "FALSE"],
+									"description": "Update status for .isConfirmed."
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"environmentConfiguration": {
+			"description": "Represents an environment configuration, currently limited to specifying a default base URL for external grammars.",
+			"type": "object",
+			"properties": {
+				"label": {
+					"type": "string",
+					"description": "GRAMMAR_BASE_PATH if the project is configured with a default base URL for external grammars"
+				},
+				"value": {
+					"type": "string",
+					"description": "Default base URL for external grammars (e.g., http://myfileserver:9000)",
+					"format": "uri"
+				}
+			}
+		},
+		"escalationDestination": {
+			"type": "object",
+			"description": "Destination details for the transfer.",
+			"properties": {
+				"destinationConstant": {
+					"type": "string",
+					"description": "Static string used as the transfer target."
+				},
+				"destinationVariable": {
+					"type": "object",
+					"description": "Variable used to define the transfer target."
+				}
+			}
+		},
+		"escalationDetails": {
+			"type": "object",
+			"description": "Escalation instructions for IVR transfer scenarios.",
+			"properties": {
+				"escalationType": {
+					"type": "string",
+					"description": "Type of transfer",
+					"enum": ["BLIND", "ROUTE_REQUEST"]
+				},
+				"destination": {
+					"$ref": "#/$defs/escalationDestination",
+					"description": "Destination for the transfer."
+				}
+			}
+		},
+		"event": {
+			"description": "Represents an event in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the event"
+				},
+				"eventString": {
+					"type": "string",
+					"description": "The event to throw—for example, event.nuance.dialog.escalate"
+				},
+				"uiString": {
+					"type": "string",
+					"description": "Display name of the event—for example, Escalate"
+				},
+				"throwable": {
+					"type": "boolean",
+					"description": "True if the event can be used in a throw action; otherwise, false"
+				},
+				"reserved": {
+					"type": "boolean",
+					"description": "True for predefined events; false for custom events"
+				}
+			}
+		},
+		"eventHandler": {
+			"description": "Represents a global, component-level, or node-level event handler in a dialog system.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the event handler."
+				},
+				"eventId": {
+					"type": "string",
+					"description": "UUID of the event to be handled by this handler."
+				},
+				"transition": {
+					"$ref": "#/$defs/transition",
+					"description": "The transition to perform when the event is triggered."
+				},
+				"transitionId": {
+					"type": "string",
+					"description": "UUID of the transition to be executed when the event is triggered."
+				},
+				"reserved": {
+					"type": "boolean",
+					"description": "True if the event handler is for a predefined event; otherwise, false."
+				},
+				"componentId": {
+					"type": "string",
+					"description": "UUID of the component (used in global or component-level handlers)."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the node (used only in node-level event handlers)."
+				}
+			}
+		},
+		"expression": {
+			"type": "object",
+			"description": "Represents an evaluatable expression composed of operands and operators.",
+			"allOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "UUID of the expression."
+						},
+						"lastModified": {
+							"type": "string",
+							"format": "date-time",
+							"description": "Date and time of the last modification (ISO 8601 format)."
+						},
+						"leftVariableId": {
+							"type": "string",
+							"description": "UUID of the variable for leftVariable type."
+						},
+						"leftVariableExpressionId": {
+							"type": "string",
+							"description": "UUID for leftVariableExpression type."
+						},
+						"leftExpressionId": {
+							"type": "string",
+							"description": "UUID of the nested expression used as the left operand."
+						},
+						"rightVariableId": {
+							"type": "string",
+							"description": "UUID of the variable for rightVariable type."
+						},
+						"rightVariableExpressionId": {
+							"type": "string",
+							"description": "UUID for rightVariableExpression type."
+						},
+						"rightExpressionId": {
+							"type": "string",
+							"description": "UUID of the nested expression used as the right operand."
+						}
+					}
+				},
+				{
+					"oneOf": [
+						{
+							"required": ["leftVariable"],
+							"properties": {
+								"leftVariable": {
+									"#ref": "#/$defs/variable",
+									"description": "Variable used as the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftVariableExpression"],
+							"properties": {
+								"leftVariableExpression": {
+									"$ref": "#/$defs/variableExpression",
+									"description": "Complex variable field or method result used as the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftExpression"],
+							"properties": {
+								"leftExpression": {
+									"$ref": "#/$defs/expression",
+									"description": "Nested expression used as the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftConceptId"],
+							"properties": {
+								"leftConceptId": {
+									"type": "string",
+									"description": "UUID of the entity whose value is the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftConceptIdLiteral"],
+							"properties": {
+								"leftConceptIdLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose literal is the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftConceptIdFormattedLiteral"],
+							"properties": {
+								"leftConceptIdFormattedLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose formatted literal is the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftIntent"],
+							"properties": {
+								"leftIntent": {
+									"type": "string",
+									"enum": ["INTENT_VALUE", "INTENT_LITERAL", "INTENT_FORMATTED_LITERAL", "INTENT_CONFIDENCE"],
+									"description": "Intent-related data to be used as the left operand."
+								}
+							}
+						},
+						{
+							"required": ["leftSpecialOperand"],
+							"properties": {
+								"leftSpecialOperand": {
+									"type": "string",
+									"enum": ["LAST_COLLECTION_INTERPRETATION", "LAST_CONFIRMATION_INTERPRETATION", "NULL"],
+									"description": "Special operand such as interpretation results or NULL."
+								}
+							}
+						}
+					]
+				},
+				{
+					"oneOf": [
+						{
+							"required": ["logicalOperator"],
+							"properties": {
+								"logicalOperator": {
+									"type": "string",
+									"enum": ["NO_LOGICAL_OPERATOR", "AND_OPERATOR", "OR_OPERATOR"],
+									"description": "Logical operator for combining boolean expressions."
+								}
+							}
+						},
+						{
+							"required": ["mathematicalOperator"],
+							"properties": {
+								"mathematicalOperator": {
+									"type": "string",
+									"enum": ["NO_OP", "PLUS", "MINUS", "TIMES", "DIVIDE", "MOD"],
+									"description": "Mathematical operator used for numeric expressions."
+								}
+							}
+						},
+						{
+							"required": ["relationalOperator"],
+							"properties": {
+								"relationalOperator": {
+									"type": "string",
+									"enum": [
+										"NO_RELATIONAL_OPERATOR",
+										"EQUAL_OPERATOR",
+										"NOT_EQUAL_OPERATOR",
+										"LESS_OPERATOR",
+										"GREATER_OPERATOR",
+										"LESS_EQUAL_OPERATOR",
+										"GREATER_EQUAL_OPERATOR"
+									],
+									"description": "Relational operator used for comparison between values."
+								}
+							}
+						}
+					]
+				},
+				{
+					"oneOf": [
+						{
+							"required": ["rightConstant"],
+							"properties": {
+								"rightConstant": {
+									"type": "string",
+									"maxLength": 255,
+									"description": "A constant string value used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightVariable"],
+							"properties": {
+								"rightVariable": {
+									"$ref": "#/$defs/variable",
+									"description": "Variable used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightVariableExpression"],
+							"properties": {
+								"rightVariableExpression": {
+									"$ref": "#/$defs/variableExpression",
+									"description": "Complex variable expression used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightExpression"],
+							"properties": {
+								"rightExpression": {
+									"$ref": "#/$defs/expression",
+									"description": "Nested expression used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightConceptId"],
+							"properties": {
+								"rightConceptId": {
+									"type": "string",
+									"description": "UUID of the entity whose value is the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightConceptIdLiteral"],
+							"properties": {
+								"rightConceptIdLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose literal is the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightConceptIdFormattedLiteral"],
+							"properties": {
+								"rightConceptIdFormattedLiteral": {
+									"type": "string",
+									"description": "UUID of the entity whose formatted literal is the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightIntent"],
+							"properties": {
+								"rightIntent": {
+									"type": "string",
+									"enum": ["INTENT_VALUE", "INTENT_LITERAL", "INTENT_FORMATTED_LITERAL", "INTENT_CONFIDENCE"],
+									"description": "Intent-related value used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightSpecialOperand"],
+							"properties": {
+								"rightSpecialOperand": {
+									"type": "string",
+									"enum": ["LAST_COLLECTION_INTERPRETATION", "LAST_CONFIRMATION_INTERPRETATION", "NULL"],
+									"description": "Special operand used as the right operand."
+								}
+							}
+						},
+						{
+							"required": ["rightChannelId"],
+							"properties": {
+								"rightChannelId": {
+									"type": "string",
+									"description": "UUID of the channel to use when leftVariableId is SYS_VAR_channel."
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"externalactionNode": {
+			"type": "object",
+			"description": "A node representing external actions like ending a conversation or escalating to a live agent.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node (must follow naming guidelines)."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the node."
+				},
+				"actionType": {
+					"type": "string",
+					"enum": ["END", "ESCALATE"],
+					"description": "The type of action to perform—either END or ESCALATE."
+				},
+				"escalationDetails": {
+					"$ref": "#/$defs/escalationDetails",
+					"description": "Details of the escalation, only present if actionType is ESCALATE."
+				},
+				"inputVariablesConcepts": {
+					"type": "array",
+					"description": "Key-value pairs of variables and concepts to pass to the client.",
+					"items": {
+						"$ref": "#/$defs/inputConcept"
+					}
+				},
+				"outputVariables": {
+					"type": "array",
+					"description": "Variables expected from the client application.",
+					"items": {
+						"$ref": "#/$defs/variable"
+					}
+				},
+				"successTransition": {
+					"$ref": "#/$defs/transition",
+					"description": "Transition to follow upon successful escalation."
+				},
+				"failureTransition": {
+					"$ref": "#/$defs/transition",
+					"description": "Transition to follow if escalation fails."
+				},
+				"successTransitionId": {
+					"type": "string",
+					"description": "UUID of the success transition."
+				},
+				"failureTransitionId": {
+					"type": "string",
+					"description": "UUID of the failure transition."
+				},
+				"outputVariableIds": {
+					"type": "array",
+					"description": "UUIDs of variables returned by the client application.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modification timestamp (ISO 8601 format)."
+				}
+			}
+		},
+		"globalSettingOverride": {
+			"description": "Represents an override to the global settings defaults in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the setting override"
+				},
+				"settingName": {
+					"type": "string",
+					"description": "Name of the setting"
+				},
+				"settingType": {
+					"type": "string",
+					"description": "Setting category",
+					"enum": [
+						"COPILOT_SETTINGS",
+						"COLLECTION_SETTINGS",
+						"CONFIRMATION_SETTINGS",
+						"DTMF_SETTINGS",
+						"TTS_SETTINGS",
+						"SPEECH_SETTINGS",
+						"CONVERSATION_SETTINGS",
+						"AUDIO_SETTINGS",
+						"GRAMMAR_SETTINGS",
+						"DATA_ACCESS_SETTINGS",
+						"INTERNAL_SETTINGS"
+					]
+				},
+				"channelId": {
+					"type": "string",
+					"description": "UUID of the channel for the override"
+				},
+				"predefinedName": {
+					"type": "string",
+					"description": "For an entity-level setting override: type of entity",
+					"enum": [
+						"CUSTOM_LIST_TYPE",
+						"REGEX",
+						"FREE_FORM",
+						"DATE",
+						"TIME",
+						"YES_NO",
+						"NUANCE_AMOUNT",
+						"NUANCE_BOOLEAN",
+						"NUANCE_CARDINAL_NUMBER",
+						"NUANCE_DISTANCE",
+						"NUANCE_DOUBLE",
+						"NUANCE_EXPIRY_DATE",
+						"NUANCE_GENERIC_ORDER",
+						"NUANCE_NUMBER",
+						"NUANCE_ORDINAL_NUMBER",
+						"NUANCE_TEMPERATURE",
+						"PREDEFINE_NOT_SET"
+					]
+				},
+				"value": {
+					"type": "string",
+					"description": "Override value"
+				},
+				"language": {
+					"type": "string",
+					"description": "Language to which the override applies (e.g., en-US)"
+				},
+				"entityId": {
+					"type": "string",
+					"description": "UUID of the entity to which the override applies; otherwise, empty"
+				}
+			}
+		},
+		"header": {
+			"description": "Represents a header used in backend connection data for a data access node or connection preset.",
+			"type": "object",
+			"properties": {
+				"key": {
+					"type": "string",
+					"description": "Name of the header."
+				},
+				"header": {
+					"type": "object",
+					"description": "Value of the header. One of the supported header types.",
+					"oneOf": [
+						{
+							"$ref": "#/$defs/constantHeader"
+						},
+						{
+							"$ref": "#/$defs/variableHeader"
+						},
+						{
+							"$ref": "#/$defs/variableExpressionHeader"
+						}
+					]
+				},
+				"variableId": {
+					"type": "string",
+					"description": "UUID of the variable; only present for headers of type 'variable'."
+				},
+				"variableExpressionId": {
+					"type": "string",
+					"description": "UUID of the complex variable field; only present for headers of type 'variableExpression'."
+				}
+			}
+		},
+		"inputConcept": {
+			"type": "object",
+			"description": "Information to pass to backend systems.",
+			"properties": {
+				"variable": {
+					"$ref": "#/$defs/variable",
+					"description": "Variable."
+				},
+				"variableId": {
+					"type": "string",
+					"description": "UUID of the variable."
+				},
+				"concept": {
+					"$ref": "#/$defs/entity",
+					"description": "Entity name."
+				},
+				"conceptId": {
+					"type": "string",
+					"description": "UUID of the entity."
+				},
+				"intent": {
+					"type": "string",
+					"description": "Type of intent data (e.g., INTENT_VALUE)."
+				},
+				"specialOperand": {
+					"type": "string",
+					"description": "Special operand like LAST_COLLECTION_INTERPRETATION."
+				}
+			}
+		},
+		"intent": {
+			"type": "object",
+			"description": "Represents an intent in the project.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique ID of the intent."
+				},
+				"projectId": {
+					"type": "string",
+					"description": "ID of the project this intent belongs to."
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the intent (follows naming guidelines)."
+				},
+				"conceptIds": {
+					"type": "array",
+					"description": "List of UUIDs for the entities associated with this intent.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"isInBaseOntology": {
+					"type": "boolean",
+					"description": "True if this intent is predefined; false if it is custom."
+				},
+				"lastModified": {
+					"type": "string",
+					"description": "Reserved for future use."
+				}
+			}
+		},
+		"intentMapperNode2": {
+			"type": "object",
+			"description": "An intent mapper node handles NLU routing by mapping intents to specific components or nodes.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node, following naming guidelines."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the node."
+				},
+				"intentMappings": {
+					"type": "array",
+					"description": "List of local intent-to-destination mappings overriding global mappings.",
+					"items": {
+						"$ref": "#/$defs/nodeIntentMapping"
+					}
+				},
+				"transition": {
+					"$ref": "#/$defs/transition",
+					"description": "Specifies the transition after completing the interaction for a mapped intent."
+				},
+				"transitionId": {
+					"type": "string",
+					"description": "UUID of the transition associated with this intent mapper node."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp of the last modification (ISO 8601 format)."
+				}
+			}
+		},
+		"interactiveElement": {
+			"type": "object",
+			"description": "Defines a clickable UI element for users.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the clickable element."
+				},
+				"order": {
+					"type": "number",
+					"description": "Display order."
+				},
+				"entityValue": {
+					"type": "string",
+					"description": "Value collected when clicked."
+				},
+				"clickableDescription": {
+					"type": "string",
+					"description": "Optional description."
+				},
+				"imageUrl": {
+					"type": "string",
+					"description": "Optional image URL."
+				},
+				"label": {
+					"type": "string",
+					"description": "Text label."
+				},
+				"channel": {
+					"type": "string",
+					"description": "Target channel."
+				},
+				"language": {
+					"type": "string",
+					"description": "Language code (e.g., en-US)."
+				},
+				"enabled": {
+					"type": "boolean",
+					"description": "Whether the element is enabled."
+				},
+				"entityId": {
+					"type": "string",
+					"description": "Entity associated with this element."
+				}
+			}
+		},
+		"leftOperand": {
+			"type": "object",
+			"description": "Represents the left operand in an assign action.",
+			"oneOf": [
+				{
+					"properties": {
+						"lhsVariable": {
+							"$ref": "#/$defs/variable"
+						}
+					}
+				},
+				{
+					"properties": {
+						"lhsVariableExpression": {
+							"$ref": "#/$defs/variableExpression"
+						}
+					}
+				},
+				{
+					"properties": {
+						"lhsConceptId": {
+							"type": "string",
+							"description": "UUID of the entity to set."
+						}
+					}
+				},
+				{
+					"properties": {
+						"lhsIntent": {
+							"type": "string",
+							"enum": ["INTENT_VALUE"],
+							"description": "INTENT_VALUE constant."
+						}
+					}
+				}
+			]
+		},
+		"localCommandOverride": {
+			"type": "object",
+			"description": "Local handling override for global commands.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the override."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the node."
+				},
+				"entityId": {
+					"type": "string",
+					"description": "UUID of the global command entity."
+				},
+				"entityValue": {
+					"type": "string",
+					"description": "Entity value being overridden."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Processing items to run."
+				},
+				"enabled": {
+					"type": "boolean",
+					"description": "Enable or disable override."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing items."
+				}
+			}
+		},
+		"localConfirmationBehavior": {
+			"type": "object",
+			"description": "Handles confirmation events like yes or no prompts.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the confirmation behavior."
+				},
+				"event": {
+					"type": "string",
+					"description": "Confirmation event type."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Actions taken on confirmation."
+				},
+				"disabledChannelIds": {
+					"type": "array",
+					"description": "Channels where confirmation behavior is disabled.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the node."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing items."
+				}
+			}
+		},
+		"localRecoveryBehavior": {
+			"type": "object",
+			"description": "Handles no match or max no match recovery.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the recovery behavior."
+				},
+				"event": {
+					"type": "string",
+					"description": "Event ID like nomatch1-prompt."
+				},
+				"escalationLevel": {
+					"type": "number",
+					"description": "Deprecated. Previously used for escalation levels."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Items executed during recovery."
+				},
+				"disabledChannelIds": {
+					"type": "array",
+					"description": "Channels where recovery is disabled.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the node this applies to."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing item group."
+				}
+			}
+		},
+		"mappingDestination": {
+			"type": "object",
+			"description": "Destination for intent mappings—either a nodeId or componentId.",
+			"properties": {
+				"componentId": {
+					"type": "string",
+					"description": "UUID of the destination component."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the destination node."
+				}
+			}
+		},
+		"messageNode": {
+			"type": "object",
+			"description": "A message node used to display or play messages to the user.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the node."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "List of processing items that define the message content."
+				},
+				"view": {
+					"$ref": "#/$defs/view",
+					"description": "Formatting information for the client application display."
+				},
+				"nodeSettingOverride": {
+					"type": "array",
+					"description": "Overrides to global settings such as disabling barge-in.",
+					"items": {
+						"$ref": "#/$defs/nodeSettingOverride"
+					}
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the associated processing item group."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modified timestamp in ISO 8601 format."
+				}
+			}
+		},
+		"methodParameter": {
+			"description": "Represents a parameter in a method call. Only one of 'constant', 'variableId', or 'conceptId' should be specified.",
+			"type": "object",
+			"properties": {
+				"constant": {
+					"type": "string",
+					"description": "Constant string value to be passed to the method"
+				},
+				"variableId": {
+					"type": "string",
+					"format": "uuid",
+					"description": "UUID of a variable to be passed to the method. May also be a special system variable like 'SYS_VAR_channel'"
+				},
+				"conceptId": {
+					"type": "string",
+					"format": "uuid",
+					"description": "UUID of a concept or entity to be passed to the method"
+				}
+			}
+		},
+		"modality": {
+			"description": "Represents a modality in a channel.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the modality"
+				},
+				"channelId": {
+					"type": "string",
+					"description": "UUID of the channel"
+				},
+				"name": {
+					"type": "string",
+					"description": "One of the supported output modalities or input modalities",
+					"enum": ["Rich Text", "TTS", "Audio Script", "Text", "Interactivity", "Voice", "DTMF"]
+				},
+				"disabled": {
+					"type": "boolean",
+					"description": "True if the modality is disabled; otherwise, false"
+				},
+				"lastModified": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification"
+				}
+			}
+		},
+		"node": {
+			"description": "Represents a node in a component.",
+			"type": "object",
+			"oneOf": [
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["recognitionNode2"],
+							"properties": {
+								"recognitionNode2": {
+									"$ref": "#/$defs/recognitionNode2"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["messageNode"],
+							"properties": {
+								"messageNode": {
+									"$ref": "#/$defs/messageNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["decisionNode"],
+							"properties": {
+								"decisionNode": {
+									"$ref": "#/$defs/decisionNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["dataaccessNode"],
+							"properties": {
+								"dataaccessNode": {
+									"$ref": "#/$defs/dataAccessNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["controllerNode"],
+							"properties": {
+								"controllerNode": {
+									"$ref": "#/$defs/controllerNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["intentmapperNode2"],
+							"properties": {
+								"intentmapperNode2": {
+									"$ref": "#/$defs/intentMapperNode2"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["componentNode"],
+							"properties": {
+								"componentNode": {
+									"$ref": "#/$defs/componentNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["startNode"],
+							"properties": {
+								"startNode": {
+									"$ref": "#/$defs/startNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["externalactionNode"],
+							"properties": {
+								"externalactionNode": {
+									"$ref": "#/$defs/externalactionNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["endNode"],
+							"properties": {
+								"endNode": {
+									"$ref": "#/$defs/endNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				},
+				{
+					"allOf": [
+						{
+							"$ref": "#/$defs/sharedNodeProperties"
+						},
+						{
+							"type": "object",
+							"required": ["transferNode"],
+							"properties": {
+								"transferNode": {
+									"$ref": "#/$defs/transferNode"
+								}
+							},
+							"additionalProperties": true
+						}
+					]
+				}
+			]
+		},
+		"nodeIntentMapping": {
+			"type": "object",
+			"description": "Defines how a specific intent maps to a destination component or node.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the intent mapping."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the intent mapper node."
+				},
+				"intentId": {
+					"type": "string",
+					"description": "UUID of the intent being mapped."
+				},
+				"destination": {
+					"$ref": "#/$defs/mappingDestination",
+					"description": "Destination for the mapped intent (component or node)."
+				}
+			}
+		},
+		"nodeSettingOverride": {
+			"type": "object",
+			"description": "Overrides default node behavior settings.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the override."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the node."
+				},
+				"settingType": {
+					"type": "string",
+					"description": "Category of setting (e.g., DTMF_SETTINGS)."
+				},
+				"channelId": {
+					"type": "string",
+					"description": "UUID of the channel."
+				},
+				"value": {
+					"type": "string",
+					"description": "Override value."
+				},
+				"settingName": {
+					"type": "string",
+					"description": "Name of the specific setting."
+				},
+				"language": {
+					"type": "string",
+					"description": "Language code (e.g., en-US)."
+				}
+			}
+		},
+		"ontology": {
+			"description": "Represents the ontology used for this project.",
+			"type": "object",
+			"properties": {
+				"projectId": {
+					"type": "string",
+					"description": "ID of the project."
+				},
+				"intents": {
+					"type": "array",
+					"description": "List of intents defined in the project.",
+					"items": {
+						"$ref": "#/$defs/intent"
+					}
+				},
+				"concepts": {
+					"type": "array",
+					"description": "List of entities (concepts) defined in the project.",
+					"items": {
+						"$ref": "#/$defs/entity"
+					}
+				},
+				"lastModified": {
+					"type": "string",
+					"description": "Reserved for future use."
+				}
+			}
+		},
+		"processingItem": {
+			"type": "object",
+			"description": "An individual processing item within a list.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the processing item."
+				},
+				"note": {
+					"type": "string",
+					"maxLength": 4000,
+					"description": "Designer notes or descriptions for this item."
+				},
+				"promptGroupId": {
+					"type": "string",
+					"description": "UUID of the prompt group, only for items of type 'promptGroup'."
+				}
+			},
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"condition": {
+							"$ref": "#/$defs/condition",
+							"description": "Sets a condition (such as if, else if, else) to control the dialog flow"
+						}
+					}
+				},
+				{
+					"type": "object",
+					"properties": {
+						"action": {
+							"$ref": "#/$defs/action",
+							"description": "Performs one of these actions: assign a value to a variable or set a log message"
+						}
+					}
+				},
+				{
+					"type": "object",
+					"properties": {
+						"promptGroup": {
+							"$ref": "#/$defs/promptGroup",
+							"description": "Sets a prompt"
+						}
+					}
+				},
+				{
+					"type": "object",
+					"properties": {
+						"transition": {
+							"$ref": "#/$defs/transition",
+							"description": "Sets a transition to another node or throws an event"
+						}
+					}
+				},
+				{
+					"type": "object",
+					"properties": {
+						"placeholderProcessingType": {
+							"type": "string",
+							"description": "note for designer notes; action for an action that is not yet defined; prompt_tts, prompt_text, or prompt_ttsAudio for a message that is not yet defined"
+						}
+					}
+				}
+			]
+		},
+		"processingItemGroup": {
+			"type": "object",
+			"description": "A container for processing items grouped by channel.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the processing item group."
+				},
+				"channelProcessingItemsMap": {
+					"type": "object",
+					"description": "Map of channel UUIDs to their processing item lists.",
+					"additionalProperties": {
+						"$ref": "#/$defs/processingItemList"
+					}
+				},
+				"lastModified": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp of last modification in ISO 8601 format."
+				},
+				"parentNodeId": {
+					"type": "string",
+					"description": "UUID of the node this group belongs to."
+				}
+			}
+		},
+		"processingItemList": {
+			"type": "object",
+			"description": "List of processing items for a specific channel.",
+			"properties": {
+				"processingItems": {
+					"type": "array",
+					"description": "List of processing items.",
+					"items": {
+						"$ref": "#/$defs/processingItemList"
+					}
+				}
+			}
+		},
+		"project": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Unique identifier for the project"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the project"
+				},
+				"defaultLocale": {
+					"type": "string",
+					"description": "Default locale for the project, as a 4-letter language code (e.g., en-US)"
+				},
+				"supportedLocales": {
+					"type": "array",
+					"description": "Supported locales for the project",
+					"items": {
+						"type": "string"
+					}
+				},
+				"connectorColors": {
+					"type": "object",
+					"description": "Deprecated"
+				},
+				"baseServiceUrl": {
+					"type": "string",
+					"description": "Base application URL (e.g., mycompany.com/mix)"
+				},
+				"staticProjectId": {
+					"type": "string",
+					"description": "ID of the master project, used to link different versions"
+				},
+				"version": {
+					"type": "string",
+					"description": "Version number of the project"
+				},
+				"supportedChannels": {
+					"type": "array",
+					"description": "Standard channels for system interaction (e.g., IVR, Web, SMS)",
+					"items": {
+						"$ref": "#/$defs/channel"
+					}
+				},
+				"supportedCustomChannels": {
+					"type": "array",
+					"description": "Deprecated"
+				},
+				"richTextChannels": {
+					"type": "array",
+					"description": "Deprecated"
+				},
+				"globalConfirmations": {
+					"type": "array",
+					"description": "Global and default confirmation behaviors",
+					"items": {
+						"$ref": "#/$defs/confirmation"
+					}
+				},
+				"components": {
+					"type": "array",
+					"description": "Components in the project",
+					"items": {
+						"$ref": "#/$defs/component"
+					}
+				},
+				"recovery": {
+					"type": "array",
+					"description": "Global and channel-specific recovery handling",
+					"items": {
+						"$ref": "#/$defs/recoveryHandling"
+					}
+				},
+				"variables": {
+					"type": "array",
+					"description": "Variables used in the project",
+					"items": {
+						"$ref": "#/$defs/variable"
+					}
+				},
+				"complexVariableTypes": {
+					"type": "array",
+					"description": "Complex variable schemas in the project",
+					"items": {
+						"$ref": "#/$defs/schema"
+					}
+				},
+				"promptGroups": {
+					"type": "array",
+					"description": "Messages used in the project",
+					"items": {
+						"$ref": "#/$defs/promptGroup"
+					}
+				},
+				"parentId": {
+					"type": "string",
+					"description": "ID of the parent project"
+				},
+				"ontologyId": {
+					"type": "string",
+					"description": "UUID of the ontology used for this dialog project"
+				},
+				"ontology": {
+					"$ref": "#/$defs/ontology",
+					"description": "Intents and entities for this dialog project"
+				},
+				"globalSettings": {
+					"type": "array",
+					"description": "Deprecated (superseded by globalSettingOverrides)"
+				},
+				"backendConfig": {
+					"type": "array",
+					"description": "Backend connection presets for the project",
+					"items": {
+						"$ref": "#/$defs/backendConnectionPreset"
+					}
+				},
+				"upgradeVersion": {
+					"type": "number",
+					"description": "Internal version number used for upgrade reference"
+				},
+				"events": {
+					"type": "array",
+					"description": "Global and custom events in the project",
+					"items": {
+						"$ref": "#/$defs/event"
+					}
+				},
+				"globalCommandsEntityId": {
+					"type": "string",
+					"description": "UUID of the entity used to store a command from the user"
+				},
+				"globalCommands": {
+					"type": "array",
+					"description": "Global commands defined in the project",
+					"items": {
+						"$ref": "#/$defs/command"
+					}
+				},
+				"dressAliases": {
+					"type": "array",
+					"description": "Data host aliases",
+					"items": {
+						"$ref": "#/$defs/dataHostAlias"
+					}
+				},
+				"globalSettingOverrides": {
+					"type": "array",
+					"description": "Overrides to the default global settings for the project",
+					"items": {
+						"$ref": "#/$defs/globalSettingOverride"
+					}
+				},
+				"ndfVersion": {
+					"type": "string",
+					"description": "Version of the Dialog runtime service to target"
+				},
+				"projectIntentMappings": {
+					"type": "array",
+					"description": "Global mappings from intents to components",
+					"items": {
+						"$ref": "#/$defs/projectIntentMapping"
+					}
+				},
+				"enginePackVersion": {
+					"type": "string",
+					"description": "Engine pack version for self-hosted Mix environments"
+				},
+				"environmentConfigurations": {
+					"type": "array",
+					"description": "Default base URL for external grammars",
+					"items": {
+						"$ref": "#/$defs/environmentConfiguration"
+					}
+				},
+				"versionTimestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Creation date and time for this project version"
+				},
+				"lastModified": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification"
+				}
+			}
+		},
+		"projectIntentMapping": {
+			"description": "Represents the global mapping of one intent to a component. Intent mapper nodes inherit these global mappings and can override them if needed.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the mapping"
+				},
+				"intentId": {
+					"type": "string",
+					"description": "UUID of the intent being mapped"
+				},
+				"destination": {
+					"type": "object",
+					"description": "Key-value pair where the key is componentId and the value is the UUID of the component",
+					"patternProperties": {
+						"^[a-zA-Z0-9_-]+$": {
+							"type": "string",
+							"description": "UUID of the component to which the intent is mapped"
+						}
+					},
+					"additionalProperties": false,
+					"minProperties": 1
+				}
+			}
+		},
+		"prompt": {
+			"type": "object",
+			"description": "A single prompt entry in the group.",
+			"properties": {
+				"payload": {
+					"$ref": "#/$defs/promptPayload",
+					"description": "Content payload of the prompt."
+				},
+				"language": {
+					"type": "string",
+					"description": "Locale code for the prompt (e.g., en-US)."
+				},
+				"channel": {
+					"type": "string",
+					"description": "UUID of the channel this prompt is used for."
+				},
+				"lastModified": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last modification time for the prompt."
+				}
+			}
+		},
+		"promptGroup": {
+			"type": "object",
+			"description": "A group of related prompts, used to present messages in a dialog system.",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the prompt group."
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the prompt group."
+				},
+				"prompts": {
+					"type": "array",
+					"description": "List of prompts in this group.",
+					"items": {
+						"$ref": "#/$defs/prompt"
+					}
+				},
+				"audioFileId": {
+					"type": "string",
+					"maxLength": 255,
+					"description": "Name of the audio file for the Audio Script modality."
+				},
+				"bargeinDisabled": {
+					"type": "boolean",
+					"description": "If true, barge-in is disabled for this prompt group."
+				},
+				"lastModified": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time the prompt group was last modified."
+				}
+			}
+		},
+		"promptPayload": {
+			"type": "object",
+			"description": "Payload details of a prompt, including text, TTS, and annotations.",
+			"properties": {
+				"displayText": {
+					"type": "string",
+					"description": "Text to display with dynamic placeholders."
+				},
+				"ttsText": {
+					"type": "string",
+					"description": "Text to be spoken by TTS, with placeholders."
+				},
+				"audioFile": {
+					"type": "string",
+					"description": "Deprecated. Path to audio file."
+				},
+				"displayTextAnnotations": {
+					"type": "array",
+					"description": "Annotations in the display text.",
+					"items": {
+						"$ref": "#/$defs/annotation"
+					}
+				},
+				"ttsTextAnnotations": {
+					"type": "array",
+					"description": "Annotations in the TTS text.",
+					"items": {
+						"$ref": "#/$defs/annotation"
+					}
+				},
+				"ttsAudioBackup": {
+					"type": "string",
+					"description": "Backup TTS text if audio file is unavailable."
+				},
+				"ttsAudioBackupAnnotations": {
+					"type": "array",
+					"description": "Annotations in the backup TTS text.",
+					"items": {
+						"$ref": "#/$defs/annotation"
+					}
+				}
+			}
+		},
+		"recognitionNode2": {
+			"type": "object",
+			"description": "A question and answer node is the basic node type in dialog applications. It recognizes user input. In a node object literal, the question and answer node element is identified with this key: recognitionNode2.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node"
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Description of the node"
+				},
+				"initialMessage": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Processing items to perform before recognition"
+				},
+				"collectionType": {
+					"type": "string",
+					"description": "Type of data to collect—for example, INTENT_TYPE, CUSTOM_LIST_TYPE, YES_NO, NUANCE_ORDINAL_NUMBER; empty for a menu-type entity"
+				},
+				"actionConfigurations": {
+					"type": "array",
+					"description": "Processing items to perform for each entity value or ASR value of a menu-type, yes/no or Boolean entity; empty for list-type entities",
+					"items": {
+						"$ref": "#/$defs/actionConfiguration"
+					}
+				},
+				"inputManagerReferenceId": {
+					"type": "string",
+					"description": "UUID of the question router node handling any user input that is not recognized as the entity this question and answer node is to collect, if any; empty if collectionType is INTENT_TYPE"
+				},
+				"entityId": {
+					"type": "string",
+					"description": "UUID of the entity to collect, if any; empty if collectionType is INTENT_TYPE"
+				},
+				"recoRecoveryBehaviors": {
+					"type": "array",
+					"description": "Local recovery behaviors for handling collection events, such as no match, max no match",
+					"items": {
+						"$ref": "#/$defs/localRecoveryBehavior"
+					}
+				},
+				"defaultIntentProcessingItem": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Only present if collectionType is INTENT_TYPE; processing items to perform after intent recognition"
+				},
+				"defaultConceptProcessingItem": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Only present if collectionType is not INTENT_TYPE; processing items to perform after entity recognition"
+				},
+				"initialProcessingItem": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Processing items to perform before the value-specific processing items—only present if collectionType is empty, YES_NO or nuance_BOOLEAN"
+				},
+				"reentryMessage": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "Optional processing items to perform before recognition—instead of initialMessage—, when the dialog flow reenters this node"
+				},
+				"clickables": {
+					"type": "array",
+					"description": "Optional interactive elements for values of the entity to collect, if collectionType is CUSTOM_LIST_TYPE, YES_NO or NUANCE_BOOLEAN, and for values of the global command entity for which an override is defined at this node; otherwise, empty",
+					"items": {
+						"$ref": "#/$defs/interactiveElement"
+					}
+				},
+				"view": {
+					"$ref": "#/$defs/view",
+					"description": "Formatting information to pass to the client application for messages and interactive elements"
+				},
+				"inputVariablesConcepts": {
+					"type": "array",
+					"description": "Key-value pairs representing variables, entities, and other objects to pass on to the client application",
+					"items": {
+						"type": "object"
+					}
+				},
+				"nodeSettingOverride": {
+					"type": "array",
+					"description": "Overrides to the default global settings for this node",
+					"items": {
+						"$ref": "#/$defs/nodeSettingOverride"
+					}
+				},
+				"recoConfirmationBehaviors": {
+					"type": "array",
+					"description": "Local behaviors for handling confirmation events, such as a no match, a positive or negative response to a confirmation prompt",
+					"items": {
+						"$ref": "#/$defs/localConfirmationBehavior"
+					}
+				},
+				"dtmfToEntityValueMapping": {
+					"type": "array",
+					"description": "Mappings between DTMF keys and values of the entity to collect, if collectionType is CUSTOM_LIST_TYPE, YES_NO or NUANCE_BOOLEAN; otherwise, empty",
+					"items": {
+						"$ref": "#/$defs/dtmfMapping"
+					}
+				},
+				"nodeCommandOverrides": {
+					"type": "array",
+					"description": "Local handling for specified values of the global command entity",
+					"items": {
+						"$ref": "#/$defs/localCommandOverride"
+					}
+				},
+				"defaultConceptProcessingId": {
+					"type": "string",
+					"description": "UUID of defaultConceptProcessingItem"
+				},
+				"defaultIntentProcessingId": {
+					"type": "string",
+					"description": "UUID of defaultIntentProcessingItem"
+				},
+				"initialProcessingId": {
+					"type": "string",
+					"description": "UUID of initialProcessingItem"
+				},
+				"reentryMessageId": {
+					"type": "string",
+					"description": "UUID of reentryMessage"
+				},
+				"initialMessageProcessingItemId": {
+					"type": "string",
+					"description": "UUID of initialMessage"
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "ate and time of the last modification, in this format: YYYY-MM-DD hh:mm:ssZ—for example, 2019-08-21T08:34:27Z"
+				}
+			}
+		},
+		"recoveryBehavior": {
+			"description": "Represents a global or channel-specific recovery behavior for confirmation or error recovery handling.",
+			"type": "object",
+			"properties": {
+				"event": {
+					"type": "string",
+					"description": "Event ID—e.g., nomatch1-pre-prompt, nomatch1-prompt, yes-prompt, no-prompt"
+				},
+				"escalationLevel": {
+					"type": "number",
+					"description": "Deprecated (event includes the escalation level)"
+				},
+				"processingItemsList": {
+					"type": "object",
+					"description": "Processing items to perform",
+					"$ref": "#/$defs/processingItemList"
+				},
+				"enabled": {
+					"type": "boolean",
+					"description": "True if the global recovery behavior is enabled; otherwise, false"
+				}
+			}
+		},
+		"recoveryHandling": {
+			"description": "Represents a global (default) or channel-specific error recovery handling.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the recovery behavior"
+				},
+				"globalValue": {
+					"type": "string",
+					"description": "Deprecated"
+				},
+				"recoveryBehaviors": {
+					"type": "array",
+					"description": "Error handling for the recovery behavior",
+					"items": {
+						"$ref": "#/$defs/recoveryBehavior"
+					}
+				},
+				"channelId": {
+					"type": "string",
+					"description": "UUID of the channel"
+				}
+			}
+		},
+		"rightOperand": {
+			"type": "object",
+			"description": "Represents the right operand in an assign action.",
+			"oneOf": [
+				{
+					"properties": {
+						"constant": {
+							"type": "string",
+							"maxLength": 64000,
+							"description": "A literal string constant."
+						}
+					}
+				},
+				{
+					"properties": {
+						"variable": {
+							"$ref": "#/$defs/variable"
+						}
+					}
+				},
+				{
+					"properties": {
+						"variableExpression": {
+							"$ref": "#/$defs/variableExpression"
+						}
+					}
+				},
+				{
+					"properties": {
+						"expression": {
+							"$ref": "#/$defs/expression"
+						}
+					}
+				},
+				{
+					"properties": {
+						"conceptId": {
+							"type": "string",
+							"description": "UUID of the referenced entity."
+						}
+					}
+				},
+				{
+					"properties": {
+						"conceptIdLiteral": {
+							"type": "string",
+							"description": "UUID of the entity literal."
+						}
+					}
+				},
+				{
+					"properties": {
+						"conceptIdFormattedLiteral": {
+							"type": "string",
+							"description": "UUID of the formatted literal."
+						}
+					}
+				},
+				{
+					"properties": {
+						"intent": {
+							"type": "string",
+							"enum": ["INTENT_VALUE", "INTENT_LITERAL", "INTENT_FORMATTED_LITERAL", "INTENT_CONFIDENCE"],
+							"description": "Intent value or metadata."
+						}
+					}
+				},
+				{
+					"properties": {
+						"specialOperand": {
+							"type": "string",
+							"enum": ["NULL", "NEW_OBJECT"],
+							"description": "Special operands to nullify or initialize values."
+						}
+					}
+				},
+				{
+					"properties": {
+						"channelId": {
+							"type": "string",
+							"description": "UUID of the channel, only used if lhsVariableId is SYS_VAR_channel."
+						}
+					}
+				}
+			]
+		},
+		"schema": {
+			"description": "Represents a complex variable schema in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the schema."
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the schema (follows naming guidelines)."
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the schema (maximum 255 characters).",
+					"maxLength": 255
+				},
+				"fields": {
+					"type": "array",
+					"description": "List of variables included in the schema.",
+					"items": {
+						"$ref": "#/$defs/variable"
+					},
+					"minItems": 1
+				},
+				"isReserved": {
+					"type": "boolean",
+					"description": "True if this is a reserved schema (e.g., DynamicMessageReference); otherwise, false."
+				}
+			}
+		},
+		"sharedNodeProperties": {
+			"type": "object",
+			"required": ["id", "parentComponentId"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the node"
+				},
+				"parentComponentId": {
+					"type": "string",
+					"description": "UUID of the parent component"
+				},
+				"eventHandlers": {
+					"type": "array",
+					"description": "Node-level event handlers—override component and global handlers",
+					"items": {
+						"$ref": "#/$defs/eventHandler"
+					}
+				}
+			}
+		},
+		"startNode": {
+			"type": "object",
+			"description": "Represents the entry point of an application (Start node) or a component (Enter node).",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the node. For Start or Enter nodes, this should always be 'start'."
+				},
+				"description": {
+					"type": "string",
+					"maxLength": 1000,
+					"description": "Detailed description of the node."
+				},
+				"processingItems": {
+					"$ref": "#/$defs/processingItemGroup",
+					"description": "List of processing items to execute at entry (supports actions only)."
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the next node in the dialog flow."
+				},
+				"processingItemsId": {
+					"type": "string",
+					"description": "UUID of the processing item group."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification (ISO 8601 format)."
+				}
+			}
+		},
+		"transferNode": {
+			"description": "Represents an end node in the project - deprecated",
+			"type": "object"
+		},
+		"transition": {
+			"description": "Represents a transition or a throw event action in a processing item; used in data access nodes, external action nodes, event handlers, or intent switches.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the transition."
+				},
+				"transitionType": {
+					"type": "string",
+					"description": "Specifies the type of transition.",
+					"enum": ["GO_TO", "GO_BACK_TO", "RETURN", "RETURN_TO_INTENT_MAPPER", "THROW", "NO_TRANSITION_TYPE"]
+				},
+				"eventId": {
+					"type": "string",
+					"description": "Event string to be thrown and caught elsewhere; only used when transitionType is THROW."
+				},
+				"eventLog": {
+					"type": "string",
+					"description": "Optional description or log message when the event is thrown; relevant for THROW transitions."
+				},
+				"label": {
+					"type": "string",
+					"description": "Descriptive label for the transition; maximum of 63 characters.",
+					"maxLength": 63
+				},
+				"nodeId": {
+					"type": "string",
+					"description": "UUID of the destination node; used with GO_TO and GO_BACK_TO transition types."
+				}
+			}
+		},
+		"variable": {
+			"description": "Represents a variable used in the project.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "UUID of the variable or SYS_VAR_channel for the predefined variable channel."
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the variable."
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the variable (maximum 255 characters).",
+					"maxLength": 255
+				},
+				"possibleValues": {
+					"type": "array",
+					"description": "Valid values for the variable. Not yet supported in Mix.dialog.",
+					"items": {
+						"type": "string"
+					}
+				},
+				"uiDefaultValue": {
+					"type": "string",
+					"description": "Value used during preview in Mix.dialog."
+				},
+				"isReserved": {
+					"type": "boolean",
+					"description": "True if the variable is reserved."
+				},
+				"masked": {
+					"type": "boolean",
+					"description": "True if the variable should be masked in logs (for sensitive data)."
+				},
+				"reportingType": {
+					"type": "string",
+					"description": "Reporting type of the variable.",
+					"enum": ["REPORTING_TYPE_NONE", "ATTRIBUTE_TYPE", "METRIC_TYPE", "DIMENSION_TYPE", "NOT_SET"]
+				},
+				"simpleVariableType": {
+					"type": "string",
+					"description": "Data type for simple variables.",
+					"enum": [
+						"STRING_TYPE",
+						"ALPHANUM_TYPE",
+						"DIGITS_TYPE",
+						"BOOLEAN_TYPE",
+						"INTEGER_TYPE",
+						"DECIMAL_TYPE",
+						"AMOUNT_TYPE",
+						"DATE_TYPE",
+						"TIME_TYPE",
+						"DISTANCE_TYPE",
+						"TEMPERATURE_TYPE",
+						"LIST_TYPE",
+						"DYNAMIC_ENTITY_DATA"
+					]
+				},
+				"simpleGenericType": {
+					"type": "string",
+					"description": "Type of items in the list for variables with LIST_TYPE."
+				},
+				"complexGenericTypeId": {
+					"type": "string",
+					"description": "UUID of the schema for list items if the list contains complex variables."
+				},
+				"complexVariableTypeId": {
+					"type": "string",
+					"description": "UUID of the schema used for this complex variable."
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp of the last modification in ISO 8601 format."
+				}
+			}
+		},
+		"variableExpression": {
+			"description": "Represents a complex variable field, or the result of a supported method against a variable.",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"format": "uuid",
+					"description": "UUID of the variable expression"
+				},
+				"variableId": {
+					"type": "string",
+					"format": "uuid",
+					"description": "UUID of the variable being referenced in the expression"
+				},
+				"timestamp": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date and time of the last modification, in ISO 8601 format (e.g., 2019-08-21T08:34:27Z)"
+				},
+				"operations": {
+					"type": "array",
+					"description": "Operations to be performed against the specified variable. Multiple operations are chained—each applied to the result of the previous one.",
+					"items": {
+						"$ref": "#/$defs/variableOperation",
+						"description": "An operation applied to a variable in the expression chain"
+					}
+				}
+			}
+		},
+		"variableExpressionHeader": {
+			"type": "object",
+			"description": "Header value derived from a complex variable field.",
+			"properties": {
+				"variableExpression": {
+					"$ref": "#/$defs/variableExpression"
+				}
+			}
+		},
+		"variableHeader": {
+			"type": "object",
+			"description": "Header value derived from a variable.",
+			"properties": {
+				"variable": {
+					"$ref": "#/$defs/variable"
+				}
+			}
+		},
+		"variableOperation": {
+			"description": "Represents an operation in a variable expression. Either a selectField or callMethod operation should be used.",
+			"type": "object",
+			"properties": {
+				"selectField": {
+					"type": "object",
+					"description": "Selects a field from the schema of a complex variable. Used to navigate deeply nested structures.",
+					"additionalProperties": {
+						"type": "string"
+					}
+				},
+				"callMethod": {
+					"$ref": "#/$defs/callMethod",
+					"description": "Calls a method on the specified variable or field."
+				}
+			}
+		},
+		"view": {
+			"type": "object",
+			"description": "Defines formatting for client display.",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Type of visual layout (e.g., List, Buttons)."
+				},
+				"style": {
+					"type": "string",
+					"description": "CSS class or inline style."
+				}
+			}
+		}
+	}
+}

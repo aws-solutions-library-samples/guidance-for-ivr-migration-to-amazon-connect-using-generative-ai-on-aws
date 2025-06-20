@@ -1,0 +1,31 @@
+{
+	"name": "@ivr-migration-tool/infrastructure",
+	"module": "index.ts",
+	"type": "module",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"typecheck": "bunx tsc -b",
+		"clean": "bunx shx rm -rf dist tsconfig.tsbuildinfo",
+		"build": "bun run clean && bun --env-file=.env build.ts",
+		"watch": "bun cdk watch",
+		"cdk": "cdk",
+		"synth": "cdk synth --profile ${AWS_PROFILE:-default}",
+		"deploy": "cdk deploy --profile ${AWS_PROFILE:-default}"
+	},
+	"dependencies": {
+		"@ivr-migration-tool/cdk-common": "workspace:*",
+		"aws-cdk-lib": "^2.177.0",
+		"cdk-nag": "^2.36.0",
+		"constructs": "^10.4.2",
+		"shx": "^0.3.4"
+	},
+	"devDependencies": {
+		"@aws-sdk/client-ssm": "^3.777.0",
+		"@types/bun": "latest",
+		"aws-cdk": "2.1006.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.7.3"
+	}
+}

@@ -1,0 +1,3397 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IVR Migration API",
+    "description": "Manages creation of IVR migration resources.",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "def-0": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique id of bot",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "error"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "success"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "stopped"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "in-progress"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "built"
+                ]
+              }
+            ]
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ar_AE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ar_SA"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "de_DE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_AU"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_GB"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_IN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_US"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_ES"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_MX"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_US"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "fr_CA"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "fr_FR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "hi_IN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "it_IT"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ja_JP"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ko_KR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "pt_BR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "pt_PT"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "zh_CN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "zh_TW"
+                ]
+              }
+            ]
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "NUANCE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "VXML"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "FLOW_DIAGRAM"
+                ]
+              }
+            ]
+          },
+          "version": {
+            "default": "DRAFT",
+            "type": "string"
+          },
+          "statusMessages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "pending"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "stopped"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "in-progress"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "built"
+                      ]
+                    }
+                  ]
+                },
+                "message": {
+                  "description": "detail on the status message",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ],
+              "title": "botStatusMessage"
+            }
+          },
+          "inputUploadUrl": {
+            "description": "The URL to upload the input. This is a required parameter if type is VXML or TRSX.",
+            "type": "string"
+          },
+          "outputDownloadUrl": {
+            "description": "The URL to download the bot definition zip.",
+            "type": "string"
+          },
+          "rawOutputDownloadUrl": {
+            "description": "The URL to download the bot definition zip.",
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "locale",
+          "type",
+          "version",
+          "statusMessages",
+          "createdAt",
+          "createdBy"
+        ],
+        "title": "botResource"
+      },
+      "def-1": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "error"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "success"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "stopped"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "in-progress"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "built"
+                ]
+              }
+            ]
+          },
+          "message": {
+            "description": "detail on the status message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "title": "botStatusMessage"
+      },
+      "def-2": {
+        "type": "object",
+        "properties": {
+          "bots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/def-0"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "count": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "required": [
+          "bots"
+        ],
+        "title": "botListResource"
+      },
+      "def-3": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ar_AE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ar_SA"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "de_DE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_AU"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_GB"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_IN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "en_US"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_ES"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_MX"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "es_US"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "fr_CA"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "fr_FR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "hi_IN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "it_IT"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ja_JP"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "ko_KR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "pt_BR"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "pt_PT"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "zh_CN"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "zh_TW"
+                ]
+              }
+            ]
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "NUANCE"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "VXML"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "FLOW_DIAGRAM"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "locale",
+          "type"
+        ],
+        "title": "createBotResource"
+      },
+      "def-4": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier of testset",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "error"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "success"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "stopped"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "in-progress"
+                ]
+              }
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "dataSource": {
+            "type": "object",
+            "properties": {
+              "botDataSource": {
+                "type": "object",
+                "properties": {
+                  "botId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "botId"
+                ]
+              }
+            },
+            "required": [
+              "botDataSource"
+            ]
+          },
+          "outputDownloadUrl": {
+            "description": "The URL to download the test file.",
+            "type": "string"
+          },
+          "statusMessages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "pending"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "stopped"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "in-progress"
+                      ]
+                    }
+                  ]
+                },
+                "message": {
+                  "description": "detail on the status message",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ],
+              "title": "testSetStatusMessage"
+            }
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "dataSource",
+          "statusMessages",
+          "createdAt",
+          "createdBy"
+        ],
+        "title": "testSetResource"
+      },
+      "def-5": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "error"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "success"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "stopped"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "in-progress"
+                ]
+              }
+            ]
+          },
+          "message": {
+            "description": "detail on the status message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "title": "testSetStatusMessage"
+      },
+      "def-6": {
+        "type": "object",
+        "properties": {
+          "testSets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "Unique identifier of testset",
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "pending"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "stopped"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "in-progress"
+                      ]
+                    }
+                  ]
+                },
+                "description": {
+                  "type": "string"
+                },
+                "dataSource": {
+                  "type": "object",
+                  "properties": {
+                    "botDataSource": {
+                      "type": "object",
+                      "properties": {
+                        "botId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "botId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "botDataSource"
+                  ]
+                },
+                "outputDownloadUrl": {
+                  "description": "The URL to download the test file.",
+                  "type": "string"
+                },
+                "statusMessages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "pending"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "error"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "success"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "stopped"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "in-progress"
+                            ]
+                          }
+                        ]
+                      },
+                      "message": {
+                        "description": "detail on the status message",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "message"
+                    ]
+                  }
+                },
+                "createdAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "updatedBy": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "status",
+                "dataSource",
+                "statusMessages",
+                "createdAt",
+                "createdBy"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "count": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "required": [
+          "testSets"
+        ],
+        "title": "testSetListResource"
+      },
+      "def-7": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dataSource": {
+            "type": "object",
+            "properties": {
+              "botDataSource": {
+                "type": "object",
+                "properties": {
+                  "botId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "botId"
+                ]
+              }
+            },
+            "required": [
+              "botDataSource"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "dataSource"
+        ],
+        "title": "createTestSetResource"
+      },
+      "def-8": {
+        "type": "object",
+        "properties": {
+          "uploadUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uploadUrl"
+        ],
+        "title": "testSetUploadUrlResource"
+      },
+      "def-9": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique id of test execution",
+            "type": "string"
+          },
+          "botId": {
+            "type": "string"
+          },
+          "testSetId": {
+            "type": "string"
+          },
+          "testSetName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "outputDownloadUrl": {
+            "description": "The URL to download the test file.",
+            "type": "string"
+          },
+          "failureReasons": {
+            "type": "array",
+            "items": {
+              "description": "Reasons why the test failed",
+              "type": "string"
+            }
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "error"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "success"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "stopped"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "in-progress"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "botId",
+          "testSetId",
+          "testSetName",
+          "createdAt",
+          "createdBy",
+          "status"
+        ],
+        "title": "testExecutionResource"
+      },
+      "def-10": {
+        "type": "object",
+        "properties": {
+          "testExecutions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "Unique id of test execution",
+                  "type": "string"
+                },
+                "botId": {
+                  "type": "string"
+                },
+                "testSetId": {
+                  "type": "string"
+                },
+                "testSetName": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "updatedBy": {
+                  "type": "string"
+                },
+                "outputDownloadUrl": {
+                  "description": "The URL to download the test file.",
+                  "type": "string"
+                },
+                "failureReasons": {
+                  "type": "array",
+                  "items": {
+                    "description": "Reasons why the test failed",
+                    "type": "string"
+                  }
+                },
+                "status": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "pending"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "stopped"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "enum": [
+                        "in-progress"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "botId",
+                "testSetId",
+                "testSetName",
+                "createdAt",
+                "createdBy",
+                "status"
+              ]
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "count": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "required": [
+          "testExecutions"
+        ],
+        "title": "testExecutionListResource"
+      },
+      "def-11": {
+        "type": "object",
+        "properties": {
+          "testSetId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "testSetId"
+        ],
+        "title": "createTestExecutionResource"
+      },
+      "def-12": {
+        "type": "object",
+        "properties": {
+          "testExecutionId": {
+            "description": "Unique id of test execution",
+            "type": "string"
+          },
+          "botId": {
+            "description": "Unique id of bot",
+            "type": "string"
+          }
+        },
+        "required": [
+          "testExecutionId",
+          "botId"
+        ],
+        "title": "taskNew"
+      },
+      "def-13": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Task resource id.",
+            "type": "string"
+          },
+          "taskStatus": {
+            "type": "string",
+            "enum": [
+              "in-progress",
+              "success",
+              "error"
+            ],
+            "description": "Task execution status"
+          },
+          "testExecutionId": {
+            "description": "Unique id of test execution",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "Date/time created",
+            "format": "date-time",
+            "type": "string"
+          },
+          "createdBy": {
+            "description": "ID of owner.",
+            "type": "string"
+          },
+          "statusMessage": {
+            "description": "message for the status",
+            "type": "string"
+          },
+          "progress": {
+            "description": "total progress of the task",
+            "type": "number"
+          },
+          "itemsTotal": {
+            "description": "total number of items in the task",
+            "type": "number"
+          },
+          "itemsSucceeded": {
+            "description": "total number of items succeeded",
+            "type": "number"
+          },
+          "itemsFailed": {
+            "description": "no. of items failed",
+            "type": "number"
+          },
+          "itemsCompleted": {
+            "description": "no. of items completed",
+            "type": "number"
+          },
+          "updatedAt": {
+            "description": "Date/time updated",
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "description": "Last ID of user who made a change.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "taskStatus",
+          "testExecutionId",
+          "createdAt",
+          "createdBy",
+          "itemsTotal",
+          "itemsSucceeded",
+          "itemsFailed",
+          "itemsCompleted"
+        ],
+        "title": "taskResource"
+      },
+      "def-14": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/def-13"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "lastEvaluated": {
+                "description": "Last evaluated task Id",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "tasks"
+        ],
+        "title": "executionTasks_list"
+      },
+      "def-15": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "description": "Recommendation task id.",
+            "type": "string"
+          },
+          "taskItemId": {
+            "description": "Recommendation task item id.",
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "error"
+            ],
+            "description": "Execution task item state"
+          },
+          "statusMessage": {
+            "description": "failure message",
+            "type": "string"
+          },
+          "recommendationDownloadUrl": {
+            "description": "recommendation download url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "taskId",
+          "taskItemId"
+        ],
+        "title": "taskItemResource"
+      },
+      "def-16": {
+        "type": "object",
+        "properties": {
+          "taskItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/def-15"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "token": {
+                "description": "Recommendation task item id.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "taskItems"
+        ],
+        "title": "taskItemListResource"
+      }
+    }
+  },
+  "paths": {
+    "/bots": {
+      "get": {
+        "operationId": "listBots",
+        "summary": "List all bots.",
+        "tags": [
+          "Bot"
+        ],
+        "description": "List all bots.\n\nPermissions:\n- `readers` may list bots.\n",
+        "parameters": [
+          {
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "count",
+            "required": true,
+            "description": "Count of results to return, if not specified default to 20"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "required": false,
+            "description": "Token used to paginate from (exclusive)."
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "type": "object",
+                  "properties": {
+                    "bots": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/def-0"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "count": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "bots"
+                  ]
+                },
+                "examples": {
+                  "List of bots": {
+                    "summary": "Paginated list of bots.",
+                    "value": {
+                      "bots": [
+                        {
+                          "id": "8IUFK6R7F2",
+                          "status": "success",
+                          "createdAt": "user@example.com",
+                          "createdBy": "2025-05-30T08:04:07.545Z",
+                          "name": "OrderCoffeeBot",
+                          "version": "DRAFT",
+                          "locale": "ar_AE",
+                          "type": "NUANCE",
+                          "statusMessages": [
+                            {
+                              "status": "pending",
+                              "message": "Creating Slots and SlotTypes."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bot"
+        ],
+        "description": "Create a bot",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/def-3"
+              },
+              "examples": {
+                "new bot request": {
+                  "value": {
+                    "name": "OrderCoffeeBot",
+                    "locale": "ar_AE",
+                    "type": "NUANCE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-0"
+                },
+                "examples": {
+                  "Bot": {
+                    "summary": "Existing bot.",
+                    "value": {
+                      "id": "8IUFK6R7F2",
+                      "status": "success",
+                      "createdAt": "user@example.com",
+                      "createdBy": "2025-05-30T08:04:07.545Z",
+                      "name": "OrderCoffeeBot",
+                      "version": "DRAFT",
+                      "locale": "ar_AE",
+                      "type": "NUANCE",
+                      "statusMessages": [
+                        {
+                          "status": "pending",
+                          "message": "Creating Slots and SlotTypes."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Bad request.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bots/{id}": {
+      "delete": {
+        "tags": [
+          "Bot"
+        ],
+        "description": "Delete a bot",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique id of bot"
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Bot"
+        ],
+        "description": "Retrieve details of an existing bot",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique id of bot"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-0"
+                },
+                "examples": {
+                  "Existing Execution Task": {
+                    "summary": "Existing Execution Task details.",
+                    "value": {
+                      "id": "8IUFK6R7F2",
+                      "status": "success",
+                      "createdAt": "user@example.com",
+                      "createdBy": "2025-05-30T08:04:07.545Z",
+                      "name": "OrderCoffeeBot",
+                      "version": "DRAFT",
+                      "locale": "ar_AE",
+                      "type": "NUANCE",
+                      "statusMessages": [
+                        {
+                          "status": "pending",
+                          "message": "Creating Slots and SlotTypes."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bots/{id}/build": {
+      "post": {
+        "tags": [
+          "Bot"
+        ],
+        "description": "Build a bot",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique id of bot"
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-0"
+                },
+                "examples": {
+                  "Bot": {
+                    "summary": "Existing bot.",
+                    "value": {
+                      "id": "8IUFK6R7F2",
+                      "status": "success",
+                      "createdAt": "user@example.com",
+                      "createdBy": "2025-05-30T08:04:07.545Z",
+                      "name": "OrderCoffeeBot",
+                      "version": "DRAFT",
+                      "locale": "ar_AE",
+                      "type": "NUANCE",
+                      "statusMessages": [
+                        {
+                          "status": "pending",
+                          "message": "Creating Slots and SlotTypes."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Bad request.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testSets": {
+      "get": {
+        "operationId": "listTestSets",
+        "summary": "List all test sets.",
+        "tags": [
+          "TestSet"
+        ],
+        "description": "List all test sets.\n\nPermissions:\n- `readers` may list all tests.\n",
+        "parameters": [
+          {
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "count",
+            "required": true,
+            "description": "Count of results to return, if not specified default to 20"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "required": false,
+            "description": "Token used to paginate from (exclusive)."
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "type": "object",
+                  "properties": {
+                    "testSets": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "Unique identifier of testset",
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "pending"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "error"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "success"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "stopped"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "in-progress"
+                                ]
+                              }
+                            ]
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "dataSource": {
+                            "type": "object",
+                            "properties": {
+                              "botDataSource": {
+                                "type": "object",
+                                "properties": {
+                                  "botId": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "botId"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "botDataSource"
+                            ]
+                          },
+                          "outputDownloadUrl": {
+                            "description": "The URL to download the test file.",
+                            "type": "string"
+                          },
+                          "statusMessages": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string",
+                                      "enum": [
+                                        "pending"
+                                      ]
+                                    },
+                                    {
+                                      "type": "string",
+                                      "enum": [
+                                        "error"
+                                      ]
+                                    },
+                                    {
+                                      "type": "string",
+                                      "enum": [
+                                        "success"
+                                      ]
+                                    },
+                                    {
+                                      "type": "string",
+                                      "enum": [
+                                        "stopped"
+                                      ]
+                                    },
+                                    {
+                                      "type": "string",
+                                      "enum": [
+                                        "in-progress"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "message": {
+                                  "description": "detail on the status message",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "message"
+                              ]
+                            }
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "createdBy": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "updatedBy": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "status",
+                          "dataSource",
+                          "statusMessages",
+                          "createdAt",
+                          "createdBy"
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "count": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "testSets"
+                  ]
+                },
+                "examples": {
+                  "List of test sets": {
+                    "summary": "Paginated list of test sets.",
+                    "value": {
+                      "testSets": [
+                        {
+                          "id": "test-set-id",
+                          "name": "sample-test-set",
+                          "status": "in-progress",
+                          "description": "sample-test-set-description",
+                          "dataSource": {
+                            "botDataSource": {
+                              "botId": "1234"
+                            }
+                          },
+                          "createdAt": "user@example.com",
+                          "createdBy": "2025-05-30T08:04:07.545Z",
+                          "statusMessages": [
+                            {
+                              "status": "pending",
+                              "message": "Importing test set to Amazon Lex."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TestSet"
+        ],
+        "description": "Create a test set",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/def-7"
+              },
+              "examples": {
+                "new test set request": {
+                  "value": {
+                    "name": "sample-test-set",
+                    "dataSource": {
+                      "botDataSource": {
+                        "botId": "1234"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-4"
+                },
+                "examples": {
+                  "CreatedTestSet": {
+                    "summary": "Existing TestSet.",
+                    "value": {
+                      "id": "test-set-id",
+                      "name": "sample-test-set",
+                      "status": "in-progress",
+                      "description": "sample-test-set-description",
+                      "dataSource": {
+                        "botDataSource": {
+                          "botId": "1234"
+                        }
+                      },
+                      "createdAt": "user@example.com",
+                      "createdBy": "2025-05-30T08:04:07.545Z",
+                      "statusMessages": [
+                        {
+                          "status": "pending",
+                          "message": "Importing test set to Amazon Lex."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Bad request.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testSets/{id}": {
+      "get": {
+        "tags": [
+          "TestSet"
+        ],
+        "description": "Retrieve details of a test set",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique identifier of testset"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-4"
+                },
+                "examples": {
+                  "Existing Test Set": {
+                    "summary": "Existing Test Set.",
+                    "value": {
+                      "id": "test-set-id",
+                      "name": "sample-test-set",
+                      "status": "in-progress",
+                      "description": "sample-test-set-description",
+                      "dataSource": {
+                        "botDataSource": {
+                          "botId": "1234"
+                        }
+                      },
+                      "createdAt": "user@example.com",
+                      "createdBy": "2025-05-30T08:04:07.545Z",
+                      "statusMessages": [
+                        {
+                          "status": "pending",
+                          "message": "Importing test set to Amazon Lex."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TestSet"
+        ],
+        "description": "Delete a test set",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique identifier of testset"
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testSets/{id}/uploadUrl": {
+      "post": {
+        "tags": [
+          "TestSet"
+        ],
+        "description": "Create a signed url to upload the test set file",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique identifier of testset"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-8"
+                },
+                "examples": {
+                  "Test Set Upload Url": {
+                    "summary": "Url for user to upload an updated test set.",
+                    "value": {
+                      "uploadUrl": "https://example.com/upload-url"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bots/{botId}/testExecutions": {
+      "post": {
+        "tags": [
+          "TestExecution"
+        ],
+        "description": "Create a test execution",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/def-11"
+              },
+              "examples": {
+                "new test execution request": {
+                  "value": {
+                    "testSetId": "test-set-id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "botId",
+            "required": true,
+            "description": "Unique id of bot"
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-9"
+                },
+                "examples": {
+                  "Bot": {
+                    "summary": "Existing Test Execution.",
+                    "value": {
+                      "id": "test-execution-id",
+                      "testSetId": "test-set-id",
+                      "testSetName": "test-set-name",
+                      "botId": "bot-id",
+                      "createdAt": "2025-05-30T08:04:07.545Z",
+                      "createdBy": "user-id",
+                      "updatedAt": "2025-05-30T08:04:07.545Z",
+                      "updatedBy": "user-id",
+                      "status": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Bad request.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "listTestExecutions",
+        "summary": "List all test executions.",
+        "tags": [
+          "TestExecution"
+        ],
+        "description": "List all test executions.\n\nPermissions:\n- `readers` may list test executions.\n",
+        "parameters": [
+          {
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "count",
+            "required": true,
+            "description": "Count of results to return, if not specified default to 20"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "required": false,
+            "description": "Token used to paginate from (exclusive)."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "botId",
+            "required": true,
+            "description": "Unique id of bot"
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "type": "object",
+                  "properties": {
+                    "testExecutions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "Unique id of test execution",
+                            "type": "string"
+                          },
+                          "botId": {
+                            "type": "string"
+                          },
+                          "testSetId": {
+                            "type": "string"
+                          },
+                          "testSetName": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "createdBy": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "updatedBy": {
+                            "type": "string"
+                          },
+                          "outputDownloadUrl": {
+                            "description": "The URL to download the test file.",
+                            "type": "string"
+                          },
+                          "failureReasons": {
+                            "type": "array",
+                            "items": {
+                              "description": "Reasons why the test failed",
+                              "type": "string"
+                            }
+                          },
+                          "status": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "pending"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "error"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "success"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "stopped"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "in-progress"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "botId",
+                          "testSetId",
+                          "testSetName",
+                          "createdAt",
+                          "createdBy",
+                          "status"
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "count": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "testExecutions"
+                  ]
+                },
+                "examples": {
+                  "List of bots": {
+                    "summary": "Paginated list of test execution.",
+                    "value": {
+                      "testExecutions": [
+                        {
+                          "id": "test-execution-id",
+                          "testSetId": "test-set-id",
+                          "testSetName": "test-set-name",
+                          "botId": "bot-id",
+                          "createdAt": "2025-05-30T08:04:07.545Z",
+                          "createdBy": "user-id",
+                          "updatedAt": "2025-05-30T08:04:07.545Z",
+                          "updatedBy": "user-id",
+                          "status": "success"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bots/{botId}/testExecutions/{id}": {
+      "get": {
+        "tags": [
+          "TestExecution"
+        ],
+        "description": "Retrieve details of an existing test execution",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "botId",
+            "required": true,
+            "description": "Unique id of bot"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Unique id of test execution"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-9"
+                },
+                "examples": {
+                  "Existing Test Execution": {
+                    "summary": "Existing Test Execution.",
+                    "value": {
+                      "id": "test-execution-id",
+                      "testSetId": "test-set-id",
+                      "testSetName": "test-set-name",
+                      "botId": "bot-id",
+                      "createdAt": "2025-05-30T08:04:07.545Z",
+                      "createdBy": "user-id",
+                      "updatedAt": "2025-05-30T08:04:07.545Z",
+                      "updatedBy": "user-id",
+                      "status": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recommendationTasks": {
+      "post": {
+        "tags": [
+          "Recommendation Tasks"
+        ],
+        "description": "Create a recommendation tasks in bulk",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/def-12"
+              },
+              "examples": {
+                "new recommendation task request": {
+                  "value": {
+                    "testExecutionId": "01jbdqm00vdyz1d2bdbp26qm9p",
+                    "botId": "ULHZMUZCQI"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-13"
+                },
+                "examples": {
+                  "Execution creation task": {
+                    "summary": "Existing execution task detail.",
+                    "value": {
+                      "id": "XP8QITQ9OR",
+                      "taskStatus": "success",
+                      "itemsTotal": 11,
+                      "itemsSucceeded": 11,
+                      "itemsFailed": 0,
+                      "itemsCompleted": 11,
+                      "createdAt": "2024-10-30T03:30:58.734Z",
+                      "createdBy": "someone@somewhere.com",
+                      "testExecutionId": "01jbdqm00vdyz1d2bdbp26qm9p"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Bad request.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testExecutions/{testExecutionId}/recommendationTasks": {
+      "get": {
+        "tags": [
+          "Execution Tasks"
+        ],
+        "description": "Lists Execution Tasks",
+        "parameters": [
+          {
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "count",
+            "required": true,
+            "description": "Count of results to return, if not specified default to 20"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "fromTaskId",
+            "required": false,
+            "description": "Token used to paginate from (exclusive)."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "testExecutionId",
+            "required": true,
+            "description": "Unique id of test execution"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-14"
+                },
+                "examples": {
+                  "List of Execution Tasks": {
+                    "summary": "Paginated list of executionTasks",
+                    "value": {
+                      "tasks": [
+                        {
+                          "id": "XP8QITQ9OR",
+                          "taskStatus": "success",
+                          "itemsTotal": 11,
+                          "itemsSucceeded": 11,
+                          "itemsFailed": 0,
+                          "itemsCompleted": 11,
+                          "createdAt": "2024-10-30T03:30:58.734Z",
+                          "createdBy": "someone@somewhere.com",
+                          "testExecutionId": "01jbdqm00vdyz1d2bdbp26qm9p"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testExecutions/{testExecutionId}/recommendationTasks/{id}": {
+      "get": {
+        "tags": [
+          "Execution Tasks"
+        ],
+        "description": "Retrieve details of an existing execution task",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Task resource id."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "testExecutionId",
+            "required": true,
+            "description": "Unique id of test execution"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-13"
+                },
+                "examples": {
+                  "Existing Execution Task": {
+                    "summary": "Existing Execution Task details.",
+                    "value": {
+                      "id": "XP8QITQ9OR",
+                      "taskStatus": "success",
+                      "itemsTotal": 11,
+                      "itemsSucceeded": 11,
+                      "itemsFailed": 0,
+                      "itemsCompleted": 11,
+                      "createdAt": "2024-10-30T03:30:58.734Z",
+                      "createdBy": "someone@somewhere.com",
+                      "testExecutionId": "01jbdqm00vdyz1d2bdbp26qm9p"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recommendationTasks/{taskId}/taskItems": {
+      "get": {
+        "operationId": "listExecutionTaskItems",
+        "tags": [
+          "Task Items"
+        ],
+        "description": "Lists execution task items",
+        "parameters": [
+          {
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "count",
+            "required": true,
+            "description": "Count of results to return, if not specified default to 20"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "fromDate",
+            "required": false,
+            "description": "Id to paginate from (exclusive)."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "description": "Recommendation task id."
+          },
+          {
+            "schema": {
+              "default": "1.0.0",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept-version",
+            "required": true,
+            "description": "API version"
+          },
+          {
+            "schema": {
+              "default": "application/json",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accept",
+            "required": true,
+            "description": "Accepted Content Type"
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-16"
+                },
+                "examples": {
+                  "List of task items": {
+                    "summary": "Paginated list of execution task items",
+                    "value": {
+                      "taskItems": [
+                        {
+                          "taskId": "01jbdv60dzd26j43wvn762ehm4",
+                          "taskItemId": "01jb8zyt5ccs2zrq5c2vsmrx7a",
+                          "status": "success",
+                          "statusMessage": "Essential container in task exited"
+                        },
+                        {
+                          "taskId": "01jbdv60dzd26j43wvn762ehm4",
+                          "taskItemId": "01jb8zyt5ccs2zrq5c2vsmrx7a",
+                          "status": "success",
+                          "statusMessage": "Essential container in task exited"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recommendationTasks/{taskId}/taskItems/{taskItemId}": {
+      "get": {
+        "tags": [
+          "Task Item"
+        ],
+        "description": "Retrieve details of an recommendation task item in an execution task",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "description": "Recommendation task id."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "taskItemId",
+            "required": true,
+            "description": "Recommendation task item id."
+          }
+        ],
+        "x-security-scopes": [
+          "admin",
+          "contributor",
+          "reader"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Success.",
+                  "$ref": "#/components/schemas/def-15"
+                },
+                "examples": {
+                  "Existing Recommendation Task Item": {
+                    "summary": "Recommendation Task Item Details",
+                    "value": {
+                      "taskId": "01jbdv60dzd26j43wvn762ehm4",
+                      "status": "success",
+                      "statusMessage": "Essential container in task exited",
+                      "taskItemId": "01jb8zyt5ccs2zrq5c2vsmrx7a"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Forbidden.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Not found.",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:30001"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Bot",
+      "description": "A bot to migrate from IVR legacy."
+    },
+    {
+      "name": "TestSet",
+      "description": "A test set is a collection of sample utterances used to evaluate and validate your bot's performance. "
+    }
+  ]
+}
