@@ -1,10 +1,10 @@
 # Guidance for IVR Chatbot migration to Amazon Lex and Amazon Connect
 
-[Amazon Connect](https://aws.amazon.com/connect/) offers flexible IVR options to meet your unique needs and timelines. We aim to provide customers with a seamless transition to [Amazon Lex](https://aws.amazon.com/lex/), our AI-powered IVR and chatbot solution.
+[Amazon Connect](https://aws.amazon.com/connect/) offers flexible IVR options to meet your unique needs and timelines. We aim to provide customers with a seamless transition to [Amazon Lex](https://aws.amazon.com/lex/), our AI-powered IVR and chatbot service.
 
-🚀 This Guidance Package aims to democratize migration capabilities, enabling partners to reduce implementation timelines from months to weeks while maintaining quality and consistency. 
+🚀 This Guidance Package aims to democratize migration capabilities, enabling partners to reduce implementation timelines from months to weeks while maintaining quality and consistency.
 
-The package offers a comprehensive migration toolkit for efficient transition to Amazon Connect, AWS's cloud contact center solution. By streamlining the migration process, this package helps partners execute Amazon Connect and Amazon Lex implementations at scale, accelerating customer transitions while reducing implementation risks. This approach not only addresses the immediate needs of organizations affected by the Nuance discontinuation but also positions partners to capture broader market opportunities in contact center modernization.
+The package offers a comprehensive migration toolkit for efficient transition to Amazon Connect, AWS's cloud contact center service. By streamlining the migration process, this package helps partners execute Amazon Connect and Amazon Lex implementations at scale, accelerating customer transitions while reducing implementation risks. This approach not only addresses the immediate needs of organizations affected by the Nuance discontinuation but also positions partners to capture broader market opportunities in contact center modernization.
 
 ## Table of Contents
 
@@ -27,13 +27,13 @@ The package offers a comprehensive migration toolkit for efficient transition to
 
 ## Overview
 
-IVR Migration Tool is a comprehensive solution that enables rapid migration from legacy Interactive Voice Response (IVR) platforms to Amazon Connect and Amazon Lex. This toolkit dramatically reduces migration timelines from months to weeks through automated tooling, pre-built components, and standardized migration patterns. This offers features such as:
+IVR Migration Tool is a comprehensive guidance that enables rapid migration from legacy Interactive Voice Response (IVR) platforms to Amazon Connect and Amazon Lex. This toolkit dramatically reduces migration timelines from months to weeks through automated tooling, pre-built components, and standardized migration patterns. This offers features such as:
 
 ### Bot migration and management
-Streamlined interface for legacy IVR migration featuring one-click spec uploads (TRSX, JSON) and automated builds. Convert source specifications to Amazon Lex format with tracking of intent and slot creation progress.
+A streamlined interface for legacy IVR migration featuring one-click spec uploads (TRSX, JSON) and automated builds. Convert source specifications to Amazon Lex format with tracking of intent and slot creation progress.
 
-### GenAI powered Testing Suite
-Comprehensive testing solution combining AI-generated test cases with one click test execution capabilities powered Amazon Lex Test Workbench feature. Features intelligent conversation path coverage, monitoring, and analytics. The generative AI powered recommendation engine analyzes results to optimize bot performance through suggested improvements to intents, utterances, slots and conversation flows.
+### GenAI-powered Testing Suite
+A comprehensive testing suite combining AI-generated test cases with one-click test execution capabilities powered by the Amazon Lex Test Workbench feature. Features intelligent conversation path coverage, monitoring, and analytics. The generative AI powered recommendation engine analyzes results to optimize bot performance through suggested improvements to intents, utterances, slots and conversation flows.
 
 ### Security Controls
 Enterprise-grade authentication powered by Amazon Cognito, providing secure access management with administrator controls for user provisioning and permissions.
@@ -67,7 +67,7 @@ a
 
 ## Cost
 
-Pricing is based on a 'Try Out' scope with 2 bot migrations, 5 intents per bot, 4 test scenarios, 100 unique invocations, and using Anthropic Claude 3.5 Sonnet Foundation Model. 
+Pricing is based on a 'Try Out' scope with 2 bot migrations, 5 intents per bot, 4 test scenarios, 100 unique invocations, and using Anthropic Claude 3.5 Sonnet Foundation Model.
 
 Actual costs may vary based on your specific requirements. Check out the [cost calculator](https://calculator.aws/#/estimate?id=758ab1bd6364356f2a41903cb1858e57f20b810c) for deploying this project. We recommend creating a [Budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this Guidance.
 
@@ -92,7 +92,7 @@ Pricing for Bedrock involves charges for model inference and customization. For 
 |Amazon Bedrock- Generate Test Set |  $2.73  | (113251*3/1000000)+(839*15/1000000) per test case|
 |Amazon Lex/Connect |  $2.00  |  (# of Tests * 100 messages + invocations) * $0.004, scaled by requests|
 | **Total Cost** |  **$58.74**  |  'Try Out' scope with 2 bot migrations, 5 intents per bot, 4 test scenarios, 100 unique invocations, and using Claude 3.5 Sonnet|                                              |
- 
+
 ## Key Features
 
 🔄 **Universal Migration Framework**
@@ -157,7 +157,7 @@ This Guidance uses AWS CDK. If you are using aws-cdk for the first time, please 
 
 ### Deploying
 
-1. Clone the solution repository:
+1. Clone the guidance repository:
 
 ```sh
 git clone https://gitlab.aws.dev/psf-guidance-packages/GP_IVR_chatbot_migration_to_AmazonLex_Connect
@@ -230,13 +230,13 @@ export IVR_MIGRATION_FOLDER=$PWD
    - **Coffee Shop Example**:
      - TRSX file: https://docs.nuance.com/mix/downloads/dialog-app-spec/coffeeShop.trsx
      - JSON file: https://docs.nuance.com/mix/downloads/dialog-app-spec/coffeeShop.json
-   
+
    - **Travel App Example**:
      - TRSX file: https://raw.githubusercontent.com/nuance-communications/mix-quickstart-projects/refs/heads/main/travel-ivr-digital/en-US/en-US.trsx
      - JSON file: https://raw.githubusercontent.com/nuance-communications/mix-quickstart-projects/refs/heads/main/travel-ivr-digital/dialog.json
-   
+
    **Important**: Download both the TRSX and JSON files for your chosen example, then compress them into a single ZIP file before uploading.
-   
+
    ![Create Bot Step 2](docs/images/CreateBot-2.png)
 
 3. **Monitor Bot Generation Progress**: View real-time status updates as the bot generation workflow progresses through each step.
@@ -368,7 +368,7 @@ This application is licensed under the MIT-0 License. See the LICENSE file.
 - Dilin Joy
 - William Sia
 
-## UI Design 
+## UI Design
 [https://cloudscape.design/](https://cloudscape.design/)
 
 Cloudscape is an open source design system for the cloud. Cloudscape offers user interface guidelines, front-end components, design resources, and development tools for building intuitive, engaging, and inclusive user experiences at scale.
