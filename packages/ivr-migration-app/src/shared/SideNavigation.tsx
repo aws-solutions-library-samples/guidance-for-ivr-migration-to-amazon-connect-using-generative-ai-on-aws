@@ -43,7 +43,7 @@ export default () => {
 				{
 					type: "link",
 					text: "Documentation",
-					href: "https://gitlab.aws.dev/psf-guidance-packages/GP_IVR_chatbot_migration_to_AmazonLex_Connect",
+					href: "https://github.com/aws-solutions-library-samples/guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws",
 					external: true,
 				},
 			]}

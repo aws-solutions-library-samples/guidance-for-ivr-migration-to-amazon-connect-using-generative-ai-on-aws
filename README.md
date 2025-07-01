@@ -160,8 +160,8 @@ This Guidance uses AWS CDK. If you are using aws-cdk for the first time, please 
 1. Clone the guidance repository:
 
 ```sh
-git clone https://gitlab.aws.dev/psf-guidance-packages/GP_IVR_chatbot_migration_to_AmazonLex_Connect
-cd GP_IVR_chatbot_migration_to_AmazonLex_Connect
+git clone https://github.com/aws-solutions-library-samples/guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
+cd guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
 export IVR_MIGRATION_FOLDER=$PWD
 ```
 
@@ -181,7 +181,7 @@ export IVR_MIGRATION_FOLDER=$PWD
 4. Build the lambda functions:
 
     ```sh
-    bun run --filter * build
+    bun run --filter '*' build
     ```
 
 5. Deploy the infrastructure:
