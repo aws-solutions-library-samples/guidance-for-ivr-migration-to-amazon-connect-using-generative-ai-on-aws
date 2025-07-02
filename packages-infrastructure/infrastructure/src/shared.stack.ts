@@ -25,12 +25,14 @@ import { Auth } from "./constructs/auth.construct";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { BlockPublicAccess, Bucket, BucketEncryption, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { NagSuppressions } from "cdk-nag";
+import { ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { CfnAccount } from "aws-cdk-lib/aws-apigateway";
 
 const dir = path.join(__dirname, '../');
 
 export type SharedStackProps = StackProps & {
-    readonly environment: string;
-    readonly administratorEmail: string;
+	readonly environment: string;
+	readonly administratorEmail: string;
 }
 
 export const bunLayerVersionArnParameter = (environment: string) => `/ivr-migration-tool/${environment}/shared/bunLayerVersionArn`;
@@ -39,96 +41,117 @@ export const bucketNameParameter = (environment: string) => `/ivr-migration-tool
 
 /**
  * SharedStack is responsible for creating and managing shared AWS resources across the application.
- * 
+ *
  * This stack creates and manages:
  * - A Bun runtime Lambda layer
  * - An S3 bucket for storing artifacts with appropriate security configurations
  * - Authentication module setup
  * - SSM parameters for cross-stack resource sharing
- * 
+ *
  * @extends {Stack}
  */
 export class SharedStack extends Stack {
 
-    constructor(scope: Construct, id: string, props: SharedStackProps) {
-        super(scope, id, props)
+	constructor(scope: Construct, id: string, props: SharedStackProps) {
+		super(scope, id, props)
 
-        const { administratorEmail, environment } = props;
+		const { administratorEmail, environment } = props;
 
-        const bunLayer = new LayerVersion(this, 'BunFunLayer', {
-            description: 'A custom Lambda layer for Bun.',
-            removalPolicy: RemovalPolicy.DESTROY,
-            code: Code.fromAsset(path.join(dir, '..', 'bun-lambda', 'bun-lambda-layer.zip')),
-            compatibleArchitectures: [Architecture.X86_64, Architecture.ARM_64],
-            compatibleRuntimes: [Runtime.PROVIDED_AL2],
-            layerVersionName: 'bun',
-        });
+		const bunLayer = new LayerVersion(this, 'BunFunLayer', {
+			description: 'A custom Lambda layer for Bun.',
+			removalPolicy: RemovalPolicy.DESTROY,
+			code: Code.fromAsset(path.join(dir, '..', 'bun-lambda', 'bun-lambda-layer.zip')),
+			compatibleArchitectures: [Architecture.X86_64, Architecture.ARM_64],
+			compatibleRuntimes: [Runtime.PROVIDED_AL2],
+			layerVersionName: 'bun',
+		});
 
-        bunLayer.addPermission('BunFunLayerPermission', {
-            accountId: Stack.of(this).account,
-        });
+		bunLayer.addPermission('BunFunLayerPermission', {
+			accountId: Stack.of(this).account,
+		});
 
-        new StringParameter(this, 'BunLayerVersionArnParameter', {
-            parameterName: bunLayerVersionArnParameter(environment),
-            stringValue: bunLayer.layerVersionArn,
-        });
+		new StringParameter(this, 'BunLayerVersionArnParameter', {
+			parameterName: bunLayerVersionArnParameter(environment),
+			stringValue: bunLayer.layerVersionArn,
+		});
 
-        // amazonq-ignore-next-line
-        const bucket = new Bucket(this, 'ArtifactBucket', {
-            bucketName: `ivr-migration-tool-${Stack.of(this).account}-${Stack.of(this).region}`,
-            encryption: BucketEncryption.S3_MANAGED,
-            intelligentTieringConfigurations: [
-                {
-                    name: 'archive',
-                    archiveAccessTierTime: Duration.days(90),
-                    deepArchiveAccessTierTime: Duration.days(180),
-                },
-            ],
-            blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-            enforceSSL: true,
-            autoDeleteObjects: true,
-            versioned: true,
-            serverAccessLogsPrefix: 'access-logs/',
-            removalPolicy: RemovalPolicy.DESTROY,
-            eventBridgeEnabled: true,
-        })
+		// amazonq-ignore-next-line
+		const bucket = new Bucket(this, 'ArtifactBucket', {
+			bucketName: `ivr-migration-tool-${Stack.of(this).account}-${Stack.of(this).region}`,
+			encryption: BucketEncryption.S3_MANAGED,
+			intelligentTieringConfigurations: [
+				{
+					name: 'archive',
+					archiveAccessTierTime: Duration.days(90),
+					deepArchiveAccessTierTime: Duration.days(180),
+				},
+			],
+			blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+			enforceSSL: true,
+			autoDeleteObjects: true,
+			versioned: true,
+			serverAccessLogsPrefix: 'access-logs/',
+			removalPolicy: RemovalPolicy.DESTROY,
+			eventBridgeEnabled: true,
+		})
 
-        bucket.addCorsRule({
-            allowedHeaders: ['*'],
-            allowedMethods: [HttpMethods.PUT, HttpMethods.GET, HttpMethods.HEAD],
-            allowedOrigins: ['*'],
-            exposedHeaders: ['ETag'],
-            maxAge: 3000,
-        })
+		bucket.addCorsRule({
+			allowedHeaders: ['*'],
+			allowedMethods: [HttpMethods.PUT, HttpMethods.GET, HttpMethods.HEAD],
+			allowedOrigins: ['*'],
+			exposedHeaders: ['ETag'],
+			maxAge: 3000,
+		})
 
-        new StringParameter(this, 'ArtifactBucketParameter', {
-            parameterName: bucketNameParameter(environment),
-            stringValue: bucket.bucketName,
-        });
+		new StringParameter(this, 'ArtifactBucketParameter', {
+			parameterName: bucketNameParameter(environment),
+			stringValue: bucket.bucketName,
+		});
 
-        new Auth(this, 'AuthModule', { environment, administratorEmail });
+		new Auth(this, 'AuthModule', { environment, administratorEmail });
+
+		// Create the IAM role for API Gateway CloudWatch logging
+		const apiGatewayCloudWatchRole = new Role(this, 'ApiGatewayCloudWatchRole', {
+			assumedBy: new ServicePrincipal('apigateway.amazonaws.com'),
+			managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('service-role/AmazonAPIGatewayPushToCloudWatchLogs')],
+		});
+
+		// Update the account settings to use this role
+		new CfnAccount(this, 'ApiGatewayAccount', {
+			cloudWatchRoleArn: apiGatewayCloudWatchRole.roleArn,
+		});
+
+		NagSuppressions.addResourceSuppressions(
+			apiGatewayCloudWatchRole,
+			[
+				{
+					id: 'AwsSolutions-IAM4',
+					reason: 'API Gateway requires AWS managed policy to push logs to CloudWatch',
+					appliesTo: ['Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs'],
+				},
+			],
+			true
+		);
+		NagSuppressions.addResourceSuppressionsByPath(
+			this,
+			[`/SharedStack-${props.environment}/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource`],
+			[
+				{
+					id: 'AwsSolutions-IAM4',
+					appliesTo: ['Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'],
+					reason: 'This policy attached to the role is generated by CDK.',
+				},
+				{
+					id: 'AwsSolutions-IAM5',
+					appliesTo: ['Resource::*'],
+					reason: 'This policy attached to the role is generated by CDK.',
+				},
+			],
+			true
+		);
 
 
-        NagSuppressions.addResourceSuppressionsByPath(
-            this,
-            [`/SharedStack-${props.environment}/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource`],
-            [
-                {
-                    id: 'AwsSolutions-IAM4',
-                    appliesTo: ['Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'],
-                    reason: 'This policy attached to the role is generated by CDK.',
-                },
-                {
-                    id: 'AwsSolutions-IAM5',
-                    appliesTo: ['Resource::*'],
-                    reason: 'This policy attached to the role is generated by CDK.',
-                },
-            ],
-            true
-        );
-
-
-    }
+	}
 }
 
 

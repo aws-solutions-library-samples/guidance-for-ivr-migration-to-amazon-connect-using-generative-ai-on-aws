@@ -159,11 +159,11 @@ This Guidance uses AWS CDK. If you are using aws-cdk for the first time, please 
 
 1. Clone the guidance repository:
 
-```sh
-git clone https://github.com/aws-solutions-library-samples/guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
-cd guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
-export IVR_MIGRATION_FOLDER=$PWD
-```
+	```sh
+	git clone https://github.com/aws-solutions-library-samples/guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
+	cd guidance-for-ivr-migration-to-amazon-connect-using-generative-ai-on-aws
+	export IVR_MIGRATION_FOLDER=$PWD
+	```
 
 2. Set up environment variables:
 
@@ -184,7 +184,16 @@ export IVR_MIGRATION_FOLDER=$PWD
     bun run --filter '*' build
     ```
 
-5. Deploy the infrastructure:
+5. Bootstrap CDK (if not done previously):
+
+    ```sh
+    cd $IVR_MIGRATION_FOLDER/packages-infrastructure/infrastructure
+
+    bun cdk -- bootstrap  -c environment=$ENVIRONMENT \
+        -c administratorEmail=$ADMINISTRATOR_EMAIL
+    ```
+
+6. Deploy the infrastructure:
 
     ```sh
     cd $IVR_MIGRATION_FOLDER/packages-infrastructure/infrastructure
@@ -196,7 +205,7 @@ export IVR_MIGRATION_FOLDER=$PWD
         --require-approval never --all
     ```
 
-6. Set your initial password (**Optional**)
+7. Set your initial password (**Optional**)
 
    Run the following command to set the password for the administrator user (replace the `ADMINISTRATOR_EMAIL` and `<PASSWORD>` with your own) :
 
