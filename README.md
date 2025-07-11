@@ -222,7 +222,7 @@ This Guidance uses AWS CDK. If you are using aws-cdk for the first time, please 
 1. **Retrieve the Application URL**: Get the IVR web application URL by running the following command:
 
     ```sh
-    export IVR_WEB_URL=$(aws ssm get-parameter --name "/ivr-migration-tool/$ENVIRONMENT/shared/websiteUrl" --query "Parameter.Value" --output text) && echo "https://$IVR_WEB_URL"
+    export IVR_WEB_URL=$(aws ssm get-parameter --name "/ivr-migration-tool/$ENVIRONMENT/app/websiteUrl" --query "Parameter.Value" --output text) && echo "https://$IVR_WEB_URL"
     ```
 
 2. **Access the Application**: Open the URL in your web browser and log in using the administrator username and password you configured in the previous steps.
